@@ -16,6 +16,8 @@ function Main({ data }) {
     const handleNavigate = (path) => {
         const socket = io(HOST, {
             withCredentials: true,
+            path: '/socket',
+            transports: ['websocket'],
         });
 
         // Gửi yêu cầu định tuyến bằng Socket.io khi người dùng click
@@ -23,7 +25,11 @@ function Main({ data }) {
     };
 
     useEffect(() => {
-        const socket = io(HOST);
+        const socket = io(HOST, {
+            withCredentials: true,
+            path: '/socket',
+            transports: ['websocket'],
+        });
 
         socket.on('redirectTo', (path) => {
             router.push(path); // Điều hướng đến trang được chỉ định

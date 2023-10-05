@@ -15,6 +15,9 @@ function Header() {
     useEffect(() => {
         const newSocket = io(HOST, {
             withCredentials: true,
+            path: '/socket',
+            transports: ['websocket'],
+            secure: true,
         });
 
         newSocket.on('connect', () => {
