@@ -13,7 +13,9 @@ app.use(cors({
 const io = socketIO(server, {
     cors: {
         origin: '*',
-    }
+        credentials: true
+    },
+    allowEIO3: true,
 }) // Initialize socketIO
 
 // Listen for a connection
