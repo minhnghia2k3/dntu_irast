@@ -13,7 +13,9 @@ import { useRouter } from 'next/navigation';
 function Main({ data }) {
     const router = useRouter();
     const handleNavigate = (path) => {
-        const socket = io('https://test-socket-api.vercel.app');
+        const socket = io('https://test-socket-api.vercel.app', {
+            withCredentials: true,
+        });
 
         // Gửi yêu cầu định tuyến bằng Socket.io khi người dùng click
         socket.emit('navigateTo', path);

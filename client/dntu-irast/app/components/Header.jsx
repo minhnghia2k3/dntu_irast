@@ -4,7 +4,6 @@ import Link from 'next/link'
 import React from 'react'
 import { useEffect, useState } from 'react';
 import io from 'socket.io-client';
-import { AiOutlineQuestionCircle } from 'react-icons/ai'
 import { useRouter } from 'next/navigation';
 
 function Header() {
@@ -13,7 +12,9 @@ function Header() {
     const [isConnecting, setIsConnecting] = useState(false);
     const router = useRouter();
     useEffect(() => {
-        const newSocket = io('https://test-socket-api.vercel.app');
+        const newSocket = io('https://test-socket-api.vercel.app', {
+            withCredentials: true,
+        });
 
         newSocket.on('connect', () => {
             console.log('Đã kết nối đến máy chủ');

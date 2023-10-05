@@ -6,14 +6,16 @@ const app = express() // Initialize express
 const server = http.createServer(app) // Create a server
 const cors = require('cors'); // Import middleware CORS
 
-app.use(cors({
-    origin: 'https://test-socket-eta.vercel.app',
-}));
+// app.use(cors({
+//     origin: 'https://test-socket-eta.vercel.app',
+// }));
 
 const io = socketIO(server, {
     cors: {
         origin: "https://test-socket-eta.vercel.app",
-        methods: ["GET", "POST", "OPTIONS"]
+        methods: ["GET", "POST"],
+        allowedHeaders: ["my-custom-header"],
+        credentials: true
     }
 });
 // Listen for a connection
