@@ -6,7 +6,7 @@ const app = express() // Initialize express
 const httpServer = createServer(app) // Create a server
 
 
-const origin = "https://test-socket-eta.vercel.app"
+const origin = "http://localhost:3000"
 
 
 const io = new Server(httpServer, {

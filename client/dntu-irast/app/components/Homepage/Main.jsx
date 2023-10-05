@@ -12,11 +12,10 @@ import { io } from 'socket.io-client';
 import { useRouter } from 'next/navigation';
 function Main({ data }) {
     const router = useRouter();
-    const HOST = 'https://test-socket-api.vercel.app/';
+    const HOST = 'http://localhost:8080';
     const handleNavigate = (path) => {
         const socket = io(HOST, {
             withCredentials: true,
-            path: '/socket',
         });
 
         // Gửi yêu cầu định tuyến bằng Socket.io khi người dùng click
@@ -26,7 +25,6 @@ function Main({ data }) {
     useEffect(() => {
         const socket = io(HOST, {
             withCredentials: true,
-            path: '/socket',
         });
 
         socket.on('redirectTo', (path) => {

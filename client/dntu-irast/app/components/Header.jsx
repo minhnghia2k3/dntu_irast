@@ -11,13 +11,10 @@ function Header() {
     const [position, setPosition] = useState(0);
     const [isConnecting, setIsConnecting] = useState(false);
     const router = useRouter();
-    const HOST = 'https://test-socket-api.vercel.app/'
+    const HOST = 'http://localhost:8080'
     useEffect(() => {
         const newSocket = io(HOST, {
             withCredentials: true,
-            path: '/socket',
-            transports: ['websocket'],
-            secure: true,
         });
 
         newSocket.on('connect', () => {
