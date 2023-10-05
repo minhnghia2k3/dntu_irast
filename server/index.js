@@ -10,8 +10,12 @@ app.use(cors({
     origin: 'https://test-socket-eta.vercel.app',
 }));
 
-const io = socketIO(server) // Initialize socketIO
-
+const io = socketIO(server, {
+    cors: {
+        origin: "https://test-socket-eta.vercel.app",
+        methods: ["GET", "POST", "OPTIONS"]
+    }
+});
 // Listen for a connection
 io.on('connection', socket => {
     console.log('User connected')
