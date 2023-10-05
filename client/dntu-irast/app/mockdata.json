@@ -1,0 +1,100 @@
+[
+    {
+        "id": 1,
+        "name": "Hộ kinh doanh kỹ nghệ tổng hợp Cohafood",
+        "description": "Giữa muôn vàn tấp nập của cuộc sống hiện đại khiến cho con người sống nhanh hơn, chạy theo lợi ích của đồng tiền mà quên đi giá trị thực sự của sản phẩm. COHAFOOD chúng tôi hiểu rằng giá trị cốt lõi nằm ở nguyên liệu tươi ngon cùng với cái tâm khi làm sản phẩm mới tạo ra được những sản phẩm chả lụa an toàn với giá trị bền vững.",
+        "websiteUrl": "http://cohafood.vn/",
+        "images": [
+            "/images/cohafood/cohafood_1.jpg",
+            "/images/cohafood/cohafood_2.jpg",
+            "/images/cohafood/cohafood_3.jpg",
+            "/images/cohafood/cohafood_4.jpg"
+        ],
+        "qrCode": "/images/cohafood/cohafood_qrcode.png",
+        "videoUrl": "https://baodongnai.com.vn/file/video/e7837c02876411cd0187645a2551379f/media/videos/202305/74823_c__fakepath_th__tr__ng_n_o_cho_s_n_ph_m_ocop_.mp4",
+        "logo": "/logo/coha_logo.png",
+        "contact": "Mr Thoại 0918399477",
+        "address": "Hẻm 66, 81, Khu phố 2, Phường Trảng Dài, TP. Biên Hoà, tỉnh Đồng Nai"
+    },
+    {
+        "id": 2,
+        "name": "Công ty TNHH Xuất Nhập Khẩu Thảo Mộc Thái Vân",
+        "videoUrl": "https://www.youtube.com/embed/TIUhZdr5v2c",
+        "logo": "/logo/thaivan_logo.png",
+        "contact": "Ms.Tina Hạnh Nguyễn 0938 105 379",
+        "address": "",
+        "qrCode": "/images/thai_van/thai_van_qrCode.png"
+    },
+    {
+        "id": 3,
+        "name": "Công ty TNHH-TM Hà Duy Minh",
+        "videoUrl": "https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2F100042182052278%2Fvideos%2F713768739153980%2F&show_text=false&width=560&t=0",
+        "logo": "/logo/haduyminh_logo.png",
+        "contact": "Ms.Lương 0902377511",
+        "address": "",
+        "qrCode": "/images/ha_duy_minh/ha_duy_minh_qrCode.png"
+    },
+    {
+        "id": 4,
+        "name": "HTX NN An Hòa Hưng",
+        "videoUrl": "https://www.youtube.com/embed/lHrEuKVFuJQ",
+        "logo": "/logo/anhoahung_logo.jpg",
+        "contact": "Ms.C Linh 0906272303",
+        "address": "",
+        "qrCode": "/images/an_hoa_hung/an_hoa_hung_qrCode.png"
+    },
+    {
+        "id": 5,
+        "name": "Công ty TNHH Nông nghiệp công nghệ cao Việt Nam",
+        "videoUrl": "https://www.youtube.com/embed/gNylNljaGtk",
+        "logo": "/logo/nong_nghiep_logo.png",
+        "contact": "Mr.Anh Khoa 0915 915 934",
+        "address": "",
+        "qrCode": "/images/nong_nghiep/nong_nghiep_qrCode.png"
+    },
+    {
+        "id": 6,
+        "name": "Công ty TNHH TM SX Thuận Hương",
+        "videoUrl": "https://www.youtube.com/embed/deHMIfz0Iso",
+        "logo": "/logo/thuan_huong_logo.png",
+        "contact": "Ms.Hương 0908387338",
+        "address": "",
+        "qrCode": "/images/thuan_huong/thuan_huong_qrCode.png"
+    },
+    {
+        "id": 7,
+        "name": "Tương Việt Hoa Sen",
+        "videoUrl": "https://www.youtube.com/embed/93A8MATPt2k",
+        "logo": "/logo/hoa_sen_logo.png",
+        "contact": "Hiếu 0976541841",
+        "address": "",
+        "qrCode": "/images/hoa_sen/hoa_sen_qrCode.png"
+    },
+    {
+        "id": 8,
+        "name": "Công Ty TNHH Thực Phẩm Trí Kiên",
+        "videoUrl": "",
+        "logo": "/logo/tri_kien_logo.png",
+        "contact": "Dương Ngọc Văn Long - Email: long.duong@trikienfood.vn - HP: 0937778490 - Website: www.trikienfood.vn",
+        "address": "",
+        "qrCode": "/images/tri_kien/tri_kien_qrCode.png"
+    },
+    {
+        "id": 9,
+        "name": "Hợp Tác Xã Dịch Vụ Nông Nghiệp Trường Phát",
+        "videoUrl": "https://www.youtube.com/embed/qvuolBkqYpM",
+        "logo": "/logo/truong_phat_logo.png",
+        "contact": "Ms.Lệ 0919319717",
+        "address": "Ấp Vĩnh Tuy,Xã Long Tân,Huyện Nhơn Trạch, Tỉnh Đồng Nai",
+        "qrCode": "/images/truong_phat/truong_phat_qrCode.png"
+    },
+    {
+        "id": 10,
+        "name": "Công ty TNHH TMDV Vfarm",
+        "videoUrl": "https://www.youtube.com/embed/i9lGjzGWzxQ",
+        "logo": "/logo/vfram_logo.jpg",
+        "contact": "Ms.Cẩm Vân 0933200961",
+        "address": "",
+        "qrCode": "/images/vfram/vfram_qrCode.png"
+    }
+]
