@@ -1,22 +1,19 @@
-const express = require('express')
-const http = require('http')
-const socketIO = require('socket.io')
+import express from 'express'
+import { createServer } from 'http'
+import { Server } from "socket.io";
 
 const app = express() // Initialize express
-const server = http.createServer(app) // Create a server
-const cors = require('cors'); // Import middleware CORS
+const server = createServer(app) // Create a server
+
 
 const origin = "https://test-socket-eta.vercel.app"
-// app.use(cors({
-//     origin: 'https://test-socket-eta.vercel.app',
-// }));
 
-const io = require("socket.io")(server, {
+
+const io = new Server(httpServer, {
     cors: {
         origin: origin,
-        credentials: true,
-        methods: ["GET", "POST"],
-    },
+        credentials: true
+    }
 });
 // Listen for a connection
 io.on('connection', socket => {
