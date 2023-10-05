@@ -12,7 +12,7 @@ app.use(cors({
 }));
 const io = socketIO(server, {
     cors: {
-        origin: '*',
+        origin: 'https://test-socket-eta.vercel.app',
         credentials: true
     },
     allowEIO3: true,
