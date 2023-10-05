@@ -7,7 +7,9 @@ const server = http.createServer(app) // Create a server
 
 const cors = require('cors');
 
-app.use(cors());
+app.use(cors({
+    origin: 'https://test-socket-eta.vercel.app',
+}));
 const io = socketIO(server, {
     cors: {
         origin: '*',
@@ -42,13 +44,6 @@ io.on('connection', socket => {
         });
 
     })
-    // socket.emit('updateSoundStatus', isSoundOn);
-    // socket.on('toggleSound', (status) => {
-    //     isSoundOn = status;
-    //     // Phát sóng trạng thái âm thanh mới cho tất cả các kết nối khác
-    //     socket.broadcast.emit('updateSoundStatus', isSoundOn);
-    // });
-
     socket.on('navigateTo', (path) => {
         // Phát sóng sự kiện cho tất cả các kết nối khác để định tuyến
         socket.broadcast.emit('redirectTo', path);
