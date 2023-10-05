@@ -3,7 +3,7 @@ import { createServer } from 'http'
 import { Server } from "socket.io";
 
 const app = express() // Initialize express
-const server = createServer(app) // Create a server
+const httpServer = createServer(app) // Create a server
 
 
 const origin = "https://test-socket-eta.vercel.app"
@@ -61,6 +61,6 @@ app.get('/', (req, res) => {
 
 // Start the server
 const port = 8080
-server.listen(port, () => console.log(`Listening on port ${port}`))
+httpServer.listen(port, () => console.log(`Listening on port ${port}`))
 
 
