@@ -21,6 +21,7 @@ io.on('connection', socket => {
     // Listen when user A click connect
     socket.on('connectToB', () => {
         console.log('User A click connect to B')
+
         // Emit broadcast event -> user A want to connect
         io.emit('requestConnection', socket.id)
 
@@ -29,12 +30,25 @@ io.on('connection', socket => {
             // Emit broadcast to all user except user A
             socket.broadcast.emit('scrollTo', position)
         })
+
+        // Lắng nghe sự kiện khi đường dẫn của user A thay đổi
+        socket.on('changeRoute', (newRoute) => {
+            // Gửi sự kiện đến tất cả client (bao gồm cả user B) để cập nhật đường dẫn
+            io.emit('updateRoute', newRoute);
+        });
+
     })
-    socket.on('disconnectToB', () => {
-        console.log('User A click disconnect to B')
-        // Emit broadcast event -> user A want to disconnect
-        io.emit('requestDisconnect', socket.id)
-    })
+    // socket.emit('updateSoundStatus', isSoundOn);
+    // socket.on('toggleSound', (status) => {
+    //     isSoundOn = status;
+    //     // Phát sóng trạng thái âm thanh mới cho tất cả các kết nối khác
+    //     socket.broadcast.emit('updateSoundStatus', isSoundOn);
+    // });
+
+    socket.on('navigateTo', (path) => {
+        // Phát sóng sự kiện cho tất cả các kết nối khác để định tuyến
+        socket.broadcast.emit('redirectTo', path);
+    });
 
     // Listen for a disconnect
     socket.on('disconnect', () => {

@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay } from 'swiper/modules';
 import Link from 'next/link';
@@ -8,9 +8,30 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-
-
+import { io } from 'socket.io-client';
+import { useRouter } from 'next/navigation';
 function Main({ data }) {
+    const router = useRouter();
+    const handleNavigate = (path) => {
+        const socket = io('http://localhost:8080');
+
+        // Gửi yêu cầu định tuyến bằng Socket.io khi người dùng click
+        socket.emit('navigateTo', path);
+    };
+
+    useEffect(() => {
+        const socket = io('http://localhost:8080');
+
+        socket.on('redirectTo', (path) => {
+            router.push(path); // Điều hướng đến trang được chỉ định
+        });
+
+        return () => {
+            socket.disconnect(); // Đóng kết nối khi component unmount
+        };
+    }, []);
+
+
     return (
         <>
             <div className="w-screen relative h-[100%] flex flex-row items-center justify-center color-div py-8 px-8 2xl:px-32">
@@ -52,6 +73,7 @@ function Main({ data }) {
                         data && data.map((item, index) => (
                             <SwiperSlide key={index} className="main-card !py-2">
                                 <Link
+                                    onClick={() => handleNavigate(`detail/${item.id}`)}
                                     href={`detail/${item.id}`}
                                     className="card flex flex-col items-center justify-start text-center w-[300px] h-[400px] md:w-[350px] md:h-[400px] 2xl:w-[500px] 2xl:h-[600px] hover:text-[#F7666D] bg-white border-gray-200 rounded-[15px] shadow px-4 py-2 gap-2 cursor-pointer">
                                     <div className="card-image relative w-[140px] h-[140px] 2xl:w-[220px] 2xl:h-[220px]  object-cover">

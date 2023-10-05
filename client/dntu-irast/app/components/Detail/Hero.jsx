@@ -31,14 +31,13 @@ function Hero({ data: { id, name, contact, address, logo, videoUrl, websiteUrl }
 
     const handlePlaySound = () => {
         // Change playsound
-        setIsPlaySound(!isPlaySound)
-
         const video = videoRef.current
         if (video.muted) {
-            video.muted = false
+            video.muted = false // Unmute
         } else {
             video.muted = true
         }
+        setIsPlaySound(!isPlaySound)
     }
 
     return (
