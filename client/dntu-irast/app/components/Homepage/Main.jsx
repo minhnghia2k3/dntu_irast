@@ -13,14 +13,14 @@ import { useRouter } from 'next/navigation';
 function Main({ data }) {
     const router = useRouter();
     const handleNavigate = (path) => {
-        const socket = io('https://test-socket-api.vercel.app/');
+        const socket = io('https://test-socket-api.vercel.app');
 
         // Gửi yêu cầu định tuyến bằng Socket.io khi người dùng click
         socket.emit('navigateTo', path);
     };
 
     useEffect(() => {
-        const socket = io('https://test-socket-api.vercel.app/');
+        const socket = io('https://test-socket-api.vercel.app');
 
         socket.on('redirectTo', (path) => {
             router.push(path); // Điều hướng đến trang được chỉ định

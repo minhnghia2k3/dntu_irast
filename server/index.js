@@ -4,15 +4,11 @@ const socketIO = require('socket.io')
 
 const app = express() // Initialize express
 const server = http.createServer(app) // Create a server
+const cors = require('cors'); // Import middleware CORS
 
-const cors = require('cors');
-
-const corsOptions = {
-    origin: 'https://test-socket-eta.vercel.app', // Đặt URL của trang web của bạn ở đây
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-};
-
-app.use(cors(corsOptions));
+app.use(cors({
+    origin: 'https://test-socket-eta.vercel.app',
+}));
 
 const io = socketIO(server) // Initialize socketIO
 

@@ -13,7 +13,7 @@ function Header() {
     const [isConnecting, setIsConnecting] = useState(false);
     const router = useRouter();
     useEffect(() => {
-        const newSocket = io('https://test-socket-api.vercel.app/');
+        const newSocket = io('https://test-socket-api.vercel.app');
 
         newSocket.on('connect', () => {
             console.log('Đã kết nối đến máy chủ');
