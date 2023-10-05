@@ -17,7 +17,6 @@ function Main({ data }) {
         const socket = io(HOST, {
             withCredentials: true,
             path: '/socket',
-            transports: ['websocket'],
         });
 
         // Gửi yêu cầu định tuyến bằng Socket.io khi người dùng click
@@ -28,7 +27,6 @@ function Main({ data }) {
         const socket = io(HOST, {
             withCredentials: true,
             path: '/socket',
-            transports: ['websocket'],
         });
 
         socket.on('redirectTo', (path) => {
