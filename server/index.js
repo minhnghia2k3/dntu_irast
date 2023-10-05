@@ -7,16 +7,14 @@ const server = http.createServer(app) // Create a server
 
 const cors = require('cors');
 
-app.use(cors({
-    origin: 'https://test-socket-eta.vercel.app',
-}));
-const io = socketIO(server, {
-    cors: {
-        origin: 'https://test-socket-eta.vercel.app',
-        credentials: true
-    },
-    allowEIO3: true,
-}) // Initialize socketIO
+const corsOptions = {
+    origin: 'https://test-socket-eta.vercel.app', // Đặt URL của trang web của bạn ở đây
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+};
+
+app.use(cors(corsOptions));
+
+const io = socketIO(server) // Initialize socketIO
 
 // Listen for a connection
 io.on('connection', socket => {
