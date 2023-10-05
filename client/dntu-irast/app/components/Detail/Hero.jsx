@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useRef, useState } from 'react'
 import { AiOutlineGlobal } from 'react-icons/ai'
-import { BsFacebook } from 'react-icons/bs'
+import { BsFacebook, BsFillPipFill } from 'react-icons/bs'
 import { GoMute, GoUnmute } from 'react-icons/go'
 import { FiPlay, FiPause } from 'react-icons/fi'
 function Hero({ data: { id, name, contact, address, logo, videoUrl, websiteUrl } }) {
@@ -40,23 +40,31 @@ function Hero({ data: { id, name, contact, address, logo, videoUrl, websiteUrl }
         setIsPlaySound(!isPlaySound)
     }
 
+    const handlePictureInPicture = async () => {
+        try {
+            await videoRef.current.requestPictureInPicture();
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
     return (
         <>
             <div className="_video flex items-center justify-center relative w-full h-[220px] md:h-[calc(100vh-80px)] md:w-screen">
-                <div className="absolute bottom-5 right-8 z-50 flex items-center justify-center gap-2">
+                <div className="absolute bottom-5 left-8 z-50 flex items-center justify-center gap-4 text-white">
                     {
                         !isPlaying ?
                             (
                                 <FiPlay
                                     size={30}
                                     onClick={handlePlayVideo}
-                                    className="cursor-pointer text-red-primary" />
+                                    className="cursor-pointer" />
                             ) :
                             (
                                 <FiPause
                                     size={30}
                                     onClick={handlePlayVideo}
-                                    className="cursor-pointer text-red-primary" />
+                                    className="cursor-pointer" />
                             )
 
                     }
@@ -64,18 +72,55 @@ function Hero({ data: { id, name, contact, address, logo, videoUrl, websiteUrl }
                         <GoMute
                             size={30}
                             onClick={handlePlaySound}
-                            className="cursor-pointer text-red-primary" />
+                            className="cursor-pointer" />
                     ) :
                         (<GoUnmute
                             size={30}
                             onClick={handlePlaySound}
-                            className="cursor-pointer text-red-primary" />
+                            className="cursor-pointer" />
                         )
                     }
 
                 </div>
+                <div className="absolute bottom-5 right-8 z-50 flex items-center justify-center gap-4 text-white">
+                    {
+                        !isPlaying ?
+                            (
+                                <FiPlay
+                                    size={30}
+                                    onClick={handlePlayVideo}
+                                    className="cursor-pointer" />
+                            ) :
+                            (
+                                <FiPause
+                                    size={30}
+                                    onClick={handlePlayVideo}
+                                    className="cursor-pointer" />
+                            )
+
+                    }
+                    {!isPlaySound ? (
+                        <GoMute
+                            size={30}
+                            onClick={handlePlaySound}
+                            className="cursor-pointer" />
+                    ) :
+                        (<GoUnmute
+                            size={30}
+                            onClick={handlePlaySound}
+                            className="cursor-pointer" />
+                        )
+                    }
+
+                </div>
+                <div
+                    onClick={handlePictureInPicture}
+                    className={`absolute top-2 right-2 p-2 cursor-pointer bg-white rounded-full shadow-md z-50`}
+                >
+                    <BsFillPipFill />
+                </div>
                 <div className="absolute top-0 left-0 opacity-30 bg-gradient-to-b from-black to-gray-500 z-10 w-full h-full"></div>
-                <div className="w-[90%] lg:w-[80%] shadow-md h-[150px] lg:h-auto absolute -bottom-[8.25rem] flex flex-row items-start gap-2 lg:gap-8 z-20 bg-slate-50 rounded-[15px] px-2 lg:px-8 py-2">
+                <div className="overflow-hidden w-[90%] lg:w-[80%] shadow-md h-[150px] lg:h-auto absolute top-[25px] flex flex-row items-start gap-2 lg:gap-8 z-20 bg-slate-50 rounded-[15px] px-2 lg:px-8 py-2 opacity-10 hover:opacity-100 transition-opacity ease-in-out duration-300">
                     <div className="_left flex-start">
                         <Image src={logo}
                             width={150}
@@ -87,16 +132,14 @@ function Hero({ data: { id, name, contact, address, logo, videoUrl, websiteUrl }
                         <h3 className="font-bold text-red-primary text-xs lg:text-xl">{name}</h3>
                         <p className="font-medium text-gray-400 text-xs lg:text-lg">{contact}</p>
                         <p className="font-medium text-gray-400 text-xs lg:text-lg">{address}</p>
-                        <div className="flex flex-row gap-2 items-center w-full h-full lg:py-2">
+                        {/* <div className="flex flex-row gap-2 items-center w-full h-full lg:py-2">
                             <Link target='_blank' href="http://cohafood.vn" className="text-sm text-black hover:text-blue-400">
                                 <AiOutlineGlobal size={20} />
                             </Link>
                             <Link target='_blank' href="https://www.facebook.com/thuphamcohafood?mibextid=ZbWKwL" className="text-sm text-black hover:text-blue-400">
                                 <BsFacebook size={20} />
                             </Link>
-                        </div>
-
-
+                        </div> */}
                     </div>
                 </div>
                 {

@@ -10,8 +10,8 @@ function page({ params }) {
     return (
         <>
             <Hero data={filteredData} />
-            <Container data={filteredData} />
-            <Images data={filteredData} />
+            {/* <Container data={filteredData} /> */}
+            {/* <Images data={filteredData} /> */}
         </>
     )
 }
