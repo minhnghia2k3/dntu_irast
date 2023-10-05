@@ -12,8 +12,9 @@ import { io } from 'socket.io-client';
 import { useRouter } from 'next/navigation';
 function Main({ data }) {
     const router = useRouter();
+    const HOST = 'https://test-socket-api.vercel.app/';
     const handleNavigate = (path) => {
-        const socket = io('https://test-socket-api.vercel.app', {
+        const socket = io(HOST, {
             withCredentials: true,
         });
 
@@ -22,7 +23,7 @@ function Main({ data }) {
     };
 
     useEffect(() => {
-        const socket = io('https://test-socket-api.vercel.app');
+        const socket = io(HOST);
 
         socket.on('redirectTo', (path) => {
             router.push(path); // Điều hướng đến trang được chỉ định

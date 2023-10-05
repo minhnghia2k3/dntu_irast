@@ -11,8 +11,9 @@ function Header() {
     const [position, setPosition] = useState(0);
     const [isConnecting, setIsConnecting] = useState(false);
     const router = useRouter();
+    const HOST = 'https://test-socket-api.vercel.app/'
     useEffect(() => {
-        const newSocket = io('https://test-socket-api.vercel.app', {
+        const newSocket = io(HOST, {
             withCredentials: true,
         });
 
