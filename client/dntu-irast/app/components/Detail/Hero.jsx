@@ -8,7 +8,7 @@ import { GoMute, GoUnmute } from 'react-icons/go'
 import { FiPlay, FiPause } from 'react-icons/fi'
 function Hero({ data: { id, name, contact, address, logo, videoUrl, websiteUrl } }) {
     const [isPlaySound, setIsPlaySound] = useState(false)
-    const [isPlaying, setIsPlaying] = useState(false)
+    const [isPlaying, setIsPlaying] = useState(true)
     const videoRef = useRef(null)
 
     useEffect(() => {
@@ -22,7 +22,7 @@ function Hero({ data: { id, name, contact, address, logo, videoUrl, websiteUrl }
         // Change isPlaying
         setIsPlaying(!isPlaying)
         const video = videoRef.current
-        if (video.paused) {
+        if (!isPlaying) {
             video.play()
         } else {
             video.pause()
@@ -32,7 +32,7 @@ function Hero({ data: { id, name, contact, address, logo, videoUrl, websiteUrl }
     const handlePlaySound = () => {
         // Change playsound
         const video = videoRef.current
-        if (video.muted) {
+        if (!isPlaySound) {
             video.muted = false // Unmute
         } else {
             video.muted = true
@@ -47,13 +47,13 @@ function Hero({ data: { id, name, contact, address, logo, videoUrl, websiteUrl }
                     {
                         !isPlaying ?
                             (
-                                <FiPause
+                                <FiPlay
                                     size={30}
                                     onClick={handlePlayVideo}
                                     className="cursor-pointer text-red-primary" />
                             ) :
                             (
-                                <FiPlay
+                                <FiPause
                                     size={30}
                                     onClick={handlePlayVideo}
                                     className="cursor-pointer text-red-primary" />
