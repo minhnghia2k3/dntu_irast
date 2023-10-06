@@ -1,6 +1,5 @@
 const express = require('express') // Import express
 const { createServer } = require('http');
-const { emit } = require('process');
 const { Server } = require("socket.io");
 
 const app = express() // Initialize express
@@ -42,9 +41,16 @@ io.on('connection', socket => {
         console.log('Đã gửi tín hiệu tới room tivi')
     }
 
+
+
     socket.on('JoinTivi', () => {
         socket.join('Tivi')
         console.log('join tivi')
+    })
+
+    // Redirect in Main
+    socket.on('RedirectToPath', data => {
+        socket.to('Tivi').emit('redirect', data)
     })
     // Listen when user A click connect
     socket.on('connectToB', () => {

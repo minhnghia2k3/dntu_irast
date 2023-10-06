@@ -16,11 +16,21 @@ function Header() {
         setStatus(window.localStorage.getItem('status') === 'logged')
         const newSocket = io(HOST, {
             withCredentials: true,
+            extraHeaders: {
+                // Kiểm tra đã đăng nhập hay chưa
+                'logged' : localStorage.getItem('status'),
+                // Cập nhật path name hiện tại của socket
+                'pathName' : window.location.pathname
+            }
         });
+
         newSocket.on('connect', () => {
             console.log('Đã kết nối đến máy chủ')
         });
-        // Check login
+        
+        // Kiểm tra user đã loggin hay chưa
+        // Tại vì set giá trị mặc định cho status là false
+        // Nên cần đoạn code này để kiểm tra
         const interval = setInterval(() => {
             const localStorageStatus = localStorage.getItem('status');
             if (localStorageStatus === 'logged') {
@@ -30,6 +40,22 @@ function Header() {
             }
         }, 1000);
 
+        // Nhận tín hiệu tham gia room tivi
+        // Các đường dẫn tham gia Tivi
+        // 1: domain/tivi : Homepage
+        // 2: domain/detail/video/id:?device=tivi Video page
+        if(window.location.href.includes('tivi')){
+            newSocket.emit('JoinTivi')
+            console.log('đây là tivi')
+        }
+        newSocket.on('redirect', (data) => {
+            console.log('đã nhận diều hướng')
+            if(data === '/'){
+                router.push('/tivi');
+            }else{
+                router.push(data + '?device=tivi')
+            }
+        })
         return () => clearInterval(interval);
     }, []);
 

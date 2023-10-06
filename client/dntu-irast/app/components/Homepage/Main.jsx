@@ -16,10 +16,19 @@ function Main({ data }) {
     const handleNavigate = (path) => {
         const socket = io(HOST, {
             withCredentials: true,
+            extraHeaders: {
+                // Kiểm tra đã đăng nhập hay chưa
+                'logged' : localStorage.getItem('status'),
+                // Cập nhật path name hiện tại của socket
+                'pathName' : window.location.pathname
+            }
         });
 
         // Gửi yêu cầu định tuyến bằng Socket.io khi người dùng click
-        socket.emit('navigateTo', path);
+        if(localStorage.getItem('status') === 'logged'){
+            socket.emit('RedirectToPath', path)
+        }
+
     };
 
     useEffect(() => {
