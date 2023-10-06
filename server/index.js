@@ -1,10 +1,12 @@
 const express = require('express') // Import express
-const { createServer } = require('http')
+const { createServer } = require('http');
+const { emit } = require('process');
 const { Server } = require("socket.io");
 
 const app = express() // Initialize express
 const httpServer = createServer(app) // Create a server
-
+const username = 'thaymy'
+const password = '1234'
 
 const origin = "http://localhost:3000"
 
@@ -17,12 +19,21 @@ const io = new Server(httpServer, {
 });
 // Listen for a connection
 io.on('connection', socket => {
-    console.log('User connected')
-
     /*NOTE:
     - socket. -> specific user
     - io. -> broadcast to all users*/
 
+    // Sign in
+    socket.on('connect', () => {
+        socket.emit('connect')
+    })
+    socket.on('signIn', (data) => {
+        if (data.username === username && data.password === password) {
+            socket.emit('Complete');
+        } else {
+            socket.emit('error')
+        }
+    })
     // Listen when user A click connect
     socket.on('connectToB', () => {
         console.log('User A click connect to B')
@@ -33,7 +44,7 @@ io.on('connection', socket => {
         // Listen when user A scroll
         socket.on('scrollTo', (position) => {
             // Emit broadcast to all user except user A
-            socket.broadcast.emit('scrollTo', position)
+            socket.broadcast.emit('scrollTo', position * 2)
         })
 
         // Lắng nghe sự kiện khi đường dẫn của user A thay đổi
@@ -62,5 +73,3 @@ app.get('/', (req, res) => {
 // Start the server
 const port = 8080
 httpServer.listen(port, () => console.log(`Listening on port ${port}`))
-
-
