@@ -5,19 +5,26 @@ import React, { useEffect, useRef, useState } from 'react'
 import { AiOutlineGlobal } from 'react-icons/ai'
 import { BsFacebook, BsFillPipFill } from 'react-icons/bs'
 import { GoMute, GoUnmute } from 'react-icons/go'
+import { MdFullscreen } from 'react-icons/md'
 import { FiPlay, FiPause } from 'react-icons/fi'
+import { useRouter } from 'next/navigation';
+import { motion } from 'framer-motion';
+
 function Hero({ data: { id, name, contact, address, logo, videoUrl, websiteUrl } }) {
+    const router = useRouter()
     const [isPlaySound, setIsPlaySound] = useState(false)
     const [isPlaying, setIsPlaying] = useState(true)
+    const [isPictureInPicture, setIsPictureInPicture] = useState(false)
     const videoRef = useRef(null)
 
-    useEffect(() => {
-        const video = videoRef.current
-        video?.addEventListener('loadeddata', () => {
-            video.play()
-        })
-    }, [videoRef !== null])
+    /* Handle Page transition */
+    const variants = {
+        initial: { opacity: 0 },
+        enter: { opacity: 1 },
+        exit: { opacity: 0 },
+    };
 
+    /* Handle Video Player */
     const handlePlayVideo = () => {
         // Change isPlaying
         setIsPlaying(!isPlaying)
@@ -40,17 +47,53 @@ function Hero({ data: { id, name, contact, address, logo, videoUrl, websiteUrl }
         setIsPlaySound(!isPlaySound)
     }
 
+    /* Handle picture in picture */
+    useEffect(() => {
+        const video = videoRef.current
+        video.addEventListener('leavepictureinpicture', () => {
+            setIsPictureInPicture(false)
+            router.push(`/detail/video/${id}`)
+        })
+        if (isPictureInPicture) {
+            router.push(`/detail/${id}`)
+        }
+        return () => {
+            video.removeEventListener('leavepictureinpicture', () => {
+                setIsPictureInPicture(false)
+                router.push(`/detail/video/${id}`)
+            })
+        }
+    }, [isPictureInPicture])
+
     const handlePictureInPicture = async () => {
         try {
             await videoRef.current.requestPictureInPicture();
+            setIsPictureInPicture(true)
         } catch (err) {
             console.log(err)
         }
     }
 
+    const handleFullScreen = () => {
+        const video = videoRef.current
+        if (video.requestFullscreen) {
+            video.requestFullscreen();
+        } else if (video.webkitRequestFullscreen) {
+            video.webkitRequestFullscreen();
+        } else if (video.msRequestFullscreen) {
+            video.msRequestFullscreen();
+        }
+    }
     return (
         <>
-            <div className="_video flex items-center justify-center relative w-full h-[220px] md:h-[calc(100vh-80px)] md:w-screen">
+            <motion.div
+                variants={variants}
+                initial="initial"
+                animate="enter"
+                exit="exit"
+                className="_video flex items-center justify-center relative w-full h-[220px] md:h-[calc(100vh-80px)] md:w-screen"
+            >
+                {/* Group of buttons for controlling video */}
                 <div className="absolute bottom-5 left-8 z-50 flex items-center justify-center gap-4 text-white">
                     {
                         !isPlaying ?
@@ -82,42 +125,20 @@ function Hero({ data: { id, name, contact, address, logo, videoUrl, websiteUrl }
                     }
 
                 </div>
+                {/* Group of buttons for screen video */}
                 <div className="absolute bottom-5 right-8 z-50 flex items-center justify-center gap-4 text-white">
-                    {
-                        !isPlaying ?
-                            (
-                                <FiPlay
-                                    size={30}
-                                    onClick={handlePlayVideo}
-                                    className="cursor-pointer" />
-                            ) :
-                            (
-                                <FiPause
-                                    size={30}
-                                    onClick={handlePlayVideo}
-                                    className="cursor-pointer" />
-                            )
-
-                    }
-                    {!isPlaySound ? (
-                        <GoMute
-                            size={30}
-                            onClick={handlePlaySound}
+                    <div
+                        onClick={handlePictureInPicture}
+                        className={`p-2 cursor-pointer rounded-full shadow-md z-50`} >
+                        <BsFillPipFill
+                            size={25}
+                            onClick={handlePlayVideo}
                             className="cursor-pointer" />
-                    ) :
-                        (<GoUnmute
-                            size={30}
-                            onClick={handlePlaySound}
-                            className="cursor-pointer" />
-                        )
-                    }
-
-                </div>
-                <div
-                    onClick={handlePictureInPicture}
-                    className={`absolute top-2 right-2 p-2 cursor-pointer bg-white rounded-full shadow-md z-50`}
-                >
-                    <BsFillPipFill />
+                    </div>
+                    <MdFullscreen
+                        size={30}
+                        onClick={handleFullScreen}
+                        className="cursor-pointer" />
                 </div>
                 <div className="absolute top-0 left-0 opacity-30 bg-gradient-to-b from-black to-gray-500 z-10 w-full h-full"></div>
                 <div className="overflow-hidden w-[90%] lg:w-[80%] shadow-md h-[150px] lg:h-auto absolute top-[25px] flex flex-row items-start gap-2 lg:gap-8 z-20 bg-slate-50 rounded-[15px] px-2 lg:px-8 py-2 opacity-10 hover:opacity-100 transition-opacity ease-in-out duration-300">
@@ -133,13 +154,13 @@ function Hero({ data: { id, name, contact, address, logo, videoUrl, websiteUrl }
                         <p className="font-medium text-gray-400 text-xs lg:text-lg">{contact}</p>
                         <p className="font-medium text-gray-400 text-xs lg:text-lg">{address}</p>
                         {/* <div className="flex flex-row gap-2 items-center w-full h-full lg:py-2">
-                            <Link target='_blank' href="http://cohafood.vn" className="text-sm text-black hover:text-blue-400">
-                                <AiOutlineGlobal size={20} />
-                            </Link>
-                            <Link target='_blank' href="https://www.facebook.com/thuphamcohafood?mibextid=ZbWKwL" className="text-sm text-black hover:text-blue-400">
-                                <BsFacebook size={20} />
-                            </Link>
-                        </div> */}
+                                <Link target='_blank' href="http://cohafood.vn" className="text-sm text-black hover:text-blue-400">
+                                    <AiOutlineGlobal size={20} />
+                                </Link>
+                                <Link target='_blank' href="https://www.facebook.com/thuphamcohafood?mibextid=ZbWKwL" className="text-sm text-black hover:text-blue-400">
+                                    <BsFacebook size={20} />
+                                </Link>
+                            </div> */}
                     </div>
                 </div>
                 {
@@ -153,7 +174,7 @@ function Hero({ data: { id, name, contact, address, logo, videoUrl, websiteUrl }
                                 muted
                                 className="w-full h-full object-cover"
                             >
-                                <source src={`${videoUrl}`} type='video/mp4' />
+                                <source src={`/videos/sample_video.mp4`} type='video/mp4' />
                             </video>
                         ) :
                         (
@@ -165,9 +186,11 @@ function Hero({ data: { id, name, contact, address, logo, videoUrl, websiteUrl }
                             )
                         )
                 }
-            </div>
+            </motion.div>
         </>
     )
 }
-
 export default Hero
+
+
+

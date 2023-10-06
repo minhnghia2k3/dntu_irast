@@ -6,12 +6,12 @@ import React from 'react'
 import mockdata from '@/app/mockdata.json'
 
 function page({ params }) {
+    const [companyId] = params.companyId || [];
     const filteredData = mockdata.filter((data) => data.id.toString() === params.companyId.toString()).shift()
     return (
         <>
-            <Hero data={filteredData} />
-            {/* <Container data={filteredData} /> */}
-            {/* <Images data={filteredData} /> */}
+            <Container data={filteredData} />
+            <Images data={filteredData} />
         </>
     )
 }
