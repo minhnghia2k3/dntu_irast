@@ -44,7 +44,7 @@ function Video({ data: { id, name, contact, address, logo, videoUrl, websiteUrl 
     /* Handle picture in picture */
     useEffect(() => {
         const video = videoRef.current
-        video.addEventListener('leavepictureinpicture', () => {
+        video?.addEventListener('leavepictureinpicture', () => {
             setIsPictureInPicture(false)
             router.push(`/detail/video/${id}`)
         })
@@ -52,12 +52,12 @@ function Video({ data: { id, name, contact, address, logo, videoUrl, websiteUrl 
             router.push(`/detail/${id}`)
         }
         return () => {
-            video.removeEventListener('leavepictureinpicture', () => {
+            video?.removeEventListener('leavepictureinpicture', () => {
                 setIsPictureInPicture(false)
                 router.push(`/detail/video/${id}`)
             })
         }
-    }, [isPictureInPicture])
+    }, [isPictureInPicture, videoRef])
 
     const handlePictureInPicture = async () => {
         try {
