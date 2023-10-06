@@ -5,79 +5,39 @@ import React from 'react'
 import { useEffect, useState } from 'react';
 import io from 'socket.io-client';
 import { useRouter } from 'next/navigation';
+import { BsGearWideConnected } from 'react-icons/bs';
 
 function Header() {
-    const [socket, setSocket] = useState(null);
-    const [position, setPosition] = useState(0);
-    const [isConnecting, setIsConnecting] = useState(false);
+    const [status, setStatus] = useState(false)
     const router = useRouter();
     const HOST = 'http://localhost:8080'
+
     useEffect(() => {
+        setStatus(window.localStorage.getItem('status') === 'logged')
         const newSocket = io(HOST, {
             withCredentials: true,
         });
-
         newSocket.on('connect', () => {
-            console.log('Đã kết nối đến máy chủ');
+            console.log('Đã kết nối đến máy chủ')
         });
+        // Check login
+        const interval = setInterval(() => {
+            const localStorageStatus = localStorage.getItem('status');
+            if (localStorageStatus === 'logged') {
+                setStatus(true);
+            } else {
+                setStatus(false);
+            }
+        }, 1000);
 
-        newSocket.on('requestConnection', (requesterSocketId) => {
-            console.log('Máy khách B đã nhận yêu cầu kết nối từ máy khách A');
-            // Gửi sự kiện đến máy chủ để xác nhận kết nối
-            newSocket.emit('confirmConnection', requesterSocketId);
-        });
-
-        newSocket.on('scrollTo', (newPosition) => {
-            console.log(`Đã lướt đến vị trí ${newPosition}`);
-            // Cập nhật vị trí cuộn của máy khách B khi máy khách A lướt
-            setPosition(newPosition);
-            // Tự động cuộn đến vị trí mới
-            window.scrollTo(0, newPosition);
-        });
-
-        newSocket.on('redirectTo', (path) => {
-            router?.push(path); // Điều hướng đến trang được chỉ định
-        });
-        setSocket(newSocket);
-
-        return () => {
-            newSocket.disconnect();
-        };
+        return () => clearInterval(interval);
     }, []);
 
-    // Xử lý sự kiện cuộn trang của người dùng A
-    useEffect(() => {
-        const handleScroll = () => {
-            const newPosition = window.scrollY;
-            // Gửi sự kiện đến máy chủ để thông báo vị trí lướt của máy khách A
-            socket.emit('scrollTo', newPosition);
-        };
-
-        // Đăng ký sự kiện cuộn trang
-        window.addEventListener('scroll', handleScroll);
-
-        return () => {
-            // Hủy đăng ký sự kiện cuộn trang khi component unmount
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, [socket]);
-
-    const handleConnectToB = () => {
-        // Gửi yêu cầu kết nối đến máy khách B
-        socket.emit('connectToB');
-        setIsConnecting(true);
-        alert('Đã gửi yêu cầu kết nối đến máy khách B')
+    const Login = () => {
+        router.push('/login')
     };
-    const handleDisconnectToB = () => {
-        socket.disconnect();
-        setIsConnecting(false);
-        alert('Đã ngắt kết nối đến máy khách B')
-    }
-
-    const handleNavigate = (path) => {
-        // Gửi yêu cầu định tuyến bằng Socket.io khi người dùng click
-        socket.emit('navigateTo', path);
-
+    const Logout = () => {
+        router.push('/logout')
     }
     return (
         <header className="relative w-screen h-[80px] z-2 bg-white drop-shadow z-50 grid grid-cols-3 items-center">
@@ -91,20 +51,22 @@ function Header() {
             </Link>
             <div className="col-span-1 flex items-center justify-end px-4 gap-4 h-[80px]">
                 {
-                    !isConnecting ?
+                    !status ?
                         (
-                            <button onClick={handleConnectToB} className="flex items-center justify-center text-blue-400 underline hover:text-red-primary">
-                                <p className="line-clamp-1">Kết nối đến máy khách B</p>
+                            <button onClick={Login} className="flex items-center justify-center text-black underline hover:text-blue-600">
+                                {/* <BsGearWideConnected size={20}/> */}
+                                Bạn chưa đăng nhập
                             </button>
                         ) :
                         (
-                            <button onClick={handleDisconnectToB} className="flex items-center justify-center text-blue-400 underline hover:text-red-primary">
-                                <p className="line-clamp-1">Ngắt kết nối</p></button>
+                            <button onClick={Logout} className="flex items-center justify-center text-blue-400 underline hover:text-red-primary">
+                                {/* <BsGearWideConnected size={20}/> */}
+                                Bạn đã đăng nhập
+                            </button>
                         )
                 }
             </div>
         </header >
     )
 }
-
 export default Header
