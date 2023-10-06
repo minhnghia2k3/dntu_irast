@@ -22,8 +22,8 @@ io.on('connection', socket => {
     /*NOTE:
     - socket. -> specific user
     - io. -> broadcast to all users*/
-
     // Sign in
+    console.log(socket.handshake.headers.pathname)
     socket.on('connect', () => {
         socket.emit('connect')
     })
@@ -33,6 +33,18 @@ io.on('connection', socket => {
         } else {
             socket.emit('error')
         }
+    })
+
+    // Gửi tín hiệu tới tất cả các 
+    if(socket.handshake.headers.logged === 'logged'){
+        console.log('Hello world, Welcome back')
+        socket.to('Tivi').emit('redirect', (socket.handshake.headers.pathname))
+        console.log('Đã gửi tín hiệu tới room tivi')
+    }
+
+    socket.on('JoinTivi', () => {
+        socket.join('Tivi')
+        console.log('join tivi')
     })
     // Listen when user A click connect
     socket.on('connectToB', () => {
