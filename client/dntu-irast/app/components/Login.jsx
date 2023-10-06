@@ -18,7 +18,6 @@ const Login = () => {
         newSocket.on('connect', () => {
             console.log('Đã kết nối đến máy chủ');
         });
-
         newSocket.on('Complete', () => {
             window.localStorage.setItem('status', 'logged')
             route?.push('/')
