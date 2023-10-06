@@ -79,7 +79,7 @@ function Main({ data }) {
                             <SwiperSlide key={index} className="main-card !py-2">
                                 <Link
                                     onClick={() => handleNavigate(`detail/${item.id}`)}
-                                    href={`detail/${item.id}`}
+                                    href={`detail/video/${item.id}`}
                                     className="card flex flex-col items-center justify-start text-center w-[300px] h-[400px] md:w-[350px] md:h-[400px] 2xl:w-[500px] 2xl:h-[600px] hover:text-[#F7666D] bg-white border-gray-200 rounded-[15px] shadow px-4 py-2 gap-2 cursor-pointer">
                                     <div className="card-image relative w-[140px] h-[140px] 2xl:w-[220px] 2xl:h-[220px]  object-cover">
                                         <Image
