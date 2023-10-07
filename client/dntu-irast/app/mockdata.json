@@ -19,7 +19,7 @@
     {
         "id": 2,
         "name": "Công ty TNHH Xuất Nhập Khẩu Thảo Mộc Thái Vân",
-        "videoUrl": "https://www.youtube.com/embed/TIUhZdr5v2c",
+        "videoUrl": "",
         "logo": "/logo/thaivan_logo.png",
         "contact": "Ms.Tina Hạnh Nguyễn 0938 105 379",
         "address": "",
@@ -28,7 +28,7 @@
     {
         "id": 3,
         "name": "Công ty TNHH-TM Hà Duy Minh",
-        "videoUrl": "https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2F100042182052278%2Fvideos%2F713768739153980%2F&show_text=false&width=560&t=0",
+        "videoUrl": "",
         "logo": "/logo/haduyminh_logo.png",
         "contact": "Ms.Lương 0902377511",
         "address": "",
@@ -37,7 +37,7 @@
     {
         "id": 4,
         "name": "HTX NN An Hòa Hưng",
-        "videoUrl": "https://www.youtube.com/embed/lHrEuKVFuJQ",
+        "videoUrl": "",
         "logo": "/logo/anhoahung_logo.jpg",
         "contact": "Ms.C Linh 0906272303",
         "address": "",
@@ -46,7 +46,7 @@
     {
         "id": 5,
         "name": "Công ty TNHH Nông nghiệp công nghệ cao Việt Nam",
-        "videoUrl": "https://www.youtube.com/embed/gNylNljaGtk",
+        "videoUrl": "",
         "logo": "/logo/nong_nghiep_logo.png",
         "contact": "Mr.Anh Khoa 0915 915 934",
         "address": "",
@@ -55,7 +55,7 @@
     {
         "id": 6,
         "name": "Công ty TNHH TM SX Thuận Hương",
-        "videoUrl": "https://www.youtube.com/embed/deHMIfz0Iso",
+        "videoUrl": "",
         "logo": "/logo/thuan_huong_logo.png",
         "contact": "Ms.Hương 0908387338",
         "address": "",
@@ -64,7 +64,7 @@
     {
         "id": 7,
         "name": "Tương Việt Hoa Sen",
-        "videoUrl": "https://www.youtube.com/embed/93A8MATPt2k",
+        "videoUrl": "",
         "logo": "/logo/hoa_sen_logo.png",
         "contact": "Hiếu 0976541841",
         "address": "",
@@ -82,7 +82,7 @@
     {
         "id": 9,
         "name": "Hợp Tác Xã Dịch Vụ Nông Nghiệp Trường Phát",
-        "videoUrl": "https://www.youtube.com/embed/qvuolBkqYpM",
+        "videoUrl": "",
         "logo": "/logo/truong_phat_logo.png",
         "contact": "Ms.Lệ 0919319717",
         "address": "Ấp Vĩnh Tuy,Xã Long Tân,Huyện Nhơn Trạch, Tỉnh Đồng Nai",
@@ -91,7 +91,7 @@
     {
         "id": 10,
         "name": "Công ty TNHH TMDV Vfarm",
-        "videoUrl": "https://www.youtube.com/embed/i9lGjzGWzxQ",
+        "videoUrl": "",
         "logo": "/logo/vfram_logo.jpg",
         "contact": "Ms.Cẩm Vân 0933200961",
         "address": "",
