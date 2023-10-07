@@ -70,7 +70,7 @@ export default function App({ data }) {
                                         <source src={item.videoUrl} type='video/mp4' />
                                     </video>
                                     {/* Card info */}
-                                    <Link href={`/detail/video/${item.id.toString()}`} className="flex flex-row items-center justify-start max-w-[800px] absolute overflow-hidden top-0 left-0 mx-4 my-2 px-4 py-2 gap-4 w-fit h-fit bg-slate-50 rounded-[15px] shadow-md hover:bg-white ease-in-out transition-all">
+                                    <a href={`/detail/video/${item.id.toString()}`} className="flex flex-row items-center justify-start max-w-[800px] absolute overflow-hidden top-0 left-0 mx-4 my-2 px-4 py-2 gap-4 w-fit h-fit bg-slate-50 rounded-[15px] shadow-md hover:bg-white ease-in-out transition-all">
                                         <div className="!w-[70px] !h-[70px] relative rounded-full">
                                             <Image
                                                 src={item.logo}
@@ -89,7 +89,7 @@ export default function App({ data }) {
                                                 <span className="shadow inline-block bg-red-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#winter</span>
                                             </div>
                                         </div>
-                                    </Link>
+                                    </a>
 
                                 </div>
                             </SwiperSlide>
