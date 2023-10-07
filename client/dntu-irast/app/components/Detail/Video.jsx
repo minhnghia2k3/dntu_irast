@@ -136,27 +136,27 @@ function Video({ data: { id, name, contact, address, logo, videoUrl, websiteUrl 
                 {/* Company info */}
                 <InfoCard navUrl={`detail/${id}`} logo={logo} companyName={name} contact={contact} address={address} />
                 {
-                    id === 1 ?
-                        (
-                            <video
-                                ref={videoRef}
-                                controls={false}
-                                autoPlay
-                                loop
-                                muted
-                                className="w-full h-full object-cover"
-                            >
-                                <source src={videoUrl} type='video/mp4' />
-                            </video>
-                        ) :
-                        (
-                            id !== 8 && (
-                                <iframe
-                                    className="w-full h-full object-cover"
-                                    src={`${videoUrl}?autoplay=1&mute=1&loop=1&controls=0`}
-                                    frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                            )
-                        )
+                    videoUrl ? (
+                        <video
+                            ref={videoRef}
+                            controls={false}
+                            autoPlay
+                            loop
+                            muted
+                            className="w-full h-full object-cover"
+                        >
+                            <source src={videoUrl} type='video/mp4' />
+                        </video>
+                    ) : (
+                        <div className="w-full h-full relative rounded-[15px] shadow-md">
+                            <Image
+                                src={`/banner.jpg`}
+                                alt={name}
+                                layout="fill"
+                                objectFit="cover"
+                                className="rounded-[15px]" />
+                        </div>
+                    )
                 }
             </motion.div>
         </>
