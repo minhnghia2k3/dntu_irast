@@ -5,8 +5,8 @@ import React from 'react'
 import { useEffect, useState } from 'react';
 import io from 'socket.io-client';
 import { useRouter } from 'next/navigation';
-import { BsGearWideConnected } from 'react-icons/bs';
-
+import { LuSettings } from 'react-icons/lu'
+import { IoLogOutOutline } from 'react-icons/io5'
 function Header() {
     const [status, setStatus] = useState(false)
     const router = useRouter();
@@ -18,16 +18,16 @@ function Header() {
             withCredentials: true,
             extraHeaders: {
                 // Kiểm tra đã đăng nhập hay chưa
-                'logged' : localStorage.getItem('status'),
+                'logged': localStorage.getItem('status'),
                 // Cập nhật path name hiện tại của socket
-                'pathName' : window.location.pathname
+                'pathName': window.location.pathname
             }
         });
 
         newSocket.on('connect', () => {
             console.log('Đã kết nối đến máy chủ')
         });
-        
+
         // Kiểm tra user đã loggin hay chưa
         // Tại vì set giá trị mặc định cho status là false
         // Nên cần đoạn code này để kiểm tra
@@ -44,15 +44,15 @@ function Header() {
         // Các đường dẫn tham gia Tivi
         // 1: domain/tivi : Homepage
         // 2: domain/detail/video/id:?device=tivi Video page
-        if(window.location.href.includes('tivi')){
+        if (window.location.href.includes('tivi')) {
             newSocket.emit('JoinTivi')
             console.log('đây là tivi')
         }
         newSocket.on('redirect', (data) => {
             console.log('đã nhận diều hướng')
-            if(data === '/'){
+            if (data === '/') {
                 router.push('/tivi');
-            }else{
+            } else {
                 router.push(data + '?device=tivi')
             }
         })
@@ -80,14 +80,12 @@ function Header() {
                     !status ?
                         (
                             <button onClick={Login} className="flex items-center justify-center text-black underline hover:text-blue-600">
-                                {/* <BsGearWideConnected size={20}/> */}
-                                Bạn chưa đăng nhập
+                                <LuSettings size={20} />
                             </button>
                         ) :
                         (
                             <button onClick={Logout} className="flex items-center justify-center text-blue-400 underline hover:text-red-primary">
-                                {/* <BsGearWideConnected size={20}/> */}
-                                Bạn đã đăng nhập
+                                <IoLogOutOutline size={20} />
                             </button>
                         )
                 }
