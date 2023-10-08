@@ -11,7 +11,7 @@ import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import InfoCard from '../InfoCard';
 
-function Video({ data: { id, name, contact, address, logo, videoUrl, websiteUrl } }) {
+function Video({ data: { id, name, videoUrl }, data }) {
     const router = useRouter()
     const [isPlaySound, setIsPlaySound] = useState(false)
     const [isPlaying, setIsPlaying] = useState(true)
@@ -84,7 +84,7 @@ function Video({ data: { id, name, contact, address, logo, videoUrl, websiteUrl 
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
-                className="_video flex items-center justify-center relative w-full h-[220px] md:h-[calc(100vh-80px)] md:w-screen"
+                className="_video flex items-center justify-center relative w-full h-screen md:h-[calc(100vh-80px)] md:w-screen"
             >
                 {/* Group of buttons for controlling video */}
                 <div className="absolute bottom-5 left-8 z-50 flex items-center justify-center gap-4 text-white">
@@ -134,7 +134,7 @@ function Video({ data: { id, name, contact, address, logo, videoUrl, websiteUrl 
                         className="cursor-pointer" />
                 </div>
                 {/* Company info */}
-                <InfoCard navUrl={`detail/${id}`} logo={logo} companyName={name} contact={contact} address={address} />
+                <InfoCard data={data} navUrl={`/detail/${id}`} showTag={false} />
                 {
                     videoUrl ? (
                         <video
@@ -143,7 +143,7 @@ function Video({ data: { id, name, contact, address, logo, videoUrl, websiteUrl 
                             autoPlay
                             loop
                             muted
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-fit md:object-cover"
                         >
                             <source src={videoUrl} type='video/mp4' />
                         </video>

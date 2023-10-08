@@ -7,7 +7,6 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
-const font_style = Dancing_Script({ subsets: ['latin'] })
 
 function Images({ data: { images } }) {
     return (
@@ -15,24 +14,24 @@ function Images({ data: { images } }) {
             {images && images?.map((item, index) => (
                 <div key={index} className={`flex flex-col items-center justify-center`}>
                     <div className={`flex ${index % 2 === 0 ? 'flex-row-reverse text-end' : 'flex-row text-start'} items-center justify-center w-full h-full bg-white rounded-[15px] px-2 py-2 shadow gap-4`}>
-                        <div className="w-[800px] h-[150px] md:-[1000px] md:h-[300px] relative">
+                        <div className="w-[70%] h-[150px] md:h-[300px] lg:h-[500px] relative ">
                             <Image
                                 src={item}
                                 fill
-                                className="cursor-pointer rounded-[.5rem] shadow hover:shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105"
+                                className="cursor-pointer rounded-[.5rem] shadow opacity-90 hover:opacity-100 transition-opacity duration-300"
                             />
                         </div>
 
-                        <p className={`${font_style.className} text-lg md:text-2xl font-normal`}>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta delectus, nobis saepe totam eum ratione libero, quo nesciunt illum vel qui, unde harum dolorem eligendi modi aliquid debitis sit quaerat.
-                        </p>
+                        <div className={`text-sm md:text-xl font-normal w-[30%] max-h-[150px] line-clamp-4`}>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta delectus, nobis saepe totam eum ratione libero, quo nesciunt illum vel qui, unde harum dolorem eligendi modi aliquid debitis sit quaerat.</p>
+                        </div>
                     </div>
                 </div >
             ))
             }
             <div className="flex flex-col items-center justify-center bg-white rounded-[15px] shadow py-4">
-                <p className={`${font_style.className} text-red-primary text-xl md:text-2xl font-normal`}>
-                    San phẩm của chúng tôi
+                <p className={`text-red-primary text-xl md:text-2xl font-normal`}>
+                    Sản phẩm của chúng tôi
                 </p>
                 <Swiper
                     slidesPerView={3}
@@ -57,19 +56,19 @@ function Images({ data: { images } }) {
                     }}
                     className="w-full h-full">
                     <SwiperSlide>
-                        <Image src={'/banner.jpg'} alt="" width={300} height={300} className="rounded-[1rem]" />
+                        <Image src={'/banner.jpg'} alt="" width={1000} height={200} className="rounded-[1rem] p-2" />
                     </SwiperSlide>
                     <SwiperSlide>
-                        <Image src={'/banner.jpg'} alt="" width={300} height={300} className="rounded-[1rem]" />
+                        <Image src={'/banner.jpg'} alt="" width={1000} height={200} className="rounded-[1rem] p-2" />
                     </SwiperSlide>
                     <SwiperSlide>
-                        <Image src={'/banner.jpg'} alt="" width={300} height={300} className="rounded-[1rem]" />
+                        <Image src={'/banner.jpg'} alt="" width={1000} height={200} className="rounded-[1rem] p-2" />
                     </SwiperSlide>
                     <SwiperSlide>
-                        <Image src={'/banner.jpg'} alt="" width={300} height={300} className="rounded-[1rem]" />
+                        <Image src={'/banner.jpg'} alt="" width={1000} height={200} className="rounded-[1rem] p-2" />
                     </SwiperSlide>
                     <SwiperSlide>
-                        <Image src={'/banner.jpg'} alt="" width={300} height={300} className="rounded-[1rem]" />
+                        <Image src={'/banner.jpg'} alt="" width={1000} height={200} className="rounded-[1rem] p-2" />
                     </SwiperSlide>
                 </Swiper>
             </div>

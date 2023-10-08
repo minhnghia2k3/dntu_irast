@@ -19,70 +19,70 @@
     {
         "id": 2,
         "name": "Công ty TNHH Xuất Nhập Khẩu Thảo Mộc Thái Vân",
-        "videoUrl": "",
+        "videoUrl": null,
         "logo": "/logo/thaivan_logo.png",
         "contact": "Ms.Tina Hạnh Nguyễn 0938 105 379",
-        "address": "",
+        "address": null,
         "qrCode": "/images/thai_van/thai_van_qrCode.png"
     },
     {
         "id": 3,
         "name": "Công ty TNHH-TM Hà Duy Minh",
-        "videoUrl": "",
+        "videoUrl": null,
         "logo": "/logo/haduyminh_logo.png",
         "contact": "Ms.Lương 0902377511",
-        "address": "",
+        "address": null,
         "qrCode": "/images/ha_duy_minh/ha_duy_minh_qrCode.png"
     },
     {
         "id": 4,
         "name": "HTX NN An Hòa Hưng",
-        "videoUrl": "",
+        "videoUrl": null,
         "logo": "/logo/anhoahung_logo.jpg",
         "contact": "Ms.C Linh 0906272303",
-        "address": "",
+        "address": null,
         "qrCode": "/images/an_hoa_hung/an_hoa_hung_qrCode.png"
     },
     {
         "id": 5,
         "name": "Công ty TNHH Nông nghiệp công nghệ cao Việt Nam",
-        "videoUrl": "",
+        "videoUrl": null,
         "logo": "/logo/nong_nghiep_logo.png",
         "contact": "Mr.Anh Khoa 0915 915 934",
-        "address": "",
+        "address": null,
         "qrCode": "/images/nong_nghiep/nong_nghiep_qrCode.png"
     },
     {
         "id": 6,
         "name": "Công ty TNHH TM SX Thuận Hương",
-        "videoUrl": "",
+        "videoUrl": null,
         "logo": "/logo/thuan_huong_logo.png",
         "contact": "Ms.Hương 0908387338",
-        "address": "",
+        "address": null,
         "qrCode": "/images/thuan_huong/thuan_huong_qrCode.png"
     },
     {
         "id": 7,
         "name": "Tương Việt Hoa Sen",
-        "videoUrl": "",
+        "videoUrl": null,
         "logo": "/logo/hoa_sen_logo.png",
         "contact": "Hiếu 0976541841",
-        "address": "",
+        "address": null,
         "qrCode": "/images/hoa_sen/hoa_sen_qrCode.png"
     },
     {
         "id": 8,
         "name": "Công Ty TNHH Thực Phẩm Trí Kiên",
-        "videoUrl": "",
+        "videoUrl": null,
         "logo": "/logo/tri_kien_logo.png",
         "contact": "Dương Ngọc Văn Long - Email: long.duong@trikienfood.vn - HP: 0937778490 - Website: www.trikienfood.vn",
-        "address": "",
+        "address": null,
         "qrCode": "/images/tri_kien/tri_kien_qrCode.png"
     },
     {
         "id": 9,
         "name": "Hợp Tác Xã Dịch Vụ Nông Nghiệp Trường Phát",
-        "videoUrl": "",
+        "videoUrl": null,
         "logo": "/logo/truong_phat_logo.png",
         "contact": "Ms.Lệ 0919319717",
         "address": "Ấp Vĩnh Tuy,Xã Long Tân,Huyện Nhơn Trạch, Tỉnh Đồng Nai",
@@ -91,10 +91,10 @@
     {
         "id": 10,
         "name": "Công ty TNHH TMDV Vfarm",
-        "videoUrl": "",
+        "videoUrl": null,
         "logo": "/logo/vfram_logo.jpg",
         "contact": "Ms.Cẩm Vân 0933200961",
-        "address": "",
+        "address": null,
         "qrCode": "/images/vfram/vfram_qrCode.png"
     }
 ]
