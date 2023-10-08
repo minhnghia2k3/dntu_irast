@@ -30,7 +30,6 @@ const Login = () => {
 
     function signIn(e) {
         e.preventDefault();
-        alert('Gửi tới server')
         socket.emit('signIn', {
             username: username,
             password: password

@@ -60,6 +60,7 @@ export default function App({ data }) {
                             <SwiperSlide key={index}>
                                 <div className="w-full h-full relative">
                                     {/* Background Video */}
+
                                     {
                                         item.videoUrl ? (
                                             <video
