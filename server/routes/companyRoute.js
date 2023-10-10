@@ -1,8 +1,8 @@
-const { Router } = require('express')
-const { getAllCompanies } = require('../controllers/companyController')
+import { Router } from "express";
+import { getAllCompanies } from '../controllers/companyController.js';
 
 const router = Router();
 
 router.get('/companies', getAllCompanies);
 
-module.exports = router;
+export default router;

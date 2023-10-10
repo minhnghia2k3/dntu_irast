@@ -1,15 +1,17 @@
-const CompanyModel = require('../models/companyModel');
+import db from '../models/companyModel.js'
 
-const companyController = {
-    getAllCompanies: (req, res) => {
-        CompanyModel.getAllCompanies((err, company) => {
+export const getAllCompanies = async (req, res, err) => {
+    try {
+        const query = `SELECT * FROM companies`
+        const companies = await db.all(query, [], (err, rows) => {
             if (err) {
-                console.log('Error getting all companies:', err)
-                res.status(500).send('Error getting all companies')
+                console.log(err.message)
+                res.status(500).json({ error: err.message })
             }
-            res.status(200).json(company)
+            res.status(200).json(rows)
         })
+        return companies
+    } catch (err) {
+        next(err);
     }
 }
-
-module.exports = companyController;

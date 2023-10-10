@@ -1,8 +1,9 @@
-const express = require('express') // Import express
-const { createServer } = require('http');
-const { Server } = require("socket.io");
-require('dotenv').config()
-const companyRoutes = require('./routes/companyRoute')
+import express from 'express';
+import { createServer } from 'http';
+import { Server } from 'socket.io';
+import dotenv from 'dotenv';
+import companyRoutes from './routes/companyRoute.js';
+dotenv.config();
 
 const app = express() // Initialize express
 const httpServer = createServer(app) // Create a server
