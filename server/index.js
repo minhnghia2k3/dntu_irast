@@ -1,14 +1,13 @@
 const express = require('express') // Import express
 const { createServer } = require('http');
 const { Server } = require("socket.io");
+require('dotenv').config()
+const companyRoutes = require('./routes/companyRoute')
 
 const app = express() // Initialize express
 const httpServer = createServer(app) // Create a server
-const username = 'thaymy'
-const password = '1234'
 
 const origin = "http://localhost:3000"
-
 
 const io = new Server(httpServer, {
     cors: {
@@ -27,7 +26,7 @@ io.on('connection', socket => {
         socket.emit('connect')
     })
     socket.on('signIn', (data) => {
-        if (data.username === username && data.password === password) {
+        if (data.username === process.env.ACCOUNT && data.password === password) {
             socket.emit('Complete');
         } else {
             socket.emit('error')
@@ -35,7 +34,7 @@ io.on('connection', socket => {
     })
 
     // Gửi tín hiệu tới tất cả các 
-    if(socket.handshake.headers.logged === 'logged'){
+    if (socket.handshake.headers.logged === 'logged') {
         console.log('Hello world, Welcome back')
         socket.to('Tivi').emit('redirect', (socket.handshake.headers.pathname))
         console.log('Đã gửi tín hiệu tới room tivi')
@@ -83,10 +82,11 @@ io.on('connection', socket => {
     })
 })
 
-// Using route
+// Routing
 app.get('/', (req, res) => {
-    res.send('Hello World')
+    res.send('Hello world')
 })
+app.use('/api/companies', companyRoutes);
 
 // Start the server
 const port = 8080
