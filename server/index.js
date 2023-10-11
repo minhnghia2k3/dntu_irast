@@ -7,6 +7,9 @@ dotenv.config();
 
 const app = express() // Initialize express
 const httpServer = createServer(app) // Create a server
+// form-data parser
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 const origin = "http://localhost:3000"
 
