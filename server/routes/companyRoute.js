@@ -17,7 +17,7 @@ const upload = multer({ storage: storage });
 
 router.get('/companies', getAllCompanies);
 router.post('/create-company', upload.fields([{ name: 'image_src', maxCount: 10 }, { name: 'video_src', maxCount: 10 }]), createCompany);
-router.put('/update-company', updateCompany)
+router.put('/update-company', upload.fields([{ name: 'image_src', maxCount: 10 }, { name: 'video_src', maxCount: 10 }]), updateCompany)
 router.put('/delete-company', softDeleteCompany); // default delete method
 router.delete('/hard-delete-company', hardDeleteCompany);
 

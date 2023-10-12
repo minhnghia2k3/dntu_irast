@@ -1,6 +1,5 @@
 import sqlite3 from "sqlite3";
 sqlite3.verbose();
-
 // Init DB
 const db = new sqlite3.Database('./db/Company.db', err =>
   err
@@ -19,7 +18,8 @@ db.serialize(() => {
         websiteURL TEXT,
         address TEXT,
         phone TEXT,
-        isDeleted BOOLEAN DEFAULT 0
+        isDeleted BOOLEAN DEFAULT 0,
+        createdAt DATETIME DEFAULT (DATETIME(CURRENT_TIMESTAMP, 'LOCALTIME'))
     )
   `);
 
