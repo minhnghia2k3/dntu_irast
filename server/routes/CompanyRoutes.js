@@ -2,7 +2,6 @@ import { Router } from "express";
 import { getAllCompanies, hardDeleteCompany, createCompany, softDeleteCompany, updateCompany } from '../controllers/CompanyController.js';
 import multer from 'multer';
 const router = Router();
-import path from 'path';
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, './uploads');

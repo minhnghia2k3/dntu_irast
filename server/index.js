@@ -2,7 +2,7 @@ import express from 'express';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import dotenv from 'dotenv';
-import companyRoutes from './routes/companyRoute.js';
+import companyRoutes from './routes/CompanyRoutes.js';
 dotenv.config();
 
 const app = express() // Initialize express
@@ -16,9 +16,10 @@ const origin = "http://localhost:3000"
 const io = new Server(httpServer, {
     cors: {
         origin: origin,
+        methods: ["GET", "POST"],
         credentials: true
     }
-});
+})
 // Listen for a connection
 io.on('connection', socket => {
     /*NOTE:
@@ -30,7 +31,7 @@ io.on('connection', socket => {
         socket.emit('connect')
     })
     socket.on('signIn', (data) => {
-        if (data.username === process.env.ACCOUNT && data.password === password) {
+        if (data.username === process.env.ACCOUNT && data.password === process.env.PASSWORD) {
             socket.emit('Complete');
         } else {
             socket.emit('error')
@@ -91,6 +92,7 @@ app.get('/', (req, res) => {
     res.send('Hello world')
 })
 app.use('/api/companies', companyRoutes);
+app.use('/uploads', express.static('uploads'));
 
 // Start the server
 const port = 8080
