@@ -184,7 +184,7 @@ export const getAllCompanies = (req, res, next) => {
  * Parameters:
  * @body [company_name] - Required. The name of the company.
  * @body [description] - Optional. The description of the company.
- * @body [websiteUrl] - Optional. The website URL of the company.
+ * @body [websiteURL] - Optional. The website URL of the company.
  * @body [phone] - Optional. The phone number of the company.
  * @body [address] - Optional. The address of the company.
  * @body [image_src] - Optional. The image of the company.
@@ -201,7 +201,7 @@ export const getAllCompanies = (req, res, next) => {
  */
 export const createCompany = async (req, res, next) => {
     try {
-        const { company_name, description, websiteUrl, phone, address, image_titles, video_titles } = req.body;
+        const { company_name, description, websiteURL, phone, address, image_titles, video_titles } = req.body;
         if (!company_name) {
             res.status(400).json({ error: 'Missing company_name' });
             return;
@@ -214,7 +214,7 @@ export const createCompany = async (req, res, next) => {
         const insertVideo = `INSERT INTO videos (video_src, video_description, company_id)
         VALUES (?, ?, ?)`
         // Insert raw data into companies table
-        db.run(insertCompany, [company_name, description, websiteUrl, phone, address], function (err) {
+        db.run(insertCompany, [company_name, description, websiteURL, phone, address], function (err) {
             if (err) {
                 console.log(err.message)
                 res.status(500).json({ error: err.message })

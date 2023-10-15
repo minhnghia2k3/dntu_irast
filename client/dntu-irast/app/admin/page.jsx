@@ -1,6 +1,6 @@
 "use client";
 import React from 'react'
-import Admin from '../components/Admin';
+import Admin from '../components/Admin/Admin.jsx';
 function page() {
     return (
         <Admin />
