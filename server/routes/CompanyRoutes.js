@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getAllCompanies, hardDeleteCompany, createCompany, softDeleteCompany, updateCompany } from '../controllers/CompanyController.js';
+import { getAllCompanies, hardDeleteCompany, createCompany, softDeleteCompany, updateCompany, restoreCompany } from '../controllers/CompanyController.js';
 import multer from 'multer';
 const router = Router();
 const storage = multer.diskStorage({
@@ -18,6 +18,7 @@ router.get('/companies', getAllCompanies);
 router.post('/create-company', upload.fields([{ name: 'image_src', maxCount: 10 }, { name: 'video_src', maxCount: 10 }]), createCompany);
 router.put('/update-company', upload.fields([{ name: 'image_src', maxCount: 10 }, { name: 'video_src', maxCount: 10 }]), updateCompany)
 router.put('/delete-company', softDeleteCompany); // default delete method
+router.put('/restore-company', restoreCompany);
 router.delete('/hard-delete-company', hardDeleteCompany);
 
 export default router;

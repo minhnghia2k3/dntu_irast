@@ -6,12 +6,16 @@ import { FiMoreHorizontal } from 'react-icons/fi'
 import CreateCompany from './CreateCompany';
 import UpdateCompany from './UpdateCompany';
 import DeleteCompany from './DeleteCompany';
-import DropDown from './DropDown';
+import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@nextui-org/react";
+import RestoreCompany from './RestoreCompany';
+import PreviewCompany from './PreviewCompany';
 function Admin() {
     const [companies, setCompanies] = useState([]);
     const [isOpenAddModal, setIsOpenAddModal] = useState(false);
     const [isOpenEditModal, setIsOpenEditModal] = useState(false);
     const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
+    const [isOpenRestoreModal, setIsOpenRestoreModal] = useState(false);
+    const [isOpenPreviewModal, setIsOpenPreviewModal] = useState(false);
     const [selectedCompany, setSelectedCompany] = useState(null);
     // Handle toggle modal product
     const handleAddModal = () => {
@@ -182,13 +186,36 @@ function Admin() {
                                             </td>
                                             <td className={`px-4 py-3 ${company.isDeleted === 1 ? 'text-red-500' : 'text-green-500'}`}>{company.isDeleted === 1 ? 'Đã ẩn' : 'Hiển thị'}</td>
                                             <td className="px-4 py-3">{company.createdAt}</td>
-                                            <td className="px-4 py-3 w-fit" onClick={() => setSelectedCompany(company.company_id)}>
-                                                <DropDown
-                                                    isOpenEditModal={isOpenEditModal}
-                                                    setIsOpenEditModal={setIsOpenEditModal}
-                                                    isOpenDeleteModal={isOpenDeleteModal}
-                                                    setIsOpenDeleteModal={setIsOpenDeleteModal} />
+                                            <td className="px-4 py-3">
+                                                <Dropdown>
+                                                    <DropdownTrigger>
+                                                        <Button variant="bordered">
+                                                            <FiMoreHorizontal size={20} onClick={() => setSelectedCompany(company)} />
+                                                        </Button>
+                                                    </DropdownTrigger>
+                                                    <DropdownMenu aria-label="Static Actions" className="bg-gray-700 px-2 py-4 text-white w-40 rounded-sm">
+                                                        <DropdownItem onClick={() => setIsOpenEditModal(true)} key="edit" className="focus:outline-none hover:bg-gray-800 text-white">
+                                                            Chỉnh sửa
+                                                        </DropdownItem>
+                                                        <DropdownItem onClick={() => setIsOpenPreviewModal(true)} key="preview" className="focus:outline-none hover:bg-gray-800 text-white">
+                                                            Xem trước
+                                                        </DropdownItem>
+                                                        {
+                                                            company.isDeleted === 0 ?
+                                                                (
+                                                                    <DropdownItem onClick={() => setIsOpenDeleteModal(true)} key="delete" className="focus:outline-none hover:bg-gray-800 text-red-500" color="danger">
+                                                                        Xóa
+                                                                    </DropdownItem>
+                                                                ) :
+                                                                (
+                                                                    <DropdownItem onClick={() => setIsOpenRestoreModal(true)} key="delete" className="focus:outline-none hover:bg-gray-800 text-green-500" color="danger">
+                                                                        Khôi phục
+                                                                    </DropdownItem>
+                                                                )
+                                                        }
 
+                                                    </DropdownMenu>
+                                                </Dropdown>
                                             </td>
                                         </tr>
 
@@ -242,8 +269,10 @@ function Admin() {
             </section>
             {/* Create product Modal */}
             <CreateCompany isOpenModal={isOpenAddModal} setIsOpenModal={setIsOpenAddModal} />
-            <UpdateCompany isOpenEditModal={isOpenEditModal} setIsOpenEditModal={setIsOpenEditModal} />
-            <DeleteCompany companyId={selectedCompany} isOpenDeleteModal={isOpenDeleteModal} setIsOpenDeleteModal={setIsOpenDeleteModal} />
+            <UpdateCompany selectedCompany={selectedCompany} isOpenEditModal={isOpenEditModal} setIsOpenEditModal={setIsOpenEditModal} />
+            <PreviewCompany selectedCompany={selectedCompany} isOpenPreviewModal={isOpenPreviewModal} setIsOpenPreviewModal={setIsOpenPreviewModal} />
+            <DeleteCompany selectedCompany={selectedCompany} isOpenDeleteModal={isOpenDeleteModal} setIsOpenDeleteModal={setIsOpenDeleteModal} />
+            <RestoreCompany selectedCompany={selectedCompany} isOpenRestoreModal={isOpenRestoreModal} setIsOpenRestoreModal={setIsOpenRestoreModal} />
         </>
     )
 }

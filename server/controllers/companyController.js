@@ -413,6 +413,44 @@ export const softDeleteCompany = async (req, res, next) => {
 }
 
 /**
+ * PUT /api/companies/restore-company?company_id=14
+ * Purpose: restore a company by company_id
+ * Parameters:
+ * @query [company_id] - Required. The ID of the company to visible.
+ * @returns
+ * - Success:
+ *    - status: 200
+ *   - body: { message: 'Company deleted successfully' }
+ * - Error:
+ *   - status: 500
+ * - body: { error: 'error message' }
+ */
+export const restoreCompany = async (req, res, next) => {
+    try {
+        const { company_id } = req.query;
+        if (!company_id) {
+            return res.status(400).json({ error: 'Missing company_id' })
+        }
+        const query = `UPDATE companies
+                        SET isDeleted =0 
+                        WHERE company_id = ?`
+        db.run(query, [company_id], function (err) {
+            if (err) {
+                console.log(err.message)
+                return res.status(500).json({ error: err.message })
+            }
+            if (this.changes > 0) {
+                return res.status(200).json({
+                    message: 'Company visible successfully'
+                })
+            }
+        })
+    } catch (err) {
+        next(err)
+    }
+}
+
+/**
  * DELETE /api/companies/hard-delete-company?company_id=14
  * Purpose: Hard delete a company by company_id
  * Parameters:

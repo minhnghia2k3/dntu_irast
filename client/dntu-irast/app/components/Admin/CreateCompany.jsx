@@ -43,16 +43,7 @@ function CreateCompany({ isOpenModal, setIsOpenModal }) {
     };
     const handleSubmitForm = (e) => {
         // Upload to server
-        // e.preventDefault();
-        console.log('all data before submit: ',
-            companyName,
-            address,
-            phoneNumber,
-            websiteURL,
-            description,
-            images,
-            video)
-
+        e.preventDefault();
         const formData = new FormData();
         formData.append('company_name', companyName);
         formData.append('address', address);

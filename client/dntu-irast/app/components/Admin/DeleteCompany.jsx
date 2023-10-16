@@ -3,8 +3,17 @@ import { AiOutlineDelete } from 'react-icons/ai'
 import axios from 'axios'
 import { DELETE_COMPANY_ROUTE } from '@/utils/ApiRoutes'
 function DeleteCompany({ selectedCompany, isOpenDeleteModal, setIsOpenDeleteModal }) {
-    console.log('selectCompany: ', selectedCompany)
     const handleDelete = async () => {
+        try {
+            const res = await axios.put(`${DELETE_COMPANY_ROUTE}?company_id=${selectedCompany.company_id}`)
+            if (res.status === 200) {
+                setIsOpenDeleteModal(false)
+                window.location.reload()
+            }
+
+        } catch (err) {
+            console.log(err)
+        }
     }
     return (
         <>
