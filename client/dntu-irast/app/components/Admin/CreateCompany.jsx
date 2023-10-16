@@ -5,7 +5,7 @@ import { PiUploadSimpleBold } from 'react-icons/pi'
 import { IoIosRemove } from 'react-icons/io';
 
 
-function CreateCompany({ isOpenModal }) {
+function CreateCompany({ isOpenModal, setIsOpenModal }) {
     const [images, setImages] = useState([]);
     const [video, setVideo] = useState([]);
     const [companyName, setCompanyName] = useState(null);
@@ -83,7 +83,7 @@ function CreateCompany({ isOpenModal }) {
                                 <div className="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
                                     <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Thêm doanh nghiệp</h3>
                                     <button type="button" className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
-                                        <AiOutlineClose size={20} onClick={() => setIsOpenAddModal(false)} />
+                                        <AiOutlineClose size={20} onClick={() => setIsOpenModal(false)} />
                                         <span className="sr-only">Close modal</span>
                                     </button>
                                 </div>
