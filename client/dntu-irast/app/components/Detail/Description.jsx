@@ -2,10 +2,11 @@ import React from 'react'
 
 function Description({ data: { description } }) {
     return (
-        <div className='flex flex-col items-center justify-center w-full h-fit min-h-[100px] mt-8 bg-white rounded-[15px] shadow px-6 py-4 gap-4'>
-            <hr className="w-[80%] h-[5px] mx-8 bg-red-800"></hr>
+        <div className='overflow-x-hidden overflow-y-auto flex flex-col items-center justify-center h-fit min-h-[100px] max-h-[200px] mt-8 bg-white rounded-[15px] shadow px-2 gap-4'>
             {/* Description */}
-            <p className="flex items-center justify-center text-center md:max-w-[70%]">{description}</p>
+            <h1 className="text-xl sm:text-2xl font-semibold border-b border-red-primary">Giới thiệu</h1>
+            {/* <hr class="w-48 h-1 mx-auto my-4 bg-gray-100 border-0 rounded md:my-10 dark:bg-gray-700" /> */}
+            <p className="text-center">{description}</p>
         </div>
     )
 }

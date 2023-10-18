@@ -6,9 +6,12 @@ function DeleteCompany({ selectedCompany, isOpenDeleteModal, setIsOpenDeleteModa
     const handleDelete = async () => {
         try {
             const res = await axios.put(`${DELETE_COMPANY_ROUTE}?company_id=${selectedCompany.company_id}`)
+            console.log('res: ', res)
             if (res.status === 200) {
                 setIsOpenDeleteModal(false)
                 window.location.reload()
+            } else {
+                alert('Xóa không thành công')
             }
 
         } catch (err) {

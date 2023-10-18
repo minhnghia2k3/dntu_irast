@@ -1,16 +1,35 @@
 'use client';
-import React from 'react'
+import React, { useState } from 'react'
 import mockdata from '@/app/mockdata.json';
 import Video from '@/app/components/Detail/Video';
-
+import axios from 'axios';
+import { GET_ALL_COMPANIES_ROUTE } from '@/utils/ApiRoutes';
 function page({ params }) {
+    const [company, setCompany] = useState(null)
     const { video } = params
-    const filteredData = mockdata.filter(data => data.id.toString() === video.toString()).shift();
+    useState(() => {
+        const getCompanyById = async () => {
+            const res = await axios.get(`${GET_ALL_COMPANIES_ROUTE}?company_id=${video}`)
+            if (res.status === 200 && res.data) {
+                setCompany(res.data.shift())
+            }
+        }
+        getCompanyById()
+    }, [])
     return (
         <>
-            <main>
-                <Video data={filteredData} />
-            </main>
+            {
+                company ? (
+                    <main>
+                        <Video data={company} />
+                    </main>
+                ) : (
+                    <div className="flex justify-center items-center w-screen h-screen">
+                        <h1 className="text-3xl font-semibold text-gray-500">Loading...</h1>
+                    </div>
+                )
+            }
+
         </>
     )
 }

@@ -6,24 +6,27 @@ import { Navigation, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import { UPLOADS_API } from '@/utils/ApiRoutes';
 
 
 function Images({ data: { images } }) {
+    console.log('images: ', images)
     return (
         <>
             {images && images?.map((item, index) => (
                 <div key={index} className={`flex flex-col items-center justify-center`}>
-                    <div className={`flex ${index % 2 === 0 ? 'flex-row-reverse text-end' : 'flex-row text-start'} items-center justify-center w-full h-full bg-white rounded-[15px] px-2 py-2 shadow gap-4`}>
-                        <div className="w-[70%] h-[150px] md:h-[300px] lg:h-[500px] relative ">
+                    <div className={`flex ${index % 2 === 0 ? 'flex-row-reverse text-start' : 'flex-row text-end'} items-start justify-start w-full h-full bg-white rounded-[15px] px-2 py-2 shadow gap-4`}>
+                        <div className="w-[70%] h-[150px] md:h-[300px] lg:h-[500px] relative">
                             <Image
-                                src={item}
+                                src={`${UPLOADS_API}/${item.image_src}`}
+                                alt={item.image_description}
                                 fill
                                 className="cursor-pointer rounded-[.5rem] shadow opacity-90 hover:opacity-100 transition-opacity duration-300"
                             />
                         </div>
 
-                        <div className={`text-sm md:text-xl font-normal w-[30%] max-h-[150px] line-clamp-4`}>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta delectus, nobis saepe totam eum ratione libero, quo nesciunt illum vel qui, unde harum dolorem eligendi modi aliquid debitis sit quaerat.</p>
+                        <div className={`text-sm md:text-lg font-normal max-w-[30%] h-full p-2`}>
+                            <p>{item.image_description}</p>
                         </div>
                     </div>
                 </div >

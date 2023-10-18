@@ -14,9 +14,8 @@ import './styles.css';
 // import required modules
 import { FreeMode, Navigation, Thumbs, Autoplay } from 'swiper/modules';
 import Image from 'next/image';
-import Link from 'next/link';
 import InfoCard from '../InfoCard';
-
+import { UPLOADS_API } from '@/utils/ApiRoutes';
 export default function App({ data }) {
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
     const handleSwiperSlideChange = () => {
@@ -37,7 +36,7 @@ export default function App({ data }) {
 
     return (
         <>
-            <div className="relative bg-slate-800 w-screen h-full p-2">
+            <div className="relative bg-slate-800 w-screen h-full">
                 <Swiper
                     style={{
                         '--swiper-navigation-color': '#8C1515',
@@ -55,37 +54,34 @@ export default function App({ data }) {
                     onSlideChange={handleSwiperSlideChange}
                     className="mySwiper2"
                 >
-                    {data && data.map((item, index) => {
-                        return (
-                            <SwiperSlide key={index}>
-                                <div className="w-full h-full relative">
-                                    {/* Background Video */}
+                    {data && data?.map((item, index) => {
+                        if (item.isDeleted === 0)
+                            return (
+                                <SwiperSlide key={index}>
+                                    <div className="w-full h-full relative">
+                                        {
+                                            item.videos ? (
+                                                <video
+                                                    controls={false}
+                                                    autoPlay
+                                                    loop
+                                                    muted
+                                                    className="w-full h-full object-fit bg-slate-800 md:object-cover"
+                                                >
+                                                    <source src={`${UPLOADS_API}/${item?.videos[0]?.video_src}`} type='video/mp4' />
+                                                </video>
+                                            ) :
+                                                (
+                                                    <div className="w-full h-full relative">
+                                                        <Image src={`/banner.jpg`} alt="" fill className="md:object-cover" />
+                                                    </div>
 
-                                    {
-                                        item.videoUrl ? (
-                                            <video
-                                                controls={false}
-                                                autoPlay
-                                                loop
-                                                muted
-                                                className="w-full h-full object-fit bg-slate-800 md:object-cover"
-                                            >
-                                                <source src={item.videoUrl} type='video/mp4' />
-                                            </video>
-                                        ) :
-                                            (
-                                                <div className="w-full h-full relative">
-                                                    <Image src={`/banner.jpg`} alt="" fill className="md:object-cover" />
-                                                </div>
-
-                                            )
-                                    }
-                                    {/* Card info */}
-                                    <InfoCard data={item} showTag={true} navUrl={`/detail/video/${item.id}`} />
-
-                                </div>
-                            </SwiperSlide>
-                        )
+                                                )
+                                        }
+                                        <InfoCard data={item} showTag={true} navUrl={`/detail/video/${item.company_id}`} />
+                                    </div>
+                                </SwiperSlide>
+                            )
                     })}
 
                 </Swiper>
@@ -100,30 +96,31 @@ export default function App({ data }) {
                     modules={[FreeMode, Navigation, Thumbs]}
                     className="mySwiper"
                 >
-                    {data && data.map((item, index) => (
-                        <SwiperSlide key={index}>
-                            {
-                                item.videoUrl ? (
-                                    <video
-                                        controls={false}
-                                        autoPlay={false}
-                                        loop
-                                        muted
-                                        className="w-full h-full object-cover"
-                                    >
+                    {data && data.map((item, index) => {
+                        if (item.isDeleted === 0)
+                            return (
+                                <SwiperSlide key={index} className="rounded-[2px]">
+                                    {
+                                        item.videos ? (
+                                            <video
+                                                controls={false}
+                                                autoPlay={false}
+                                                loop
+                                                muted
+                                                className="w-full h-full object-cover rounded-[2px]"
+                                            >
 
-                                        <source src={item.videoUrl} type='video/mp4' />
-                                    </video>
-                                ) :
-                                    (
-                                        <Image src={'/banner.jpg'} alt="" fill />
-                                    )
-                            }
+                                                <source src={`${UPLOADS_API}/${item.videos[0]?.video_src}`} type='video/mp4' />
+                                            </video>
+                                        ) :
+                                            (
+                                                <Image src={'/banner.jpg'} alt="" fill />
+                                            )
+                                    }
 
-                        </SwiperSlide>
-                    ))}
-
-
+                                </SwiperSlide>
+                            )
+                    })}
                 </Swiper>
             </div >
         </>

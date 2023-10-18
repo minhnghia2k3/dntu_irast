@@ -10,8 +10,9 @@ import { FiPlay, FiPause } from 'react-icons/fi'
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import InfoCard from '../InfoCard';
+import { UPLOADS_API } from '@/utils/ApiRoutes';
 
-function Video({ data: { id, name, videoUrl }, data }) {
+function Video({ data }) {
     const router = useRouter()
     const [isPlaySound, setIsPlaySound] = useState(false)
     const [isPlaying, setIsPlaying] = useState(true)
@@ -46,15 +47,15 @@ function Video({ data: { id, name, videoUrl }, data }) {
         const video = videoRef.current
         video?.addEventListener('leavepictureinpicture', () => {
             setIsPictureInPicture(false)
-            router.push(`/detail/video/${id}`)
+            router.push(`/detail/video/${data.company_id}`)
         })
         if (isPictureInPicture) {
-            router.push(`/detail/${id}`)
+            router.push(`/detail/${data.company_id}`)
         }
         return () => {
             video?.removeEventListener('leavepictureinpicture', () => {
                 setIsPictureInPicture(false)
-                router.push(`/detail/video/${id}`)
+                router.push(`/detail/video/${data.company_id}`)
             })
         }
     }, [isPictureInPicture, videoRef])
@@ -134,9 +135,9 @@ function Video({ data: { id, name, videoUrl }, data }) {
                         className="cursor-pointer" />
                 </div>
                 {/* Company info */}
-                <InfoCard data={data} navUrl={`/detail/${id}`} showTag={false} />
+                <InfoCard data={data} navUrl={`/detail/${data.company_id}`} showTag={false} />
                 {
-                    videoUrl ? (
+                    data.videos ? (
                         <video
                             ref={videoRef}
                             controls={false}
@@ -145,13 +146,13 @@ function Video({ data: { id, name, videoUrl }, data }) {
                             muted
                             className="w-full h-full object-fit md:object-cover"
                         >
-                            <source src={videoUrl} type='video/mp4' />
+                            <source src={`${UPLOADS_API}/${data.videos[0].video_src}`} type='video/mp4' />
                         </video>
                     ) : (
                         <div className="w-full h-full relative rounded-[15px] shadow-md">
                             <Image
                                 src={`/banner.jpg`}
-                                alt={name}
+                                alt=""
                                 layout="fill"
                                 objectFit="cover"
                                 className="rounded-[15px]" />

@@ -3,8 +3,7 @@ import { CREATE_COMPANY_ROUTE } from '@/utils/ApiRoutes.js'
 import { AiOutlineClose } from 'react-icons/ai'
 import { PiUploadSimpleBold } from 'react-icons/pi'
 import { IoIosRemove } from 'react-icons/io';
-
-
+import axios from 'axios';
 function CreateCompany({ isOpenModal, setIsOpenModal }) {
     const [images, setImages] = useState([]);
     const [video, setVideo] = useState([]);
@@ -58,7 +57,8 @@ function CreateCompany({ isOpenModal, setIsOpenModal }) {
 
         axios.post(CREATE_COMPANY_ROUTE, formData).then((res) => {
             if (res.status === 200) {
-                console.log(res.data);
+                setIsOpenModal(false);
+                window.location.reload();
             }
         }).catch(err => {
             console.log(err)
