@@ -11,6 +11,7 @@ import RestoreCompany from './RestoreCompany';
 import PreviewCompany from './PreviewCompany';
 import Search from './Search';
 import Filter from './Filter';
+import Pagination from './Pagination';
 function Admin() {
     const [companies, setCompanies] = useState([]);
     const [isOpenAddModal, setIsOpenAddModal] = useState(false);
@@ -19,6 +20,8 @@ function Admin() {
     const [isOpenRestoreModal, setIsOpenRestoreModal] = useState(false);
     const [isOpenPreviewModal, setIsOpenPreviewModal] = useState(false);
     const [selectedCompany, setSelectedCompany] = useState(null);
+    const [currentPageData, setCurrentPageData] = useState([]);
+    const [result, setResult] = useState("");
     // Handle toggle modal product
     const handleAddModal = () => {
         setIsOpenAddModal(!isOpenAddModal)
@@ -32,14 +35,14 @@ function Admin() {
         }
         getAllData()
     }, [])
-
+    console.log('result', result)
     return (
         <>
             <section className="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5 antialiased w-screen h-screen">
                 <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
                     <div className="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
                         <div className="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
-                            <Search data={companies} />
+                            <Search originalData={currentPageData} data={result} setResult={setResult} />
                             <div className="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
                                 <button type="button" onClick={handleAddModal} className="flex items-center justify-center text-white bg-primary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
                                     <svg className="h-3.5 w-3.5 mr-2" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -47,61 +50,8 @@ function Admin() {
                                     </svg>
                                     Thêm doanh nghiệp
                                 </button>
-                                <div className="flex items-center space-x-3 w-full md:w-auto">
-                                    <Filter />
-                                    <div id="filterDropdown" className="z-10 hidden w-56 p-3 bg-white rounded-lg shadow dark:bg-gray-700">
-                                        <h6 className="mb-3 text-sm font-medium text-gray-900 dark:text-white">Category</h6>
-                                        <ul className="space-y-2 text-sm" aria-labelledby="filterDropdownButton">
-                                            <li className="flex items-center">
-                                                <input id="apple" type="checkbox" value="" className="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-                                                <label for="apple" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">Apple (56)</label>
-                                            </li>
-                                            <li className="flex items-center">
-                                                <input id="fitbit" type="checkbox" value="" className="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-                                                <label for="fitbit" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">Fitbit (56)</label>
-                                            </li>
-                                            <li className="flex items-center">
-                                                <input id="dell" type="checkbox" value="" className="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-                                                <label for="dell" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">Dell (56)</label>
-                                            </li>
-                                            <li className="flex items-center">
-                                                <input id="asus" type="checkbox" value="" checked="" className="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-                                                <label for="asus" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">Asus (97)</label>
-                                            </li>
-                                            <li className="flex items-center">
-                                                <input id="logitech" type="checkbox" value="" checked="" className="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-                                                <label for="logitech" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">Logitech (97)</label>
-                                            </li>
-                                            <li className="flex items-center">
-                                                <input id="msi" type="checkbox" value="" checked="" className="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-                                                <label for="msi" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">MSI (97)</label>
-                                            </li>
-                                            <li className="flex items-center">
-                                                <input id="bosch" type="checkbox" value="" checked="" className="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-                                                <label for="bosch" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">Bosch (176)</label>
-                                            </li>
-                                            <li className="flex items-center">
-                                                <input id="sony" type="checkbox" value="" className="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-                                                <label for="sony" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">Sony (234)</label>
-                                            </li>
-                                            <li className="flex items-center">
-                                                <input id="samsung" type="checkbox" value="" checked="" className="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-                                                <label for="samsung" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">Samsung (76)</label>
-                                            </li>
-                                            <li className="flex items-center">
-                                                <input id="canon" type="checkbox" value="" className="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-                                                <label for="canon" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">Canon (49)</label>
-                                            </li>
-                                            <li className="flex items-center">
-                                                <input id="microsoft" type="checkbox" value="" className="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-                                                <label for="microsoft" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">Microsoft (45)</label>
-                                            </li>
-                                            <li className="flex items-center">
-                                                <input id="razor" type="checkbox" value="" className="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-                                                <label for="razor" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">Razor (49)</label>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                <div className="relative flex items-center space-x-3 w-full md:w-auto">
+                                    <Filter originalData={currentPageData} data={result} setResult={setResult} />
                                 </div>
                             </div>
                         </div>
@@ -125,7 +75,7 @@ function Admin() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {companies && companies.map((company, index) => (
+                                    {result && result.map((company, index) => (
                                         <tr key={index} className="border-b dark:border-gray-700 h-full">
                                             <td scope="row" className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{company.company_id}</td>
                                             <td scope="row" className="max-w-[8rem] truncate px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{company.company_name}</td>
@@ -190,45 +140,7 @@ function Admin() {
                             </table>
                         </div>
                         <nav className="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 p-4" aria-label="Table navigation">
-                            <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
-                                Showing
-                                <span className="font-semibold text-gray-900 dark:text-white">1-10</span>
-                                of
-                                <span className="font-semibold text-gray-900 dark:text-white">1000</span>
-                            </span>
-                            <ul className="inline-flex items-stretch -space-x-px">
-                                <li>
-                                    <a href="#" className="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                                        <span className="sr-only">Previous</span>
-                                        <svg className="w-5 h-5" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
-                                        </svg>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" className="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
-                                </li>
-                                <li>
-                                    <a href="#" className="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
-                                </li>
-                                <li>
-                                    <a href="#" aria-current="page" className="flex items-center justify-center text-sm z-10 py-2 px-3 leading-tight text-primary-600 bg-primary-50 border border-primary-300 hover:bg-primary-100 hover:text-primary-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">3</a>
-                                </li>
-                                <li>
-                                    <a href="#" className="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">...</a>
-                                </li>
-                                <li>
-                                    <a href="#" className="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">100</a>
-                                </li>
-                                <li>
-                                    <a href="#" className="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                                        <span className="sr-only">Next</span>
-                                        <svg className="w-5 h-5" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-                                        </svg>
-                                    </a>
-                                </li>
-                            </ul>
+                            <Pagination visibleItems={result} totalItems={companies} setResult={setResult} setCurrentPageData={setCurrentPageData} itemsPerPage={5} />
                         </nav>
                     </div>
                 </div>
