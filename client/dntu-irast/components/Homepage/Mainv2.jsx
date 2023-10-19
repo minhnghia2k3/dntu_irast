@@ -39,7 +39,7 @@ export default function App({ data }) {
             <div className="relative bg-slate-800 w-screen h-full">
                 <Swiper
                     style={{
-                        '--swiper-navigation-color': '#8C1515',
+                        '--swiper-navigation-color': '#fff',
                         '--swiper-pagination-color': '#fff',
                     }}
                     loop={true}

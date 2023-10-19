@@ -1,6 +1,5 @@
 import React from 'react'
 import Image from 'next/image'
-import InfoCard from '../InfoCard'
 
 function Banner({ data }) {
     console.log('data from banner: ', data)
@@ -12,7 +11,6 @@ function Banner({ data }) {
                     fill
                     alt=""
                 />
-                <InfoCard data={data} detailPage={true} />
             </div>
         </>
     )

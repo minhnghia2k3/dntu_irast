@@ -1,6 +1,5 @@
 import Image from 'next/image'
 import React, { useEffect, useRef, useState } from 'react'
-import { Dancing_Script } from 'next/font/google'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay } from 'swiper/modules';
 import 'swiper/css';
