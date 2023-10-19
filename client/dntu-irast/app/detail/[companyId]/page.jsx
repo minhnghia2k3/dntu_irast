@@ -1,11 +1,10 @@
 'use client';
-import Images from '@/app/components/Detail/Images'
+import Images from '@/components/Detail/Images'
 import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion';
-import Description from '@/app/components/Detail/Description';
-import Banner from '@/app/components/Detail/Banner';
-import Footer from '@/app/components/Footer';
-
+import Description from '@/components/Detail/Description';
+import Banner from '@/components/Detail/Banner';
+import Footer from '@/components/Footer';
 import axios from 'axios';
 import { GET_ALL_COMPANIES_ROUTE } from '@/utils/ApiRoutes';
 function page({ params }) {

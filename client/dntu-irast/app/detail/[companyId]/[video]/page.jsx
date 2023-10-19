@@ -1,7 +1,6 @@
 'use client';
 import React, { useState } from 'react'
-import mockdata from '@/app/mockdata.json';
-import Video from '@/app/components/Detail/Video';
+import Video from '@/components/Detail/Video.jsx';
 import axios from 'axios';
 import { GET_ALL_COMPANIES_ROUTE } from '@/utils/ApiRoutes';
 function page({ params }) {

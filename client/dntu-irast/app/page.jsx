@@ -1,6 +1,5 @@
 "use client";
-import mockdata from '@/app/mockdata.json';
-import Mainv2 from "./components/Homepage/Mainv2";
+import Mainv2 from "@/components/Homepage/Mainv2.jsx";
 import { GET_ALL_COMPANIES_ROUTE } from '@/utils/ApiRoutes.js';
 import { useState } from "react";
 import axios from "axios";

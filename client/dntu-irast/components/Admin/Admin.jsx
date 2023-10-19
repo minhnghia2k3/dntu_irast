@@ -35,7 +35,6 @@ function Admin() {
         }
         getAllData()
     }, [])
-    console.log('result', result)
     return (
         <>
             <section className="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5 antialiased w-screen h-screen">
