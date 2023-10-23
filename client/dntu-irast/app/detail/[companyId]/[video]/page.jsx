@@ -10,7 +10,7 @@ function page({ params }) {
         const getCompanyById = async () => {
             const res = await axios.get(`${GET_ALL_COMPANIES_ROUTE}?company_id=${video}`)
             if (res.status === 200 && res.data) {
-                setCompany(res.data.shift())
+                setCompany(res.data.data.shift())
             }
         }
         getCompanyById()

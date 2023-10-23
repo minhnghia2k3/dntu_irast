@@ -1,9 +1,8 @@
 import React from 'react'
-
+import { CiLocationOn } from 'react-icons/ci'
 function Footer() {
     return (
         <footer className="flex items-start w-screen h-[400px] bg-red-primary p-10 border-gray-100 drop-shadow">
-
             <div className="flex flex-col gap-4 w-full">
                 <h1 className="font-semibold text-lg lg:text-xl text-gray-300 tracking-wider text-start mb-6">
                     CONG TY COHAFOOD
