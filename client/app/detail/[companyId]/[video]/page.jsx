@@ -1,7 +1,6 @@
 'use client';
 import React, { useState } from 'react'
-import mockdata from '@/app/mockdata.json';
-import Video from '@/app/components/Detail/Video';
+import Video from '@/components/Detail/Video.jsx';
 import axios from 'axios';
 import { GET_ALL_COMPANIES_ROUTE } from '@/utils/ApiRoutes';
 function page({ params }) {
@@ -11,7 +10,7 @@ function page({ params }) {
         const getCompanyById = async () => {
             const res = await axios.get(`${GET_ALL_COMPANIES_ROUTE}?company_id=${video}`)
             if (res.status === 200 && res.data) {
-                setCompany(res.data.shift())
+                setCompany(res.data.data.shift())
             }
         }
         getCompanyById()

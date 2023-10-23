@@ -1,9 +1,7 @@
 'use client';
 import Image from 'next/image';
-import Link from 'next/link';
 import React, { useEffect, useRef, useState } from 'react'
-import { AiOutlineGlobal } from 'react-icons/ai'
-import { BsFacebook, BsFillPipFill } from 'react-icons/bs'
+import { BsFillPipFill } from 'react-icons/bs'
 import { GoMute, GoUnmute } from 'react-icons/go'
 import { MdFullscreen } from 'react-icons/md'
 import { FiPlay, FiPause } from 'react-icons/fi'

@@ -1,10 +1,10 @@
 'use client';
 
-import Logout from "../components/Logout";
+import Login from "@/components/Login";
 
 function page() {
     return (
-        <Logout />
+        <Login />
     )
 }
 

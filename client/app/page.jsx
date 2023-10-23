@@ -1,6 +1,5 @@
 "use client";
-import mockdata from '@/app/mockdata.json';
-import Mainv2 from "./components/Homepage/Mainv2";
+import Mainv2 from "@/components/Homepage/Mainv2";
 import { GET_ALL_COMPANIES_ROUTE } from '@/utils/ApiRoutes.js';
 import { useState } from "react";
 import axios from "axios";
@@ -11,9 +10,7 @@ export default function Home() {
     const getAllCompanies = async () => {
       try {
         const res = await axios.get(GET_ALL_COMPANIES_ROUTE)
-        if (res.status === 200) {
-          setAllCompanies(res.data)
-        }
+        setAllCompanies(res.data.data)
       } catch (err) {
         console.log(err)
       }

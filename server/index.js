@@ -3,6 +3,7 @@ import { createServer } from 'http';
 import { Server } from 'socket.io';
 import dotenv from 'dotenv';
 import companyRoutes from './routes/CompanyRoutes.js';
+import productRoutes from './routes/ProductRoutes.js';
 import cors from 'cors';
 dotenv.config();
 
@@ -100,6 +101,7 @@ app.get('/', (req, res) => {
     res.send('Hello world')
 })
 app.use('/api/companies', companyRoutes);
+app.use('/api/products', productRoutes)
 app.use('/api/uploads', express.static('uploads'));
 
 // Start the server
