@@ -3,15 +3,23 @@ import { createServer } from 'http';
 import { Server } from 'socket.io';
 import dotenv from 'dotenv';
 import companyRoutes from './routes/CompanyRoutes.js';
+import cors from 'cors';
 dotenv.config();
 
+const origin = "http://localhost:3000"
 const app = express() // Initialize express
-const httpServer = createServer(app) // Create a server
-// form-data parser
+const httpServer = createServer(app) // Create a server\
+app.use(cors(
+    {
+        origin: origin,
+        optionsSuccessStatus: 200
+    }
+))
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-const origin = "http://localhost:3000"
+
+
 
 const io = new Server(httpServer, {
     cors: {
@@ -92,7 +100,7 @@ app.get('/', (req, res) => {
     res.send('Hello world')
 })
 app.use('/api/companies', companyRoutes);
-app.use('/uploads', express.static('uploads'));
+app.use('/api/uploads', express.static('uploads'));
 
 // Start the server
 const port = 8080

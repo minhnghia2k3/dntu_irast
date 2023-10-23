@@ -184,7 +184,7 @@ export const getAllCompanies = (req, res, next) => {
  * Parameters:
  * @body [company_name] - Required. The name of the company.
  * @body [description] - Optional. The description of the company.
- * @body [websiteUrl] - Optional. The website URL of the company.
+ * @body [websiteURL] - Optional. The website URL of the company.
  * @body [phone] - Optional. The phone number of the company.
  * @body [address] - Optional. The address of the company.
  * @body [image_src] - Optional. The image of the company.
@@ -201,7 +201,7 @@ export const getAllCompanies = (req, res, next) => {
  */
 export const createCompany = async (req, res, next) => {
     try {
-        const { company_name, description, websiteUrl, phone, address, image_titles, video_titles } = req.body;
+        const { company_name, description, websiteURL, phone, address, image_titles, video_titles } = req.body;
         if (!company_name) {
             res.status(400).json({ error: 'Missing company_name' });
             return;
@@ -214,7 +214,7 @@ export const createCompany = async (req, res, next) => {
         const insertVideo = `INSERT INTO videos (video_src, video_description, company_id)
         VALUES (?, ?, ?)`
         // Insert raw data into companies table
-        db.run(insertCompany, [company_name, description, websiteUrl, phone, address], function (err) {
+        db.run(insertCompany, [company_name, description, websiteURL, phone, address], function (err) {
             if (err) {
                 console.log(err.message)
                 res.status(500).json({ error: err.message })
@@ -404,6 +404,44 @@ export const softDeleteCompany = async (req, res, next) => {
             } else {
                 res.status(404).json({
                     message: 'Company not found',
+                })
+            }
+        })
+    } catch (err) {
+        next(err)
+    }
+}
+
+/**
+ * PUT /api/companies/restore-company?company_id=14
+ * Purpose: restore a company by company_id
+ * Parameters:
+ * @query [company_id] - Required. The ID of the company to visible.
+ * @returns
+ * - Success:
+ *    - status: 200
+ *   - body: { message: 'Company deleted successfully' }
+ * - Error:
+ *   - status: 500
+ * - body: { error: 'error message' }
+ */
+export const restoreCompany = async (req, res, next) => {
+    try {
+        const { company_id } = req.query;
+        if (!company_id) {
+            return res.status(400).json({ error: 'Missing company_id' })
+        }
+        const query = `UPDATE companies
+                        SET isDeleted =0 
+                        WHERE company_id = ?`
+        db.run(query, [company_id], function (err) {
+            if (err) {
+                console.log(err.message)
+                return res.status(500).json({ error: err.message })
+            }
+            if (this.changes > 0) {
+                return res.status(200).json({
+                    message: 'Company visible successfully'
                 })
             }
         })
