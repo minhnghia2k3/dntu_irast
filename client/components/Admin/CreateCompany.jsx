@@ -5,6 +5,7 @@ import { PiUploadSimpleBold } from 'react-icons/pi'
 import { useRouter } from 'next/navigation'
 import axios from 'axios';
 import Image from 'next/image';
+
 function CreateCompany({ isOpenModal, setIsOpenModal }) {
     const [logo, setLogo] = useState(null);
     const [video, setVideo] = useState(null);
@@ -14,6 +15,7 @@ function CreateCompany({ isOpenModal, setIsOpenModal }) {
     const [phoneNumber, setPhoneNumber] = useState(null);
     const [websiteURL, setWebsiteURL] = useState(null);
     const [description, setDescription] = useState(null);
+    const [openProduct, setOpenProduct] = useState(false);
     const router = useRouter();
     // Handle add website image fields
     const handleChangeImage = (e) => {
@@ -30,6 +32,11 @@ function CreateCompany({ isOpenModal, setIsOpenModal }) {
         }
 
     };
+
+    const handleOpenProduct = () => {
+        setOpenProduct(true)
+        console.log('is open product:', openProduct)
+    }
 
     const handleSubmitForm = async (e) => {
         // Upload to server
@@ -70,7 +77,11 @@ function CreateCompany({ isOpenModal, setIsOpenModal }) {
                         <div className="relative p-4 w-full max-w-2xl max-h-full">
                             <div className="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
                                 <div className="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
-                                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Thêm doanh nghiệp</h3>
+                                    <div className="flex gap-4 items-center justify-center">
+                                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Thêm doanh nghiệp</h3>
+                                        <button type="button" onClick={handleOpenProduct} className="txt-base font-semibold text-gray-900 dark:text-white px-6 py-1.5 border border-gray-300 rounded-md">Thêm sản phẩm</button>
+                                    </div>
+
                                     <button type="button" className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
                                         <AiOutlineClose size={20} onClick={() => setIsOpenModal(false)} />
                                         <span className="sr-only">Close modal</span>
@@ -123,9 +134,13 @@ function CreateCompany({ isOpenModal, setIsOpenModal }) {
                                             <label for="imageInput" className="cursor-pointer flex items-center justify-center w-full h-full relative">
                                                 {
                                                     logo ? (
-                                                        <Image src={URL.createObjectURL(logo)} width={150} height={150} />
+                                                        <>
+                                                            <Image src={URL.createObjectURL(logo)} width={150} height={150} />
+                                                        </>
                                                     ) : (
-                                                        <PiUploadSimpleBold size={50} className="text-gray-600" />
+                                                        <p className="flex items-center justify-center flex-col mb-2 text-sm font-medium text-gray-900 dark:text-white">Thêm logo
+                                                            <PiUploadSimpleBold size={50} className="text-gray-600" />
+                                                        </p>
                                                     )
                                                 }
                                                 <input
@@ -141,10 +156,14 @@ function CreateCompany({ isOpenModal, setIsOpenModal }) {
                                             <label className="cursor-pointer">
                                                 <div className="text-center">
                                                     {video ? (
-                                                        <video controls src={URL.createObjectURL(video)} width={150} height={150} />
+                                                        <>
+                                                            <video controls src={URL.createObjectURL(video)} width={150} height={150} />
+                                                        </>
                                                     )
                                                         : (
-                                                            <PiUploadSimpleBold size={50} className="text-gray-600" />
+                                                            <p className="flex items-center justify-center flex-col mb-2 text-sm font-medium text-gray-900 dark:text-white">Thêm video banner
+                                                                <PiUploadSimpleBold size={50} className="text-gray-600" />
+                                                            </p>
                                                         )
                                                     }
                                                 </div>

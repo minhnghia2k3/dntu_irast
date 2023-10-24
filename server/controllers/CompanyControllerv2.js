@@ -121,6 +121,54 @@ export const createCompany = (req, res, next) => {
 }
 
 /**
+ * PUT /api/companies/restore-company?company_id=1
+ * PURPOSE: Change isDeleted value of company
+ * Parameters:
+ * @body [company_id] - required
+ * 
+ * Response:
+ * - Success:
+ *     errCode: 0,
+ *    errMessage: "Restore company successfully",
+ * - Error:
+ *    errCode: 1,
+ *   errMessage: "Missing company_id",
+ * 
+ *  errCode: 2,
+ * errMessage: "Error while restoring company",
+ */
+export const restoreCompany = (req, res, next) => {
+    try {
+        const { company_id } = req.query;
+        if (!company_id) {
+            return res.json({
+                errCode: 1,
+                errMessage: "Missing company_id",
+            })
+        }
+
+        const query = `UPDATE companies SET isDeleted=0
+                        WHERE company_id = ?`
+
+        db.run(query, [company_id], function (err) {
+            if (err) {
+                return res.json({
+                    errCode: 2,
+                    errMessage: "Error while restoring company",
+                })
+            }
+            return res.json({
+                errCode: 0,
+                errMessage: "Restore company successfully",
+            })
+        })
+    } catch (err) {
+        next(err)
+    }
+}
+
+
+/**
  * PUT /api/companies/update-company?company_id=1
  * PURPOSE: Update a company
  * Parameters:
