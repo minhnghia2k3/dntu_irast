@@ -1,9 +1,10 @@
-import { UPLOADS_API } from '@/utils/ApiRoutes'
+import { GET_ALL_COMPANY_PRODUCT, UPLOADS_API } from '@/utils/ApiRoutes'
+import axios from 'axios'
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
+import React, { useState } from 'react'
 
-function PreviewCompany({ selectedCompany, isOpenPreviewModal, setIsOpenPreviewModal }) {
+function PreviewCompany({ selectedCompany: data, isOpenPreviewModal, setIsOpenPreviewModal }) {
     return (
         <>
             {isOpenPreviewModal && (
@@ -12,8 +13,8 @@ function PreviewCompany({ selectedCompany, isOpenPreviewModal, setIsOpenPreviewM
                         <div className="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
                             <div className="flex justify-between mb-4 rounded-t sm:mb-5">
                                 <div className="text-lg text-gray-900 md:text-xl dark:text-white">
-                                    <h3 className="font-semibold ">{selectedCompany.company_name}</h3>
-                                    <p className="font-bold">{selectedCompany.phone} - {selectedCompany.address}</p>
+                                    <h3 className="font-semibold ">{data.company_name}</h3>
+                                    <p className="font-bold">{data.phone} - {data.address} - {data.gmail}</p>
                                 </div>
                                 <div>
                                     <button onClick={() => setIsOpenPreviewModal(false)} type="button" className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 inline-flex dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="readProductModal">
@@ -26,28 +27,21 @@ function PreviewCompany({ selectedCompany, isOpenPreviewModal, setIsOpenPreviewM
                             </div>
                             <dl>
                                 <dt className="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Mô tả</dt>
-                                <dd className="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">{selectedCompany.description}</dd>
+                                <dd className="w-full truncate mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">{data.description}</dd>
                                 <dt className="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Website liên kết</dt>
-                                <dd className="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400"><Link target='_blank' className='text-blue-500 underline' href={`//${selectedCompany.websiteURL}`}>{selectedCompany.websiteURL}</Link></dd>
+                                <dd className="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400"><Link target='_blank' className='text-blue-500 underline' href={`//${data.websiteURL}`}>{data.websiteURL}</Link></dd>
                                 <dt className="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Hình ảnh</dt>
                                 <dd className="grid grid-cols-2 mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">
-                                    {selectedCompany.images.map((image, index) => {
-                                        return (
-                                            <div key={index} className="col-span-2 mb-2 flex flex-row items-start justify-start gap-2">
-                                                <Image alt={selectedCompany.company_name} src={`${UPLOADS_API}/${image.image_src}`} width={150} height={150} />
-                                                <p>{image.image_description}</p>
-                                            </div>
-                                        )
-                                    })}
+                                    {console.log(products)}
                                 </dd>
                                 <dt className="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Video</dt>
                                 <dd className="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">
-                                    <video controls className="w-full" src={`${UPLOADS_API}/${selectedCompany.videos[0].video_src}`} />
+                                    Video
                                 </dd>
                                 <dt className="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Trạng thái</dt>
                                 <dd className="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">
                                     {
-                                        selectedCompany.isDeleted === 1 ?
+                                        data.isDeleted === 1 ?
                                             (
                                                 <p className="text-red-500 text-lg">Đã ẩn</p>
                                             ) :
@@ -59,8 +53,9 @@ function PreviewCompany({ selectedCompany, isOpenPreviewModal, setIsOpenPreviewM
                             </dl>
                         </div>
                     </div>
-                </div>
-            )}
+                </div >
+            )
+            }
         </>
     )
 }

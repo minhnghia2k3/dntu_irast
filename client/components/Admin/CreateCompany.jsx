@@ -2,67 +2,65 @@ import React, { useEffect, useState } from 'react'
 import { CREATE_COMPANY_ROUTE } from '@/utils/ApiRoutes.js'
 import { AiOutlineClose } from 'react-icons/ai'
 import { PiUploadSimpleBold } from 'react-icons/pi'
-import { IoIosRemove } from 'react-icons/io';
+import { useRouter } from 'next/navigation'
 import axios from 'axios';
+import Image from 'next/image';
 function CreateCompany({ isOpenModal, setIsOpenModal }) {
-    const [images, setImages] = useState([]);
-    const [video, setVideo] = useState([]);
+    const [logo, setLogo] = useState(null);
+    const [video, setVideo] = useState(null);
     const [companyName, setCompanyName] = useState(null);
+    const [email, setEmail] = useState(null);
     const [address, setAddress] = useState(null);
     const [phoneNumber, setPhoneNumber] = useState(null);
     const [websiteURL, setWebsiteURL] = useState(null);
     const [description, setDescription] = useState(null);
-
+    const router = useRouter();
     // Handle add website image fields
-
-    const addImage = () => {
-        setImages([...images, { file: null, description: '' }]);
-    };
-
-    const removeImage = (index) => {
-        const updatedImages = [...images];
-        updatedImages.splice(index, 1);
-        setImages(updatedImages);
-    };
-
-    const handleImageChange = (index, e) => {
-        const updatedImages = [...images];
-        updatedImages[index].file = e.target.files[0];
-        setImages(updatedImages);
-    };
-
-    const handleDescriptionChange = (index, e) => {
-        const updatedImages = [...images];
-        updatedImages[index].description = e.target.value;
-        setImages(updatedImages);
-    };
+    const handleChangeImage = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setLogo(file)
+        }
+    }
 
     const handleVideoChange = (e) => {
-        setVideo(e.target.files[0])
+        const file = e.target.files[0];
+        if (file) {
+            setVideo(file)
+        }
+
     };
-    const handleSubmitForm = (e) => {
+
+    const handleSubmitForm = async (e) => {
         // Upload to server
         e.preventDefault();
+
         const formData = new FormData();
         formData.append('company_name', companyName);
+        formData.append('gmail', email);
+        formData.append('logo', logo);
+        formData.append('video_banner', video)
         formData.append('address', address);
         formData.append('phone', phoneNumber);
         formData.append('websiteURL', websiteURL);
         formData.append('description', description);
-        formData.append('video_src', video);
-        images.forEach((image) => {
-            formData.append('image_src', image.file);
-            formData.append('image_titles', image.description);
-        });
-
-        axios.post(CREATE_COMPANY_ROUTE, formData).then((res) => {
-            if (res.status === 200) {
-                setIsOpenModal(false);
-                window.location.reload();
+        try {
+            const response = await axios.post(CREATE_COMPANY_ROUTE, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            if (response.data.errCode == 0) {
+                console.log('Upload successful');
+            } else {
+                alert('Upload failed' + response.data.errMessage);
             }
-        }).catch(err => {
-            console.log(err)
-        })
+            setIsOpenModal(false);
+            router.reload();
+        } catch (error) {
+            console.error('Upload failed', error);
+        }
+
     }
     return (
         <>
@@ -89,6 +87,14 @@ function CreateCompany({ isOpenModal, setIsOpenModal }) {
                                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Nhập tên doanh nghiệp" required="" />
                                         </div>
                                         <div>
+                                            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                                            <input
+                                                value={email}
+                                                onChange={(e) => setEmail(e.target.value)}
+                                                type="email"
+                                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Nhập địa chỉ doanh nghiệp" required="" />
+                                        </div>
+                                        <div>
                                             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Địa chỉ</label>
                                             <input
                                                 value={address}
@@ -105,7 +111,7 @@ function CreateCompany({ isOpenModal, setIsOpenModal }) {
                                                 maxLength="12"
                                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Nhập số điện thoại" required="" />
                                         </div>
-                                        <div>
+                                        <div className="col-span-2">
                                             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Website liên kết</label>
                                             <input
                                                 value={websiteURL}
@@ -113,68 +119,44 @@ function CreateCompany({ isOpenModal, setIsOpenModal }) {
                                                 type="text"
                                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="company.com" required="" />
                                         </div>
-                                        {images.map((image, index) => (
-                                            <div key={index} className="sm:col-span-2 w-full">
-                                                <div className="flex items-center space-x-2">
-                                                    {image.file ? (
-                                                        <img src={URL.createObjectURL(image.file)} alt="Uploaded Image" className="w-16 h-16" />
+                                        <div class="relative flex items-center justify-center h-40 w-40 border-2 border-dashed border-gray-300 rounded-lg">
+                                            <label for="imageInput" className="cursor-pointer flex items-center justify-center w-full h-full relative">
+                                                {
+                                                    logo ? (
+                                                        <Image src={URL.createObjectURL(logo)} width={150} height={150} />
                                                     ) : (
-                                                        <>
-                                                            <label htmlFor={`file-input-${index}`} className="cursor-pointer custom-file-input">
-                                                                <PiUploadSimpleBold size={20} className="text-white" />
-                                                            </label>
-                                                            <input
-                                                                type="file"
-                                                                id={`file-input-${index}`}
-                                                                accept="image/*"
-                                                                onChange={(e) => handleImageChange(index, e)}
-                                                                className="hidden"
-                                                            />
-                                                        </>
-                                                    )}
-
-                                                    <textarea
-                                                        placeholder='Mô tả về hình ảnh'
-                                                        rows="1"
-                                                        onChange={(e) => handleDescriptionChange(index, e)}
-                                                        className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></textarea>
-                                                    <button
-                                                        type="button"
-                                                        onClick={() => removeImage(index)}
-                                                        className="p-2 bg-red-500 text-white rounded-full"
-                                                    >
-                                                        <IoIosRemove size={20} />
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        ))}
-                                        <button
-                                            type="button"
-                                            onClick={addImage}
-                                            className="sm:col-span-2 p-2 bg-primary text-white rounded-full"
-                                        >
-                                            Thêm hình ảnh
-                                        </button>
-
-                                        <div className="mb-4 sm:col-span-2 w-full">
-                                            <div className="flex items-center space-x-2">
-                                                <label htmlFor="video-upload" className="flex items-center justify-center gap-2 cursor-pointer text-white">
-                                                    <PiUploadSimpleBold size={20} className="" />
-                                                    Thêm video banner
-                                                </label>
+                                                        <PiUploadSimpleBold size={50} className="text-gray-600" />
+                                                    )
+                                                }
                                                 <input
+                                                    onChange={(e) => handleChangeImage(e)}
                                                     type="file"
-                                                    id="video-upload"
-                                                    accept="video/*"
-                                                    onChange={(e) => handleVideoChange(e)}
-                                                    className="hidden"
-                                                />
-                                                {video.length !== 0 && (
-                                                    <video controls src={URL.createObjectURL(video)} className="w-64 h-32" />
-                                                )}
-                                            </div>
+                                                    id="imageInput"
+                                                    class="hidden"
+                                                    accept="image/*" />
+                                            </label>
                                         </div>
 
+                                        <div className="flex items-center justify-center h-40 w-40 border-2 border-dashed border-gray-300 rounded-lg">
+                                            <label className="cursor-pointer">
+                                                <div className="text-center">
+                                                    {video ? (
+                                                        <video controls src={URL.createObjectURL(video)} width={150} height={150} />
+                                                    )
+                                                        : (
+                                                            <PiUploadSimpleBold size={50} className="text-gray-600" />
+                                                        )
+                                                    }
+                                                </div>
+                                                <input
+                                                    type="file"
+                                                    id="videoInput"
+                                                    className="hidden"
+                                                    accept="video/*"
+                                                    onChange={(e) => handleVideoChange(e)}
+                                                />
+                                            </label>
+                                        </div>
                                         <div className="sm:col-span-2">
                                             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mô tả</label>
                                             <textarea

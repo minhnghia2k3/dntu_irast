@@ -60,7 +60,7 @@ export default function App({ data }) {
                                 <SwiperSlide key={index}>
                                     <div className="w-full h-full relative">
                                         {
-                                            item.videos ? (
+                                            item.video_banner ? (
                                                 <video
                                                     controls={false}
                                                     autoPlay
@@ -68,7 +68,7 @@ export default function App({ data }) {
                                                     muted
                                                     className="w-full h-full object-fit bg-slate-800 md:object-cover"
                                                 >
-                                                    <source src={`${UPLOADS_API}/${item?.videos[0]?.video_src}`} type='video/mp4' />
+                                                    <source src={`${UPLOADS_API}/${item?.video_banner}`} type='video/mp4' />
                                                 </video>
                                             ) :
                                                 (
@@ -96,13 +96,12 @@ export default function App({ data }) {
                     modules={[FreeMode, Navigation, Thumbs]}
                     className="mySwiper"
                 >
-                    {console.log('data', data)}
                     {data && data?.map((item, index) => {
                         if (item.isDeleted === 0)
                             return (
                                 <SwiperSlide key={index} className="rounded-[2px]">
                                     {
-                                        item.videos ? (
+                                        item.video_banner ? (
                                             <video
                                                 controls={false}
                                                 autoPlay={false}
@@ -111,7 +110,7 @@ export default function App({ data }) {
                                                 className="w-full h-full object-cover rounded-[2px]"
                                             >
 
-                                                <source src={`${UPLOADS_API}/${item.videos[0]?.video_src}`} type='video/mp4' />
+                                                <source src={`${UPLOADS_API}/${item?.video_banner}`} type='video/mp4' />
                                             </video>
                                         ) :
                                             (

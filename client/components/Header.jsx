@@ -67,7 +67,7 @@ function Header() {
     }
     return (
         <header className="relative w-screen h-[80px] z-2 bg-white drop-shadow z-50 grid grid-cols-3 items-center">
-            <Link href="/" onClick={() => handleNavigate("/")} className="col-span-2 flex flex-[80%] items-center justify-start select-none px-4 py-2 max-w-max h-[80px] bg-inherit focus-visible:outline-none">
+            <Link href="/" className="col-span-2 flex flex-[80%] items-center justify-start select-none px-4 py-2 max-w-max h-[80px] bg-inherit focus-visible:outline-none">
                 <Image src='/logo_dntu.png' priority={true} width={70} height={60} alt="Trường Đại Học Công Nghệ Đồng Nai Logo" className="drop-shadow-md" />
                 <div className="flex flex-col">
                     <h1 className="text-red-primary font-medium text-lg lg:text-xl drop-shadow shadow-white tracking-widest">IRAST</h1>

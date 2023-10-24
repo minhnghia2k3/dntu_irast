@@ -134,8 +134,9 @@ function Video({ data }) {
                 </div>
                 {/* Company info */}
                 <InfoCard data={data} navUrl={`/detail/${data.company_id}`} showTag={false} />
+                {console.log(data)}
                 {
-                    data.videos ? (
+                    data.video_banner ? (
                         <video
                             ref={videoRef}
                             controls={false}
@@ -144,7 +145,7 @@ function Video({ data }) {
                             muted
                             className="w-full h-full object-fit md:object-cover"
                         >
-                            <source src={`${UPLOADS_API}/${data.videos[0].video_src}`} type='video/mp4' />
+                            <source src={`${UPLOADS_API}/${data.video_banner}`} type='video/mp4' />
                         </video>
                     ) : (
                         <div className="w-full h-full relative rounded-[15px] shadow-md">

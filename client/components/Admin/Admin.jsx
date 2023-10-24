@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { GET_ALL_COMPANIES_ROUTE, UPLOADS_API } from '@/utils/ApiRoutes.js'
+import { GET_ALL_COMPANIES_ROUTE, GET_ALL_COMPANY_PRODUCT, UPLOADS_API } from '@/utils/ApiRoutes.js'
 import axios from 'axios'
 import Image from 'next/image';
 import { FiMoreHorizontal } from 'react-icons/fi'
@@ -14,6 +14,7 @@ import Filter from './Filter';
 import Pagination from './Pagination';
 function Admin() {
     const [companies, setCompanies] = useState([]);
+
     const [isOpenAddModal, setIsOpenAddModal] = useState(false);
     const [isOpenEditModal, setIsOpenEditModal] = useState(false);
     const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
@@ -22,19 +23,21 @@ function Admin() {
     const [selectedCompany, setSelectedCompany] = useState(null);
     const [currentPageData, setCurrentPageData] = useState([]);
     const [result, setResult] = useState("");
+
     // Handle toggle modal product
     const handleAddModal = () => {
         setIsOpenAddModal(!isOpenAddModal)
     }
 
     useEffect(() => {
-        const getAllData = async () => {
+        const getAllCompanies = async () => {
             const res = await axios.get(GET_ALL_COMPANIES_ROUTE)
             if (res.status === 200) {
-                setCompanies(res.data)
+                setCompanies(res.data.data)
             }
         }
-        getAllData()
+        getAllCompanies()
+
     }, [])
     // Get localStorage data
     const isLogged = localStorage.getItem('status')
@@ -59,12 +62,14 @@ function Admin() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="overflow-x-auto">
+                                <div className="overflow-x-scroll">
                                     <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                             <tr>
-                                                <th scope="col" className="px-4 py-4">#</th>
-                                                <th scope="col" className="px-4 py-4">Tên doanh nghiệp</th>
+                                                <th scope="col" className="px-4 py-3">#</th>
+                                                <th scope="col" className="px-4 py-3">Thứ tự</th>
+                                                <th scope="col" className="px-4 py-3">Tên doanh nghiệp</th>
+                                                <th scope="col" className="px-4 py-3">Gmail</th>
                                                 <th scope="col" className="px-4 py-3">Địa chỉ</th>
                                                 <th scope="col" className="px-4 py-3">Số điện thoại</th>
                                                 <th scope="col" className="px-4 py-3">Mô tả</th>
@@ -81,28 +86,22 @@ function Admin() {
                                         <tbody>
                                             {result && result.map((company, index) => (
                                                 <tr key={index} className="border-b dark:border-gray-700 h-full">
-                                                    <td scope="row" className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{company.company_id}</td>
+                                                    <td scope="row" className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{index + 1}</td>
+                                                    <td className="px-4 py-3 text-red-500">{company.company_index}</td>
                                                     <td scope="row" className="max-w-[8rem] truncate px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{company.company_name}</td>
+                                                    <td scope="row" className="max-w-[8rem] truncate px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{company.gmail}</td>
+
                                                     <td className="max-w-[8rem] truncate px-4 py-3">{company.address}</td>
                                                     <td className="px-4 py-3">{company.phone}</td>
                                                     <td className="px-4 py-3 max-w-[8rem] truncate">{company.description}</td>
                                                     <td className="max-w-[8rem] truncate px-4 py-3">
                                                         <a target='_blank' href={company.websiteURL ? `//${company.websiteURL}` : ""} className="text-blue-500">{company.websiteURL}</a>
                                                     </td>
-                                                    <td className="px-4 py-3 flex items-center justify-center flex-col">
-                                                        {company.images && company.images.map((image, index) => (
-                                                            // if length > 3 show 3 images ... else < 3 show all
-                                                            index < 1 ?
-                                                                <Image key={index} alt={image.description} src={`${UPLOADS_API}/${image.image_src}`} width={50} height={50} className="mb-2" /> :
-                                                                (index > 2 ? <button><FiMoreHorizontal /></button> : (null))
-                                                        ))}
+                                                    <td className="px-4 py-3">
+                                                        <Image src={`${UPLOADS_API}/${company.logo}`} width={50} height={50} className='rounded-full object-contain' />
                                                     </td>
                                                     <td className="px-4 py-3">
-                                                        {company.videos && company.videos.map((video, index) => (
-                                                            index < 1 ?
-                                                                <video key={index} alt={video.description} src={`${UPLOADS_API}/${video.video_src}`} width={50} height={50} className="mb-2" /> :
-                                                                (index > 1 ? <button><FiMoreHorizontal /></button> : (null))
-                                                        ))}
+                                                        <video src={`${UPLOADS_API}/${company.video_banner}`} width="50" height="50" controls={false} autoPlay={false} />
                                                     </td>
                                                     <td className={`px-4 py-3 ${company.isDeleted === 1 ? 'text-red-500' : 'text-green-500'}`}>{company.isDeleted === 1 ? 'Đã ẩn' : 'Hiển thị'}</td>
                                                     <td className="px-4 py-3">{company.createdAt}</td>
