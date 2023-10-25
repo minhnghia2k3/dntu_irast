@@ -49,7 +49,7 @@ function CreateCompany({ isOpenModal, setIsOpenModal, setIsOpenProduct }) {
         formData.append('address', address);
         formData.append('phone', phoneNumber);
         formData.append('websiteURL', websiteURL);
-        formData.append('description', description);
+        formData.append('description', description)
         try {
             const response = await axios.post(CREATE_COMPANY_ROUTE, formData, {
                 headers: {
@@ -57,9 +57,11 @@ function CreateCompany({ isOpenModal, setIsOpenModal, setIsOpenProduct }) {
                 },
             });
             if (response.data.errCode == 0) {
-                console.log('Upload successful');
+                alert(response.data.errMessage)
+                router.refresh();
             } else {
-                alert('Upload failed' + response.data.errMessage);
+                alert('Upload failed!')
+                console.log(response.data.errMessage);
             }
             setIsOpenModal(false);
             router.reload();

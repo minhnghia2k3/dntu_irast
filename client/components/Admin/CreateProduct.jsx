@@ -4,6 +4,7 @@ import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import { AiOutlineClose } from 'react-icons/ai'
 import { PiUploadSimpleBold } from 'react-icons/pi'
+import { useRouter } from 'next/navigation'
 
 const CreateProduct = ({ data, setIsOpenAddModal, setIsOpenAddProduct, isOpenAddProduct }) => {
     const [companyId, setCompanyId] = useState('')
@@ -11,6 +12,8 @@ const CreateProduct = ({ data, setIsOpenAddModal, setIsOpenAddProduct, isOpenAdd
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [otherProds, setOtherProds] = useState([])
+    const router = useRouter()
+
     const handleOpenAddCompany = () => {
         setIsOpenAddModal(true)
         setIsOpenAddProduct(false)
@@ -66,7 +69,13 @@ const CreateProduct = ({ data, setIsOpenAddModal, setIsOpenAddProduct, isOpenAdd
             if (res.data.errCode === 0) {
                 alert(res.data.errMessage)
                 setIsOpenAddProduct(false)
-                // window.location.reload()
+                //reset state
+                setCompanyId('')
+                setBannerImg(null)
+                setTitle('')
+                setDescription('')
+                setOtherProds([])
+                router.refresh();
             }
             else {
                 console.log(res.data.errMessage)
