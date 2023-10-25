@@ -30,6 +30,7 @@ export const getCompanies = (req, res) => {
             ORDER BY company_id DESC, company_index ASC`
             db.all(query, [], function (err, rows) {
                 if (err) {
+                    console.log(err)
                     return res.json({
                         errCode: 2,
                         errMessage: "Error while getting companies",
@@ -44,9 +45,10 @@ export const getCompanies = (req, res) => {
             })
         } else {
             const query = `SELECT * FROM companies WHERE company_id = ?
-                            ORDER BY company_index ASC company_id DESC`
+                            ORDER BY company_index ASC, company_id DESC`
             db.all(query, [company_id], function (err, rows) {
                 if (err) {
+                    console.log(err)
                     return res.json({
                         errCode: 2,
                         errMessage: "Error while getting companies",

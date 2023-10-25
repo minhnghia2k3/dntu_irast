@@ -10,6 +10,7 @@ export default function Home() {
     const getAllCompanies = async () => {
       try {
         const res = await axios.get(GET_ALL_COMPANIES_ROUTE)
+        if (res.data.errCode !== 0) return console.log(res.data.message)
         setAllCompanies(res.data.data)
       } catch (err) {
         console.log(err)

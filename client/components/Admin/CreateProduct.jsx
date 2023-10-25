@@ -121,7 +121,7 @@ const CreateProduct = ({ data, setIsOpenAddModal, setIsOpenAddProduct, isOpenAdd
                                     </select>
                                 </div>
                                 <div>
-                                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tiêu đề sản phẩm</label>
+                                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tiêu đề sản phẩm chính</label>
                                     <input
                                         value={title}
                                         onChange={(e) => setTitle(e.target.value)}
@@ -131,7 +131,7 @@ const CreateProduct = ({ data, setIsOpenAddModal, setIsOpenAddProduct, isOpenAdd
                                         required="" />
                                 </div>
                                 <div className="sm:col-span-2">
-                                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mô tả</label>
+                                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mô tả sản phẩm chính</label>
                                     <textarea
                                         value={description}
                                         onChange={(e) => setDescription(e.target.value)}
@@ -143,7 +143,6 @@ const CreateProduct = ({ data, setIsOpenAddModal, setIsOpenAddProduct, isOpenAdd
                                 </div>
 
                                 <div className="flex flex-col items-center justify-center w-full col-span-2">
-                                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Thêm sản phẩm chính</label>
                                     <div class="relative flex items-center justify-center h-40 w-full border-2 border-dashed border-gray-300 rounded-lg">
                                         <label className="cursor-pointer flex items-center justify-center w-full h-full relative">
                                             {
@@ -152,7 +151,7 @@ const CreateProduct = ({ data, setIsOpenAddModal, setIsOpenAddProduct, isOpenAdd
                                                         <Image src={URL.createObjectURL(bannerImg)} width={150} height={150} />
                                                     </>
                                                 ) : (
-                                                    <p className="flex items-center justify-center flex-col mb-2 text-sm font-medium text-gray-900 dark:text-white">Thêm banner
+                                                    <p className="flex items-center justify-center flex-col mb-2 text-sm font-medium text-gray-900 dark:text-white">Thêm sản phẩm chính
                                                         <PiUploadSimpleBold size={50} className="text-gray-600" />
                                                     </p>
                                                 )
@@ -183,7 +182,7 @@ const CreateProduct = ({ data, setIsOpenAddModal, setIsOpenAddProduct, isOpenAdd
                                             ) : (
                                                 <>
                                                     <label htmlFor={`file-input-${index}`} className="cursor-pointer custom-file-input">
-                                                        <PiUploadSimpleBold size={20} className="text-white" />
+                                                        <PiUploadSimpleBold size={20} className="text-gray-600" />
                                                     </label>
                                                     <input
                                                         type="file"

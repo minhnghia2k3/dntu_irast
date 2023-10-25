@@ -17,7 +17,9 @@ import CreateProduct from './CreateProduct';
 
 function Admin() {
     const [companies, setCompanies] = useState([]);
+    const [products, setProducts] = useState([]);
 
+    const [isLogged, setIsLogged] = useState('logged');
     const [isOpenAddModal, setIsOpenAddModal] = useState(false);
     const [isOpenEditModal, setIsOpenEditModal] = useState(false);
     const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
@@ -43,17 +45,24 @@ function Admin() {
         getAllCompanies()
 
     }, [])
-    // Get localStorage data
-    const getLocalStorage = () => {
-        if (typeof localStorage !== 'undefined' && localStorage !== null) {
-            return localStorage.getItem('status')
-        } else {
-            // Xử lý khi localStorage không có sẵn
-            return null;
-        }
-    }
 
-    const isLogged = getLocalStorage();
+    useEffect(() => {
+        const getAllProducts = async () => {
+            const res = await axios.get(`${GET_ALL_COMPANY_PRODUCT}${selectedCompany?.company_id}`)
+            if (res.status === 200) {
+                setProducts(res?.data.data)
+            }
+        }
+        getAllProducts()
+    }, [selectedCompany])
+
+    // Check isLogged
+    useEffect(() => {
+        const status = localStorage.getItem('status')
+        if (status) {
+            setIsLogged(status)
+        }
+    }, [])
     return (
         isLogged === 'logged' ?
             (
@@ -65,8 +74,8 @@ function Admin() {
                                     <Search originalData={currentPageData} data={result} setResult={setResult} />
                                     <div className="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
                                         <button type="button" onClick={handleAddModal} className="flex items-center justify-center text-white bg-primary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
-                                            <svg className="h-3.5 w-3.5 mr-2" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                                <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
+                                            <svg className="h-3.5 w-3.5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                                <path clipRule="evenodd" fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
                                             </svg>
                                             Thêm doanh nghiệp
                                         </button>
@@ -111,7 +120,7 @@ function Admin() {
                                                         <a target='_blank' href={company.websiteURL ? `//${company.websiteURL}` : ""} className="text-blue-500">{company.websiteURL}</a>
                                                     </td>
                                                     <td className="px-4 py-3">
-                                                        <Image src={`${UPLOADS_API}/${company.logo}`} width={50} height={50} className='rounded-full object-contain' />
+                                                        <Image src={`${UPLOADS_API}/${company.logo}`} width={50} height={50} className='rounded-full object-contain' alt="image" />
                                                     </td>
                                                     <td className="px-4 py-3">
                                                         <video src={`${UPLOADS_API}/${company.video_banner}`} width="50" height="50" controls={false} autoPlay={false} />
@@ -125,17 +134,17 @@ function Admin() {
                                                                     <FiMoreHorizontal size={20} onClick={() => setSelectedCompany(company)} />
                                                                 </Button>
                                                             </DropdownTrigger>
-                                                            <DropdownMenu aria-label="Static Actions" className="bg-gray-700 px-2 py-4 text-white w-40 rounded-sm">
-                                                                <DropdownItem onClick={() => setIsOpenEditModal(true)} key="edit" className="focus:outline-none hover:bg-gray-800 text-white">
+                                                            <DropdownMenu aria-label="Static Actions" className="bg-gray-200 dark:bg-gray-700 px-2 py-4 dark:text-white text-gray-900 w-40 rounded-sm">
+                                                                <DropdownItem onClick={() => setIsOpenEditModal(true)} key="edit" className="focus:outline-none hover:bg-gray-400 dark:text-white text-gray-900">
                                                                     Chỉnh sửa
                                                                 </DropdownItem>
-                                                                <DropdownItem onClick={() => setIsOpenPreviewModal(true)} key="preview" className="focus:outline-none hover:bg-gray-800 text-white">
+                                                                <DropdownItem onClick={() => setIsOpenPreviewModal(true)} key="preview" className="focus:outline-none hover:bg-gray-400 dark:text-white text-gray-900">
                                                                     Xem trước
                                                                 </DropdownItem>
                                                                 {
                                                                     company.isDeleted === 0 ?
                                                                         (
-                                                                            <DropdownItem onClick={() => setIsOpenDeleteModal(true)} key="delete" className="focus:outline-none hover:bg-gray-800 text-red-500" color="danger">
+                                                                            <DropdownItem onClick={() => setIsOpenDeleteModal(true)} key="delete" className="focus:outline-none hover:bg-gray-400 text-red-500" color="danger">
                                                                                 Xóa
                                                                             </DropdownItem>
                                                                         ) :
@@ -163,7 +172,7 @@ function Admin() {
                     </main>
                     <CreateCompany isOpenModal={isOpenAddModal} setIsOpenModal={setIsOpenAddModal} setIsOpenProduct={setIsOpenAddProduct} />
                     <UpdateCompany selectedCompany={selectedCompany} isOpenEditModal={isOpenEditModal} setIsOpenEditModal={setIsOpenEditModal} />
-                    <PreviewCompany selectedCompany={selectedCompany} isOpenPreviewModal={isOpenPreviewModal} setIsOpenPreviewModal={setIsOpenPreviewModal} />
+                    <PreviewCompany products={products} selectedCompany={selectedCompany} isOpenPreviewModal={isOpenPreviewModal} setIsOpenPreviewModal={setIsOpenPreviewModal} />
                     <DeleteCompany selectedCompany={selectedCompany} isOpenDeleteModal={isOpenDeleteModal} setIsOpenDeleteModal={setIsOpenDeleteModal} />
                     <RestoreCompany selectedCompany={selectedCompany} isOpenRestoreModal={isOpenRestoreModal} setIsOpenRestoreModal={setIsOpenRestoreModal} />
                     <CreateProduct data={companies} setIsOpenAddModal={setIsOpenAddModal} setIsOpenAddProduct={setIsOpenAddProduct} isOpenAddProduct={isOpenAddProduct} />

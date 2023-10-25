@@ -2,9 +2,9 @@ import { GET_ALL_COMPANY_PRODUCT, UPLOADS_API } from '@/utils/ApiRoutes'
 import axios from 'axios'
 import Image from 'next/image'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React from 'react'
 
-function PreviewCompany({ selectedCompany: data, isOpenPreviewModal, setIsOpenPreviewModal }) {
+function PreviewCompany({ products, selectedCompany: data, isOpenPreviewModal, setIsOpenPreviewModal }) {
     return (
         <>
             {isOpenPreviewModal && (
@@ -14,12 +14,12 @@ function PreviewCompany({ selectedCompany: data, isOpenPreviewModal, setIsOpenPr
                             <div className="flex justify-between mb-4 rounded-t sm:mb-5">
                                 <div className="text-lg text-gray-900 md:text-xl dark:text-white">
                                     <h3 className="font-semibold ">{data.company_name}</h3>
-                                    <p className="font-bold">{data.phone} - {data.address} - {data.gmail}</p>
+                                    <p className="font-semibold text-sm">{data.phone} - {data.address} - {data.gmail}</p>
                                 </div>
                                 <div>
                                     <button onClick={() => setIsOpenPreviewModal(false)} type="button" className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 inline-flex dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="readProductModal">
-                                        <svg aria-hidden="true" className="w-5 h-5" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                        <svg aria-hidden="true" className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                            <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
                                         </svg>
                                         <span className="sr-only">Close modal</span>
                                     </button>
@@ -27,16 +27,23 @@ function PreviewCompany({ selectedCompany: data, isOpenPreviewModal, setIsOpenPr
                             </div>
                             <dl>
                                 <dt className="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Mô tả</dt>
-                                <dd className="w-full truncate mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">{data.description}</dd>
+                                <dd className="whitespace-normal mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">{data.description}</dd>
                                 <dt className="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Website liên kết</dt>
                                 <dd className="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400"><Link target='_blank' className='text-blue-500 underline' href={`//${data.websiteURL}`}>{data.websiteURL}</Link></dd>
-                                <dt className="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Hình ảnh</dt>
+                                <dt className="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Sản phẩm</dt>
                                 <dd className="grid grid-cols-2 mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">
-                                    {console.log(products)}
+                                    {
+                                        products && products.map((product, index) => (
+                                            <div key={index} className='flex items-center'>
+                                                <Image src={`${UPLOADS_API}/${product.banner_img}`} height={70} width={70} alt={product.title} />
+                                                <p className='ml-2'>{product.title}</p>
+                                            </div>
+                                        ))
+                                    }
                                 </dd>
                                 <dt className="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Video</dt>
                                 <dd className="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">
-                                    Video
+                                    <video src={`${UPLOADS_API}/${data.video_banner}`} width={70} height={70} controls={false} />
                                 </dd>
                                 <dt className="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Trạng thái</dt>
                                 <dd className="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">

@@ -31,12 +31,7 @@ body {
   @apply text-lg lg:text-xl font-bold text-red-primary min-w-[180px];
 }
 
-/* .swiper-container {
-  width: 100%;
-  height: auto;
-  margin-left: auto;
-  margin-right: auto;
-}
+
 
 .swiper-slide {
   text-align: center;
@@ -89,7 +84,7 @@ body {
 
 .swiper-slide-next.main-card {
   transform: scaleY(1.1) !important;
-} */
+}
 
 .card {
   /* CSS của card */
@@ -129,4 +124,24 @@ body {
 
 .color-div {
   background: linear-gradient(180deg, rgba(255, 255, 255, 1) 50%, rgba(247, 102, 109, 1) 50%);
+}
+
+.widget-title {
+  font-size: 24px;
+  font-weight: 500;
+  position: relative;
+  padding-bottom: 20px;
+  color: #fff;
+  max-height: 100px;
+  min-height: 100px;
+}
+
+.widget-title::after {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 20px;
+  height: 2px;
+  background-color: #34b1eb;
+  content: "";
 }
