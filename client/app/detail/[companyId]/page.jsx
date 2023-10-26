@@ -3,8 +3,9 @@
 import Detail from "@/components/Detail/Detail";
 import Footer from "@/components/Footer";
 import { GET_ALL_COMPANIES_ROUTE, GET_ALL_COMPANY_PRODUCT } from "@/utils/ApiRoutes";
-import axios from "axios";
+import axios, { all } from "axios";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 function page({ params }) {
     const [allProducts, setAllProducts] = useState([])
@@ -35,12 +36,21 @@ function page({ params }) {
         getAllProducts();
     }, [])
     return (
-        <>
-            <main className="w-full h-full sm:h-[calc(100vh-80px)] bg-slate-100">
-                <Detail data={allProducts} company={company} />
-            </main>
-            <Footer data={company} />
-        </>
+        allProducts && allProducts.length > 0 ? (
+            <>
+                <main className="w-full h-full sm:h-[calc(100vh-80px)] bg-slate-100">
+                    <Detail data={allProducts} company={company} />
+                </main>
+                <Footer data={company} />
+            </>
+        )
+            : (
+                <div className="w-full h-screen flex flex-col justify-center items-center">
+                    <h1 className="text-2xl font-bold text-center text-gray-300">Không có sản phẩm nào</h1>
+                    <Link href="/" className="text-2xl font-bold text-center text-blue-500">Quay lại trang chủ</Link>
+                </div>
+            )
+
     )
 }
 
