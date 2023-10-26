@@ -53,6 +53,10 @@ io.on('connection', socket => {
         socket.to('Tivi').emit('redirect', (socket.handshake.headers.pathname))
         console.log('Đã gửi tín hiệu tới room tivi')
     }
+    socket.on('redirect', (data) => {
+        socket.to('Tivi').emit('redirect', data)
+        console.log('test')
+    })
 
 
 
