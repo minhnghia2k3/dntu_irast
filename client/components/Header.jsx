@@ -23,11 +23,6 @@ function Header() {
                 'pathName': window.location.pathname
             }
         });
-
-        newSocket.on('connect', () => {
-            console.log('Đã kết nối đến máy chủ')
-        });
-
         // Kiểm tra user đã loggin hay chưa
         // Tại vì set giá trị mặc định cho status là false
         // Nên cần đoạn code này để kiểm tra
@@ -56,9 +51,6 @@ function Header() {
                 router.push(data + '?device=tivi')
             }
         })
-        if(window.localStorage.getItem('status') === 'logged'){
-            newSocket.emit('redirect', pathName);
-        }
         return () => clearInterval(interval);
     }, [pathName]);
 

@@ -35,7 +35,6 @@ io.on('connection', socket => {
     - socket. -> specific user
     - io. -> broadcast to all users*/
     // Sign in
-    console.log(socket.handshake.headers.pathname)
     socket.on('connect', () => {
         socket.emit('connect')
     })
@@ -49,14 +48,18 @@ io.on('connection', socket => {
 
     // Gửi tín hiệu tới tất cả các 
     if (socket.handshake.headers.logged === 'logged') {
-        console.log('Hello world, Welcome back')
-        socket.to('Tivi').emit('redirect', (socket.handshake.headers.pathname))
+        console.log(socket.handshake.headers.pathname)
+        if(!(socket.handshake.headers.pathname.includes('admin') || socket.handshake.headers.pathname.includes('logout'))){
+            socket.to('Tivi').emit('redirect', (socket.handshake.headers.pathname))
+        }else{
+            socket.to('Tivi').emit('redirect', ('/'))
+        }
         console.log('Đã gửi tín hiệu tới room tivi')
     }
-    socket.on('redirect', (data) => {
-        socket.to('Tivi').emit('redirect', data)
-        console.log('test')
-    })
+    // socket.on('redirect', (data) => {
+    //     console.log('test')
+    //     socket.to('Tivi').emit('redirect', data)
+    // })
 
 
 
@@ -96,6 +99,9 @@ io.on('connection', socket => {
 
     // Listen for a disconnect
     socket.on('disconnect', () => {
+        if(socket.handshake.headers.logged === 'logged'){
+            socket.to('Tivi').emit('redirect', ('/'))
+        }
         console.log('User disconnected')
     })
 })
