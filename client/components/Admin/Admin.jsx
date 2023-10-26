@@ -56,13 +56,13 @@ function Admin() {
         getAllProducts()
     }, [selectedCompany])
 
-    // Check isLogged
+    // Check isLogged in localStorage when component did mount
     useEffect(() => {
         const status = localStorage.getItem('status')
-        if (status) {
-            setIsLogged(status)
-        }
+        setIsLogged(status)
     }, [])
+
+
     return (
         isLogged === 'logged' ?
             (
@@ -89,7 +89,6 @@ function Admin() {
                                         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                             <tr>
                                                 <th scope="col" className="px-4 py-3">#</th>
-                                                <th scope="col" className="px-4 py-3">Thứ tự</th>
                                                 <th scope="col" className="px-4 py-3">Tên doanh nghiệp</th>
                                                 <th scope="col" className="px-4 py-3">Gmail</th>
                                                 <th scope="col" className="px-4 py-3">Địa chỉ</th>
@@ -109,8 +108,10 @@ function Admin() {
                                             {result && result.map((company, index) => (
                                                 <tr key={index} className="border-b dark:border-gray-700 h-full">
                                                     <td scope="row" className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{index + 1}</td>
-                                                    <td className="px-4 py-3 text-red-500">{company.company_index}</td>
-                                                    <td scope="row" className="max-w-[8rem] truncate px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{company.company_name}</td>
+                                                    <td scope="row" className="relative max-w-[8rem] truncate px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                        {company.company_name}
+                                                        {company.company_index === 1 && <span className="absolute top-2 left-0 text-green-500 ml-2">*</span>}
+                                                    </td>
                                                     <td scope="row" className="max-w-[8rem] truncate px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{company.gmail}</td>
 
                                                     <td className="max-w-[8rem] truncate px-4 py-3">{company.address}</td>

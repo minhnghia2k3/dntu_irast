@@ -109,8 +109,9 @@ const CreateProduct = ({ data, setIsOpenAddModal, setIsOpenAddProduct, isOpenAdd
                                         onChange={(e) => {
                                             handleSelectItems(e)
                                         }}
+                                        defaultValue=""
                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                        <option disabled selected value="">=== Chọn doanh nghiệp cần thêm sản phẩm ===</option>
+                                        <option disabled value="">=== Chọn doanh nghiệp cần thêm sản phẩm ===</option>
                                         {data && data.map((company, index) => (
                                             <option
                                                 key={index}
@@ -143,7 +144,7 @@ const CreateProduct = ({ data, setIsOpenAddModal, setIsOpenAddProduct, isOpenAdd
                                 </div>
 
                                 <div className="flex flex-col items-center justify-center w-full col-span-2">
-                                    <div class="relative flex items-center justify-center h-40 w-full border-2 border-dashed border-gray-300 rounded-lg">
+                                    <div className="relative flex items-center justify-center h-40 w-full border-2 border-dashed border-gray-300 rounded-lg">
                                         <label className="cursor-pointer flex items-center justify-center w-full h-full relative">
                                             {
                                                 bannerImg ? (
@@ -160,7 +161,7 @@ const CreateProduct = ({ data, setIsOpenAddModal, setIsOpenAddProduct, isOpenAdd
                                                 onChange={(e) => setBannerImg(e.target.files[0])}
                                                 type="file"
                                                 id="imageInput"
-                                                class="hidden"
+                                                className="hidden"
                                                 accept="image/*" />
                                         </label>
                                     </div>

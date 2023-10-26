@@ -27,7 +27,7 @@ export const getCompanies = (req, res) => {
         const { company_id } = req.query;
         if (!company_id) {
             const query = `SELECT * FROM companies
-            ORDER BY company_id DESC, company_index ASC`
+            ORDER BY company_index ASC, company_id DESC`
             db.all(query, [], function (err, rows) {
                 if (err) {
                     console.log(err)
@@ -198,9 +198,9 @@ export const restoreCompany = (req, res, next) => {
 export const updateCompany = (req, res, next) => {
     try {
         const { company_id } = req.query;
-        const { company_name, gmail, description, websiteURL, phone, address } = req.body;
-        const logo = req.files.logo[0].filename
-        const video_banner = req.files.video_banner[0].filename
+        const { company_name, gmail, description, websiteURL, phone, address, company_index } = req.body;
+        const logo = req.body.logo || req.files.logo[0].filename
+        const video_banner = req.body.video_banner || req.files.video_banner[0].filename
 
         if (!company_id) {
             res.json({
@@ -209,9 +209,9 @@ export const updateCompany = (req, res, next) => {
             })
         }
         const query = `UPDATE companies 
-                        SET company_name = ?, gmail = ?, logo = ?, video_banner = ?, description = ?, websiteURL = ?, phone = ?, address = ?
+                        SET company_name = ?, gmail = ?, logo = ?, video_banner = ?, description = ?, websiteURL = ?, phone = ?, address = ?, company_index =?
                         WHERE company_id =?`
-        db.run(query, [company_name, gmail, logo, video_banner, description, websiteURL, phone, address, company_id], function (err) {
+        db.run(query, [company_name, gmail, logo, video_banner, description, websiteURL, phone, address, company_index, company_id], function (err) {
             if (err) {
                 res.json({
                     errCode: 2,
