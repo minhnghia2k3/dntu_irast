@@ -9,12 +9,12 @@ import Image from 'next/image';
 function CreateCompany({ isOpenModal, setIsOpenModal, setIsOpenProduct }) {
     const [logo, setLogo] = useState(null);
     const [video, setVideo] = useState(null);
-    const [companyName, setCompanyName] = useState(null);
-    const [email, setEmail] = useState(null);
-    const [address, setAddress] = useState(null);
-    const [phoneNumber, setPhoneNumber] = useState(null);
-    const [websiteURL, setWebsiteURL] = useState(null);
-    const [description, setDescription] = useState(null);
+    const [companyName, setCompanyName] = useState("");
+    const [email, setEmail] = useState("");
+    const [address, setAddress] = useState("");
+    const [phoneNumber, setPhoneNumber] = useState("");
+    const [websiteURL, setWebsiteURL] = useState("");
+    const [description, setDescription] = useState("");
     const router = useRouter();
     // Handle add website image fields
     const handleChangeImage = (e) => {
@@ -64,7 +64,7 @@ function CreateCompany({ isOpenModal, setIsOpenModal, setIsOpenProduct }) {
                 console.log(response.data.errMessage);
             }
             setIsOpenModal(false);
-            router.reload();
+            window.location.reload();
         } catch (error) {
             console.error('Upload failed', error);
         }
@@ -129,8 +129,8 @@ function CreateCompany({ isOpenModal, setIsOpenModal, setIsOpenProduct }) {
                                         type="text"
                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="company.com" required="" />
                                 </div>
-                                <div class="relative flex items-center justify-center h-40 w-40 border-2 border-dashed border-gray-300 rounded-lg">
-                                    <label for="imageInput" className="cursor-pointer flex items-center justify-center w-full h-full relative">
+                                <div className="relative flex items-center justify-center h-40 w-40 border-2 border-dashed border-gray-300 rounded-lg">
+                                    <label htmlFor="imageInput" className="cursor-pointer flex items-center justify-center w-full h-full relative">
                                         {
                                             logo ? (
                                                 <>
@@ -146,7 +146,7 @@ function CreateCompany({ isOpenModal, setIsOpenModal, setIsOpenProduct }) {
                                             onChange={(e) => handleChangeImage(e)}
                                             type="file"
                                             id="imageInput"
-                                            class="hidden"
+                                            className="hidden"
                                             accept="image/*" />
                                     </label>
                                 </div>
