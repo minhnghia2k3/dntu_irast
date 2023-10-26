@@ -4,14 +4,14 @@ import Link from 'next/link'
 import React from 'react'
 import { useEffect, useState } from 'react';
 import io from 'socket.io-client';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { LuSettings } from 'react-icons/lu'
 import { IoLogOutOutline } from 'react-icons/io5'
 function Header() {
     const [status, setStatus] = useState(false)
     const router = useRouter();
     const HOST = 'http://localhost:8080'
-
+    const pathName = usePathname()
     useEffect(() => {
         setStatus(window.localStorage.getItem('status') === 'logged')
         const newSocket = io(HOST, {
@@ -56,8 +56,11 @@ function Header() {
                 router.push(data + '?device=tivi')
             }
         })
+        if(window.localStorage.getItem('status') === 'logged'){
+            newSocket.emit('redirect', pathName);
+        }
         return () => clearInterval(interval);
-    }, []);
+    }, [pathName]);
 
     const Login = () => {
         router.push('/login')
