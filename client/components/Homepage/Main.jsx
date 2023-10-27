@@ -1,122 +1,128 @@
 'use client';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+// Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Autoplay } from 'swiper/modules';
-import Link from 'next/link';
-import Image from 'next/image';
+
+// Import Swiper styles
 import 'swiper/css';
-import 'swiper/css/pagination';
+import 'swiper/css/free-mode';
 import 'swiper/css/navigation';
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { io } from 'socket.io-client';
-import { useRouter } from 'next/navigation';
-function Main({ data }) {
-    const router = useRouter();
-    const HOST = 'http://localhost:8080';
-    const handleNavigate = (path) => {
-        const socket = io(HOST, {
-            withCredentials: true,
-            extraHeaders: {
-                // Kiểm tra đã đăng nhập hay chưa
-                'logged' : localStorage.getItem('status'),
-                // Cập nhật path name hiện tại của socket
-                'pathName' : window.location.pathname
-            }
-        });
+import 'swiper/css/thumbs';
 
-        // Gửi yêu cầu định tuyến bằng Socket.io khi người dùng click
-        if(localStorage.getItem('status') === 'logged'){
-            socket.emit('RedirectToPath', path)
+import './styles.css';
+
+// import required modules
+import { FreeMode, Navigation, Thumbs, Autoplay } from 'swiper/modules';
+import Image from 'next/image';
+import InfoCard from '../InfoCard';
+import { UPLOADS_API } from '@/utils/ApiRoutes';
+export default function App({ data }) {
+    const [thumbsSwiper, setThumbsSwiper] = useState(null);
+    const handleSwiperSlideChange = () => {
+        const currentVideo = document.querySelector('.swiper-slide-active video');
+        const nextVideo = document.querySelector('.swiper-slide-next video');
+        const prevVideo = document.querySelector('.swiper-slide-prev video');
+        if (currentVideo) {
+            currentVideo.pause();
+            currentVideo.currentTime = 0;
         }
-
+        if (nextVideo) {
+            nextVideo.play();
+        }
+        if (prevVideo) {
+            prevVideo.play();
+        }
     };
-
-    useEffect(() => {
-        const socket = io(HOST, {
-            withCredentials: true,
-        });
-
-        socket.on('redirectTo', (path) => {
-            router.push(path); // Điều hướng đến trang được chỉ định
-        });
-
-        return () => {
-            socket.disconnect(); // Đóng kết nối khi component unmount
-        };
-    }, []);
-
 
     return (
         <>
-            <div className="w-screen relative h-[100%] flex flex-row items-center justify-center color-div py-8 px-8 2xl:px-32">
-                <div className="swiper-button image-swiper-button-next hover:opacity-20 transition-all ease-in-out">
-                    <IoIosArrowForward />
-                </div>
-                <div className="swiper-button image-swiper-button-prev hover:opacity-20 transition-all ease-in-out">
-                    <IoIosArrowBack />
-                </div>
+            <div className="relative bg-slate-800 w-screen h-full">
                 <Swiper
-                    slidesPerView={3}
-                    breakpoints={
-                        {
-                            0: {
-                                slidesPerView: 1,
-                                spaceBetween: 20
-                            },
-                            1024: {
-                                slidesPerView: 3,
-                                spaceBetween: 0
-                            },
-                        }
-                    }
-                    spaceBetween={0}
+                    style={{
+                        '--swiper-navigation-color': '#fff',
+                        '--swiper-pagination-color': '#fff',
+                    }}
                     loop={true}
-                    navigation={{
-                        nextEl: ".image-swiper-button-next",
-                        prevEl: ".image-swiper-button-prev",
-                    }}
-                    modules={[Navigation, Autoplay]}
+                    spaceBetween={10}
+                    navigation={true}
+                    thumbs={{ swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null }}
                     autoplay={{
-                        delay: 2500,
+                        delay: 3500,
                         disableOnInteraction: false,
-                        pauseOnMouseEnter: true,
                     }}
-                    className="w-full h-full"
+                    modules={[FreeMode, Navigation, Thumbs, Autoplay]}
+                    onSlideChange={handleSwiperSlideChange}
+                    className="mySwiper2"
                 >
-                    {
-                        data && data.map((item, index) => (
-                            <SwiperSlide key={index} className="main-card !py-2">
-                                <Link
-                                    onClick={() => handleNavigate(`detail/video/${item.id}`)}
-                                    href={`detail/video/${item.id}`}
-                                    className="card flex flex-col items-center justify-start text-center w-[300px] h-[400px] md:w-[350px] md:h-[400px] 2xl:w-[500px] 2xl:h-[600px] hover:text-[#F7666D] bg-white border-gray-200 rounded-[15px] shadow px-4 py-2 gap-2 cursor-pointer">
-                                    <div className="card-image relative w-[140px] h-[140px] 2xl:w-[220px] 2xl:h-[220px]  object-cover">
-                                        <Image
-                                            src={item.logo}
-                                            alt={item.name}
-                                            fill
-                                            className="border-[3px] border-[#F7666D] rounded-[50%] p-1" />
+                    {data && data?.map((item, index) => {
+                        if (item.isDeleted === 0)
+                            return (
+                                <SwiperSlide key={index}>
+                                    <div className="w-full h-full relative">
+                                        {
+                                            item.video_banner ? (
+                                                <video
+                                                    controls={false}
+                                                    autoPlay
+                                                    loop
+                                                    muted
+                                                    className="w-full h-full object-fit bg-slate-800 md:object-cover"
+                                                >
+                                                    <source src={`${UPLOADS_API}/${item?.video_banner}`} type='video/mp4' />
+                                                </video>
+                                            ) :
+                                                (
+                                                    <div className="w-full h-full relative">
+                                                        <Image src={`/banner.jpg`} alt="" fill className="md:object-cover" />
+                                                    </div>
+
+                                                )
+                                        }
+                                        <InfoCard data={item} showTag={true} navUrl={`/detail/video/${item.company_id}`} />
                                     </div>
-                                    <div className="title font-bold text-lg md:text-xl 2xl:text-4xl line-clamp-1">
-                                        <h3>{item.name}</h3>
-                                    </div>
-                                    <div className="description font-medium text-sm text-gray-400 2xl:text-xl line-clamp-2">
-                                        <p>{item.description ? item.description : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'}</p>
-                                    </div>
-                                    <div className="qrCode relative mt-4 w-[100px] h-[100px] 2xl:w-[200px] 2xl:h-[200px]">
-                                        <Image
-                                            src={item.qrCode}
-                                            alt={item.name}
-                                            fill />
-                                    </div>
-                                </Link>
-                            </SwiperSlide>
-                        ))
-                    }
+                                </SwiperSlide>
+                            )
+                    })}
+
+                </Swiper>
+                {/* Small Pagination */}
+                <Swiper
+                    onSwiper={setThumbsSwiper}
+                    loop={true}
+                    spaceBetween={10}
+                    slidesPerView={4}
+                    freeMode={true}
+                    watchSlidesProgress={true}
+                    modules={[FreeMode, Navigation, Thumbs]}
+                    className="mySwiper"
+                >
+                    {data && data?.map((item, index) => {
+                        if (item.isDeleted === 0)
+                            return (
+                                <SwiperSlide key={index} className="rounded-[2px]">
+                                    {
+                                        item.video_banner ? (
+                                            <video
+                                                controls={false}
+                                                autoPlay={false}
+                                                loop
+                                                muted
+                                                className="w-full h-full object-cover rounded-[2px]"
+                                            >
+
+                                                <source src={`${UPLOADS_API}/${item?.video_banner}`} type='video/mp4' />
+                                            </video>
+                                        ) :
+                                            (
+                                                <Image src={'/banner.jpg'} alt="" fill />
+                                            )
+                                    }
+
+                                </SwiperSlide>
+                            )
+                    })}
                 </Swiper>
             </div >
         </>
-    )
+    );
 }
-
-export default Main

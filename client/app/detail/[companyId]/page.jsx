@@ -38,7 +38,7 @@ function page({ params }) {
     return (
         allProducts && allProducts.length > 0 ? (
             <>
-                <main className="w-full h-full sm:h-[calc(100vh-80px)] bg-slate-100">
+                <main className="w-full h-full bg-slate-100">
                     <Detail data={allProducts} company={company} />
                 </main>
                 <Footer data={company} />
