@@ -1,6 +1,6 @@
 "use client";
-import React, { useEffect, useState, useMemo } from 'react'
-import { GET_ALL_COMPANIES_ROUTE, GET_ALL_COMPANY_PRODUCT, UPLOADS_API } from '@/utils/ApiRoutes.js'
+import React, { useEffect, useState } from 'react'
+import { DETAIL_ROUTE, GET_ALL_COMPANIES_ROUTE, GET_ALL_COMPANY_PRODUCT, UPLOADS_API } from '@/utils/ApiRoutes.js'
 import axios from 'axios'
 import Image from 'next/image';
 import { FiMoreHorizontal } from 'react-icons/fi'
@@ -89,6 +89,7 @@ function Admin() {
                                         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                             <tr>
                                                 <th scope="col" className="px-4 py-3">#</th>
+                                                <th scope="col" className="px-4 py-3">Đường dẫn QR</th>
                                                 <th scope="col" className="px-4 py-3">Tên doanh nghiệp</th>
                                                 <th scope="col" className="px-4 py-3">Gmail</th>
                                                 <th scope="col" className="px-4 py-3">Địa chỉ</th>
@@ -108,6 +109,7 @@ function Admin() {
                                             {result && result.map((company, index) => (
                                                 <tr key={index} className="border-b dark:border-gray-700 h-full">
                                                     <td scope="row" className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{index + 1}</td>
+                                                    <td scope="row" className="px-4 py-3 font-medium whitespace-nowrap text-blue-500">{DETAIL_ROUTE}/{company.company_id}</td>
                                                     <td scope="row" className="relative max-w-[8rem] truncate px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                                         {company.company_name}
                                                         {company.company_index === 1 && <span className="absolute top-2 left-0 text-green-500 ml-2">*</span>}
