@@ -27,6 +27,7 @@ function UpdateCompany({ selectedCompany, isOpenEditModal, setIsOpenEditModal })
         setPhoneNumber(selectedCompany.phone)
         setWebsiteURL(selectedCompany.websiteURL)
         setDescription(selectedCompany.description)
+        setLogo(selectedCompany.logo)
         setVideoBanner(selectedCompany.video_banner)
     }, [selectedCompany])
 
