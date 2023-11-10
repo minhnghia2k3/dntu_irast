@@ -31,7 +31,18 @@ body {
   @apply text-lg lg:text-xl font-bold text-red-primary min-w-[180px];
 }
 
+.markdown-scroll {
+  overflow-y: hidden;
+  /* Ẩn thanh cuộn mặc định */
+  transition: overflow-y 0.5s;
+  /* Thêm hiệu ứng chuyển động */
 
+  /* Khi scroll, hiển thị thanh cuộn */
+  &:hover,
+  &:active {
+    overflow-y: scroll;
+  }
+}
 
 .swiper-slide {
   text-align: center;

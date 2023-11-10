@@ -10,95 +10,49 @@ import { Navigation, Autoplay } from 'swiper/modules';
 import Image from 'next/image';
 import { UPLOADS_API } from '@/utils/ApiRoutes';
 import Link from 'next/link';
-
+import { products } from '@/constants/items';
 const Detail = ({ data, company }) => {
-    const [otherProducts, setOtherProducts] = useState([]);
-    useEffect(() => {
-        if (data.length === 0) return;
-
-        const other_products = JSON.parse(data[0].other_products);
-        setOtherProducts(other_products);
-    }, [data]);
-
-    const websiteURL = company && company.websiteURL || "";
+    ;
     return (
         <>
-            <Swiper
-                style={{
-                    '--swiper-navigation-color': '#8C1515',
-                    '--swiper-pagination-color': '#8C1515',
-                    '--swiper-navigation-size': '20px'
-                }}
-                navigation={true}
-                autoplay={{
-                    delay: 3500,
-                    disableOnInteraction: false,
-                }}
-                modules={[Navigation, Autoplay]}
-                className="!h-[400px] sm:!h-[60%]">
-                {data && data.map((item, index) => (
-                    <SwiperSlide key={index}>
-                        <div className="flex items-center justify-center w-full md:px-16 px-2 py-8 gap-4 bg-gray-200 h-full">
-                            <div className="flex flex-col items-center justify-center w-full h-full sm:px-8 xl:px-16">
-                                <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight md:text-3xl lg:text-4xl text-red-primary">{item.title}</h1>
-                                <p className="mb-6 text-sm font-normal text-gray-500 lg:text-sm px-2 sm:px-8 xl:px-10 dark:text-gray-400">{item.description}</p>
+            <section className="w-full bg-slate-100 flex items-center justify-center">
+                <div className="flex items-center justify-center px-32 py-6">
+                    <div className="grid grid-cols-2 grid-flow-row bg-white rounded-[32px] drop-shadow-lg max-w-4xl min-h-[20rem] items-start">
+                        <Image src={products[0].image} alt="Main product" width={580} height={580} className="rounded-l-[32px]" />
+                        <div className="col-span-1 h-full flex flex-col items-start px-6 pt-4">
+                            <div className="flex flex-row w-full items-center justify-between">
+                                <div className="flex items-center space-x-2">
+                                    <Image src={products[0].company.logo} alt="Logo" width={48} height={48} />
+                                    <p className="font-medium text-gray-400 text-xs">{products[0].company.name}</p>
+                                </div>
+                                <Link href={products[0].company.websiteUrl} className="bg-red-500 hover:bg-red-700 text-white font-bold py-1.5 px-2 rounded">
+                                    Contact
+                                </Link>
                             </div>
-                            <div className="flex sm:hidden relative items-center">
-                                <Image
-                                    src={`${UPLOADS_API}/${item.banner_img}`}
-                                    width={350}
-                                    height={350}
-                                    alt="Main product"
-                                    className="z-10 drop-shadow-2xl" />
-                            </div>
-                            <div className="hidden sm:flex relative items-center">
-                                <Image
-                                    src={`${UPLOADS_API}/${item.banner_img}`}
-                                    width={750}
-                                    height={750}
-                                    alt="Main product"
-                                    className="z-10 drop-shadow-2xl" />
+                            <div className="flex flex-col items-start mt-4 max-h-[400px] markdown-scroll">
+                                <h2 className="text-lg font-semibold">{products[0].name}</h2>
+                                <hr className="w-full h-[2px] text-gray-500 mb-4" />
+
+                                <p className="text-sm font-normal text-gray-400" dangerouslySetInnerHTML={{ __html: products[0].markdown }} />
+                                <p className="text-sm font-normal text-gray-400" dangerouslySetInnerHTML={{ __html: products[0].markdown }} />
+                                <p className="text-sm font-normal text-gray-400" dangerouslySetInnerHTML={{ __html: products[0].markdown }} />
+                                <p className="text-sm font-normal text-gray-400" dangerouslySetInnerHTML={{ __html: products[0].markdown }} />
                             </div>
                         </div>
-                    </SwiperSlide>
-                ))}
-            </Swiper>
-            <div className="w-full h-full md:h-[40%] my-4 px-16 flex flex-col items-center justify-center">
-                <h1 className="mb-4 text-xl font-extrabold leading-none tracking-tight md:text-2xl lg:text-3xl text-red-primary">Sản phẩm khác</h1>
-                <div className="hidden sm:flex items-center justify-center my-2 gap-16">
-                    {otherProducts && otherProducts.map((item, index) => (
-                        <Link href={websiteURL} target='_blank' key={index} className="cursor-pointer relative bg-gray-200 hover:bg-gray-400 transition-all ease-in-out duration-300 items-center justify-center rounded-full w-[200px] h-[200px] p-4">
-                            <Image
-                                src={`${UPLOADS_API}/${item}`}
-                                fill
-                                alt="other product"
-                                className="object-fit p-4 rounded-full" />
-                            <span className="relative flex h-3 w-3">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                                <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
-                            </span>
-                        </Link>
-
+                    </div>
+                </div>
+            </section>
+            <section className="w-full bg-slate-100">
+                <p className="font-bold text-black text-center text-lg">Khám phá sản phẩm khác</p>
+                <div className="w-full p-4 mt-4 grid grid-cols-4 lg:grid-cols-6 justify-center gap-4">
+                    {products.map(product => (
+                        <div className="flex flex-col items-start gap-2">
+                            <Image src={product.image} alt={product.name} width={300} height={300} className="rounded-[32px] object-contain" />
+                            <p className="text-sm text-gray-900 font-bold">{product.name}</p>
+                        </div>
                     ))}
                 </div>
-
-                <div className="sm:hidden flex flex-col items-center justify-center my-8 gap-8">
-                    {otherProducts && otherProducts.map((item, index) => (
-                        <Link href={websiteURL} target='_blank' key={index} className="cursor-pointer relative bg-gray-200 hover:bg-gray-400 transition-all ease-in-out duration-300 items-center justify-center rounded-full w-[200px] h-[200px] p-6">
-                            <Image
-                                src={`${UPLOADS_API}/${item}`}
-                                fill
-                                alt="other product"
-                                className="object-fit p-4 rounded-full" />
-                            <span className="relative flex h-3 w-3">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                                <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
-                            </span>
-                        </Link>
-
-                    ))}
-                </div>
-            </div>
+            </section>
         </>
     )
 }
