@@ -16,14 +16,14 @@ const Detail = ({ data, company }) => {
     return (
         <>
             <section className="w-full bg-slate-100 flex items-center justify-center">
-                <div className="flex items-center justify-center px-32 py-6">
-                    <div className="grid grid-cols-2 grid-flow-row bg-white rounded-[32px] drop-shadow-lg max-w-4xl min-h-[20rem] items-start">
-                        <Image src={products[0].image} alt="Main product" width={580} height={580} className="rounded-l-[32px]" />
+                <div className="flex items-center justify-center px-16 sm:px-32 py-6">
+                    <div className="flex flex-col sm:grid sm:grid-cols-2 bg-white rounded-[32px] drop-shadow-lg max-w-4xl min-h-[20rem] items-start">
+                        <Image src={products[0].image} alt="Main product" width={580} height={580} className="rounded-b-[32px] sm:rounded-l-[32px]" />
                         <div className="col-span-1 h-full flex flex-col items-start px-6 pt-4">
-                            <div className="flex flex-row w-full items-center justify-between">
-                                <div className="flex items-center space-x-2">
+                            <div className="flex flex-col sm:flex-row w-full items-center justify-between gap-2 sm:gap-0">
+                                <div className="flex flex-col sm:flex-row items-center justify-center space-x-2 gap-2 sm:gap-0">
                                     <Image src={products[0].company.logo} alt="Logo" width={48} height={48} />
-                                    <p className="font-medium text-gray-400 text-xs">{products[0].company.name}</p>
+                                    <p className="text-gray-400 text-xs">{products[0].company.name}</p>
                                 </div>
                                 <Link href={products[0].company.websiteUrl} className="bg-red-500 hover:bg-red-700 text-white font-bold py-1.5 px-2 rounded">
                                     Contact
