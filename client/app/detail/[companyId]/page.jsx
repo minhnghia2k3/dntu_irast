@@ -34,22 +34,22 @@ function page({ params }) {
         }
         getCompany();
         getAllProducts();
+
     }, [])
     return (
-        allProducts && allProducts.length > 0 ? (
-            <>
-                <main className="w-full h-full bg-slate-100">
-                    <Detail data={allProducts} company={company} />
-                </main>
-                <Footer data={company} />
-            </>
-        )
-            : (
-                <div className="w-full h-screen flex flex-col justify-center items-center">
-                    <h1 className="text-2xl font-bold text-center text-gray-300">Không có sản phẩm nào</h1>
-                    <Link href="/" className="text-2xl font-bold text-center text-blue-500">Quay lại trang chủ</Link>
-                </div>
-            )
+        <main className="w-screen min-h-screen bg-slate-100">
+            <Detail data={allProducts} company={company} />
+        </main>
+
+        // allProducts && allProducts.length > 0 ? (
+        //     <Detail data={allProducts} company={company} />
+        // )
+        //     : (
+        //         <div className="w-full h-screen flex flex-col justify-center items-center">
+        //             <h1 className="text-2xl font-bold text-center text-gray-300">Không có sản phẩm nào</h1>
+        //             <Link href="/" className="text-2xl font-bold text-center text-blue-500">Quay lại trang chủ</Link>
+        //         </div>
+        //     )
 
     )
 }
