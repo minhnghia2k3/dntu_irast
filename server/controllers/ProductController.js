@@ -1,4 +1,4 @@
-import db from "../models/companyModel.js";
+import db from "../models/CompanyModel.js";
 
 export const getProductByCompanyId = (req, res, next) => {
     try {
@@ -10,7 +10,7 @@ export const getProductByCompanyId = (req, res, next) => {
                 data: []
             })
         }
-        const query = `SELECT * FROM products WHERE company_id = ?
+        const query = `SELECT * FROM CompanyProduct WHERE company_id = ?
         ORDER BY product_id DESC`
         db.all(query, [company_id], function (err, rows) {
             if (err) {

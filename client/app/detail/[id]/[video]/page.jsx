@@ -5,10 +5,9 @@ import axios from 'axios';
 import { GET_ALL_COMPANIES_ROUTE } from '@/utils/ApiRoutes';
 function page({ params }) {
     const [company, setCompany] = useState(null)
-    const { video } = params
     useState(() => {
         const getCompanyById = async () => {
-            const res = await axios.get(`${GET_ALL_COMPANIES_ROUTE}?company_id=${video}`)
+            const res = await axios.get(`${GET_ALL_COMPANIES_ROUTE}?company_id=${params.video}`)
             if (res.status === 200 && res.data) {
                 setCompany(res.data.data.shift())
             }

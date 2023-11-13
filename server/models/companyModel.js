@@ -10,33 +10,39 @@ const db = new sqlite3.Database('./db/Company.db', err =>
 // Create table
 db.serialize(() => {
   db.run(`
-    CREATE TABLE IF NOT EXISTS companies (
-        company_id INTEGER PRIMARY KEY AUTOINCREMENT,
-        company_name TEXT NOT NULL,
-        gmail TEXT NOT NULL,
+    CREATE TABLE IF NOT EXISTS Company (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
         logo TEXT NOT NULL,
-        video_banner TEXT NOT NULL,
-        description TEXT,
-        websiteURL TEXT,
+        video TEXT NOT NULL,
+        tag TEXT,
+        websiteUrl TEXT,
         phone TEXT,
-        address TEXT,
-        company_index INTEGER DEFAULT 9999,
-        isDeleted BOOLEAN DEFAULT 0,
-        createdAt DATETIME DEFAULT (DATETIME(CURRENT_TIMESTAMP, 'LOCALTIME'))
+        priority INTEGER DEFAULT 9999,
+        isDeleted BOOLEAN DEFAULT 0
     )
   `);
 
   db.run(`
-    CREATE TABLE IF NOT EXISTS products (
-        product_id INTEGER PRIMARY KEY AUTOINCREMENT,
-        banner_img TEXT,
-        title TEXT,
-        description TEXT,
-        other_products TEXT,
-        company_id INTEGER NOT NULL,
-        FOREIGN KEY (company_id) REFERENCES companies (company_id)
+    CREATE TABLE IF NOT EXISTS Product (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        image TEXT NOT NULL,
+        markdown TEXT,
+        createdAt DATETIME DEFAULT (DATETIME(CURRENT_TIMESTAMP, 'LOCALTIME')),
+        company INTEGER NOT NULL,
+        FOREIGN KEY (id) REFERENCES Company
     )
   `);
+  db.run(`
+  CREATE TABLE IF NOT EXISTS CompanyProduct (
+    company_id INTEGER,
+    product_id INTEGER,
+    PRIMARY KEY (company_id, product_id),
+    FOREIGN KEY (company_id) REFERENCES Company(id),
+    FOREIGN KEY (product_id) REFERENCES Product(id)
+  )`);
+
 })
 // db.close();
 

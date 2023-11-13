@@ -15,7 +15,6 @@ import './styles.css';
 import { FreeMode, Navigation, Thumbs, Autoplay } from 'swiper/modules';
 import Image from 'next/image';
 import InfoCard from '../InfoCard';
-import { UPLOADS_API } from '@/utils/ApiRoutes';
 export default function App({ data }) {
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
     const handleSwiperSlideChange = () => {
@@ -33,7 +32,6 @@ export default function App({ data }) {
             prevVideo.play();
         }
     };
-
     return (
         <>
             <div className="relative bg-slate-800 w-screen h-full">
@@ -46,10 +44,10 @@ export default function App({ data }) {
                     spaceBetween={10}
                     navigation={true}
                     thumbs={{ swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null }}
-                    autoplay={{
-                        delay: 3500,
-                        disableOnInteraction: false,
-                    }}
+                    // autoplay={{
+                    //     delay: 5000,
+                    //     disableOnInteraction: true,
+                    // }}
                     modules={[FreeMode, Navigation, Thumbs, Autoplay]}
                     onSlideChange={handleSwiperSlideChange}
                     className="mySwiper2"
@@ -60,25 +58,22 @@ export default function App({ data }) {
                                 <SwiperSlide key={index}>
                                     <div className="w-full h-full relative">
                                         {
-                                            item.video_banner ? (
-                                                <video
-                                                    controls={false}
-                                                    autoPlay
-                                                    loop
-                                                    muted
-                                                    className="w-full h-full object-fit bg-slate-800 md:object-cover"
-                                                >
-                                                    <source src={`${UPLOADS_API}/${item?.video_banner}`} type='video/mp4' />
-                                                </video>
+                                            item.video && index !== 0 ? (
+                                                <iframe width="100%" height="100%" src={`${item.video}?autoplay=0&mute=1&controls=0`} title="Những công dụng tuyệt vời của Tinh dầu long não cao cấp Thái Vân" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                                             ) :
                                                 (
-                                                    <div className="w-full h-full relative">
-                                                        <Image src={`/banner.jpg`} alt="" fill className="md:object-cover" />
-                                                    </div>
-
+                                                    <video
+                                                        controls={false}
+                                                        autoPlay
+                                                        loop
+                                                        muted
+                                                        className="w-full h-full object-fit bg-slate-800 md:object-cover"
+                                                    >
+                                                        <source src={item.video} type='video/mp4' />
+                                                    </video>
                                                 )
                                         }
-                                        <InfoCard data={item} showTag={true} navUrl={`/detail/video/${item.company_id}`} />
+                                        <InfoCard data={item} showTag={true} navUrl={`/detail/video/${item.id}`} />
                                     </div>
                                 </SwiperSlide>
                             )
@@ -99,25 +94,10 @@ export default function App({ data }) {
                     {data && data?.map((item, index) => {
                         if (item.isDeleted === 0)
                             return (
-                                <SwiperSlide key={index} className="rounded-[2px]">
-                                    {
-                                        item.video_banner ? (
-                                            <video
-                                                controls={false}
-                                                autoPlay={false}
-                                                loop
-                                                muted
-                                                className="w-full h-full object-cover rounded-[2px]"
-                                            >
-
-                                                <source src={`${UPLOADS_API}/${item?.video_banner}`} type='video/mp4' />
-                                            </video>
-                                        ) :
-                                            (
-                                                <Image src={'/banner.jpg'} alt="" fill />
-                                            )
-                                    }
-
+                                <SwiperSlide key={index} >
+                                    <div>
+                                        <Image src={item.logo} alt={item.name} width={128} height={128} className="object-contain" />
+                                    </div>
                                 </SwiperSlide>
                             )
                     })}

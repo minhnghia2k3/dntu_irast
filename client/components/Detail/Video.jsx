@@ -133,10 +133,9 @@ function Video({ data }) {
                         className="cursor-pointer" />
                 </div>
                 {/* Company info */}
-                <InfoCard data={data} navUrl={`/detail/${data.company_id}`} showTag={false} />
-                {console.log(data)}
+                <InfoCard data={data} navUrl={`/detail/${data.id}`} showTag={false} />
                 {
-                    data.video_banner ? (
+                    data.video ? (
                         <video
                             ref={videoRef}
                             controls={false}
@@ -145,7 +144,7 @@ function Video({ data }) {
                             muted
                             className="w-full h-full object-fit md:object-cover"
                         >
-                            <source src={`${UPLOADS_API}/${data.video_banner}`} type='video/mp4' />
+                            <source src={data.video} type='video/mp4' />
                         </video>
                     ) : (
                         <div className="w-full h-full relative rounded-[15px] shadow-md">

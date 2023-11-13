@@ -12,7 +12,7 @@ import { UPLOADS_API } from '@/utils/ApiRoutes';
 import Link from 'next/link';
 import { products } from '@/constants/items';
 const Detail = ({ data, company }) => {
-    ;
+    console.log('data: ', data)
     return (
         <>
             <section className="w-full bg-slate-100 flex items-center justify-center">
