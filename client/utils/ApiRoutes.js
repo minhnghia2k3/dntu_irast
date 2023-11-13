@@ -1,4 +1,4 @@
-export const HOST = "http://localhost:8080";
+export const HOST = "http://dntu-api.iotdongnai.com";
 export const DETAIL_ROUTE = `${HOST}/detail`;
 
 export const COMPANY_API = `${HOST}/api/companies`;

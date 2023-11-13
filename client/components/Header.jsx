@@ -10,7 +10,7 @@ import { IoLogOutOutline } from 'react-icons/io5'
 function Header() {
     const [status, setStatus] = useState(false)
     const router = useRouter();
-    const HOST = 'http://localhost:8080'
+    const HOST = 'http://dntu-api.iotdongnai.com'
     const pathName = usePathname()
     useEffect(() => {
         setStatus(window.localStorage.getItem('status') === 'logged')

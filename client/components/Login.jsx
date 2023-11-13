@@ -8,7 +8,7 @@ const Login = () => {
     const [socket, setSocket] = useState(null);
     const [error, setError] = useState(false);
     const route = useRouter();
-    const HOST = 'http://localhost:8080'
+    const HOST = 'http://dntu-api.iotdongnai.com'
 
     useEffect(() => {
         const newSocket = io(HOST, {

@@ -7,7 +7,7 @@ import productRoutes from './routes/ProductRoutes.js';
 import cors from 'cors';
 dotenv.config();
 
-const origin = "http://localhost:3000"
+const origin = "http://dntu.iotdongnai.com"
 const app = express() // Initialize express
 const httpServer = createServer(app) // Create a server\
 app.use(cors(
@@ -49,9 +49,9 @@ io.on('connection', socket => {
     // Gửi tín hiệu tới tất cả các 
     if (socket.handshake.headers.logged === 'logged') {
         console.log(socket.handshake.headers.pathname)
-        if(!(socket.handshake.headers.pathname.includes('admin') || socket.handshake.headers.pathname.includes('logout'))){
+        if (!(socket.handshake.headers.pathname.includes('admin') || socket.handshake.headers.pathname.includes('logout'))) {
             socket.to('Tivi').emit('redirect', (socket.handshake.headers.pathname))
-        }else{
+        } else {
             socket.to('Tivi').emit('redirect', ('/'))
         }
         console.log('Đã gửi tín hiệu tới room tivi')
@@ -99,7 +99,7 @@ io.on('connection', socket => {
 
     // Listen for a disconnect
     socket.on('disconnect', () => {
-        if(socket.handshake.headers.logged === 'logged'){
+        if (socket.handshake.headers.logged === 'logged') {
             socket.to('Tivi').emit('redirect', ('/'))
         }
         console.log('User disconnected')
