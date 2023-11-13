@@ -7,7 +7,7 @@ import productRoutes from './routes/ProductRoutes.js';
 import cors from 'cors';
 dotenv.config();
 
-const origin = "http://dntu.iotdongnai.com"
+const origin = process.env.HOST || "http://localhost:3000"
 const app = express() // Initialize express
 const httpServer = createServer(app) // Create a server\
 app.use(cors(
