@@ -25,13 +25,13 @@ db.serialize(() => {
 
   db.run(`
     CREATE TABLE IF NOT EXISTS Product (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL,
+        product_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        product_name TEXT NOT NULL,
         image TEXT NOT NULL,
         markdown TEXT,
         createdAt DATETIME DEFAULT (DATETIME(CURRENT_TIMESTAMP, 'LOCALTIME')),
         company INTEGER NOT NULL,
-        FOREIGN KEY (id) REFERENCES Company
+        FOREIGN KEY (product_id) REFERENCES Company
     )
   `);
   db.run(`
