@@ -24,8 +24,8 @@ import db from "../models/CompanyModel.js";
 
 export const getCompanies = (req, res) => {
     try {
-        const { company_id } = req.query;
-        if (!company_id) {
+        const { id } = req.query;
+        if (!id) {
             const query = `SELECT * FROM Company
             ORDER BY priority ASC, id DESC`
             db.all(query, [], function (err, rows) {
@@ -62,7 +62,7 @@ export const getCompanies = (req, res) => {
             })
         }
     } catch (err) {
-        next(err);
+        console.log(err)
     }
 }
 

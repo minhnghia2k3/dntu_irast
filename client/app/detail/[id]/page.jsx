@@ -1,20 +1,33 @@
 "use client";
 import Detail from '@/components/Detail/Detail';
-import { GET_ALL_COMPANY_PRODUCT } from '@/utils/ApiRoutes'
+import { GET_ALL_COMPANY_PRODUCT, GET_PRODUCT_BY_ID } from '@/utils/ApiRoutes'
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 
 const page = ({ params }) => {
-    const [product, setProduct] = useState([])
+    const [product, setProduct] = useState("")
+    const [allCompanyProducts, setAllCompanyProducts] = useState([])
     useEffect(() => {
-        const companyProduct = async () => {
-            const { data } = await axios.get(`${GET_ALL_COMPANY_PRODUCT}${params.id}`)
+        const productById = async (productId) => {
+            const { data } = await axios.get(`${GET_PRODUCT_BY_ID}${productId}`)
             setProduct(data)
         }
-        // TODO: we've got the companyProduct -> find data by productId, find data by companyId
+        productById(params.id);
     }, [])
+    useEffect(() => {
+        const getAllCompanyProducts = async (companyId) => {
+            const { data } = await axios.get(`${GET_ALL_COMPANY_PRODUCT}${companyId}`)
+            setAllCompanyProducts(data)
+        }
+        if (product)
+            getAllCompanyProducts(product.data.id)
+    }, [product])
+
     return (
-        <Detail data={data} />
+        <main className="bg-slate-100 min-h-screen">
+            <Detail data={product?.data} allProducts={allCompanyProducts?.data} />
+        </main>
+
     )
 }
 

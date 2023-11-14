@@ -59,7 +59,7 @@ export default function App({ data }) {
                                     <div className="w-full h-full relative">
                                         {
                                             item.video && index !== 0 ? (
-                                                <iframe width="100%" height="100%" src={`${item.video}?autoplay=0&mute=1&controls=0`} title="Những công dụng tuyệt vời của Tinh dầu long não cao cấp Thái Vân" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                                <iframe width="100%" height="100%" src={`${item.video}?autoplay=0&mute=1&controls=0`} title={item.name} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
                                             ) :
                                                 (
                                                     <video

@@ -40,7 +40,6 @@ function UpdateCompany({ selectedCompany, isOpenEditModal, setIsOpenEditModal })
 
     const handleVideoChange = (e) => {
         const file = e.target.files[0]
-        console.log('file: ', file)
         if (file) {
             setVideoBanner(file)
         }
