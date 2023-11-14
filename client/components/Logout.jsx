@@ -5,7 +5,7 @@ import io from 'socket.io-client';
 const Logout = () => {
     const [socket, setSocket] = useState(null);
     const route = useRouter();
-    const HOST = process.env.HOST || 'http://localhost:8080'
+    const HOST = process.env.NEXT_PUBLIC_HOST || 'http://localhost:8080'
 
     useEffect(() => {
         const newSocket = io(HOST, {

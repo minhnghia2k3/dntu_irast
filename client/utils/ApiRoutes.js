@@ -1,4 +1,4 @@
-export const HOST = process.env.HOST || "http://localhost:8080";
+export const HOST = process.env.NEXT_PUBLIC_HOST || "http://localhost:8080";
 export const DETAIL_ROUTE = `${HOST}/detail`;
 
 export const COMPANY_API = `${HOST}/api/companies`;
