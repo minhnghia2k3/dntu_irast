@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createProductByCompanyId, deleteProductByProductId, getProductByCompanyId, updateProductByProductId } from "../controllers/ProductController.js";
+import { createProductByCompanyId, deleteProductByProductId, getProductByCompanyId, getProductByProductId, updateProductByProductId } from "../controllers/ProductController.js";
 import multer from 'multer';
 const router = Router();
 const storage = multer.diskStorage({
@@ -15,6 +15,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 router.get('/products', getProductByCompanyId)
+router.get('/get-product', getProductByProductId)
 router.post('/create-product', upload.fields([{ name: 'banner_img', maxCount: 1 }, { name: 'other_products', maxCount: 10 }]), createProductByCompanyId)
 router.put('/update-product', upload.fields([{ name: 'banner_img', maxCount: 1 }, { name: 'other_products', maxCount: 10 }]), updateProductByProductId)
 router.delete('/delete-product', deleteProductByProductId)
