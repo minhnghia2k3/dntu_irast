@@ -11,7 +11,6 @@ function Header() {
     const [status, setStatus] = useState(false)
     const router = useRouter();
     const HOST = process.env.HOST || 'http://localhost:8080'
-    console.log(HOST)
     const pathName = usePathname()
     useEffect(() => {
         setStatus(window.localStorage.getItem('status') === 'logged')
@@ -42,10 +41,8 @@ function Header() {
         // 2: domain/detail/video/id:?device=tivi Video page
         if (window.location.href.includes('tivi')) {
             newSocket.emit('JoinTivi')
-            console.log('đây là tivi')
         }
         newSocket.on('redirect', (data) => {
-            console.log('đã nhận diều hướng')
             if (data === '/') {
                 router.push('/tivi');
             } else {

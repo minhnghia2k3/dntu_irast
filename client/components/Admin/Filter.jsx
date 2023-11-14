@@ -19,7 +19,6 @@ function Filter({ data, setResult, originalData }) {
             }
         }
         const updatedResult = handleCheckboxChange();
-        console.log('updatedResult', updatedResult)
         setResult(updatedResult);
     }, [showData, hideData]);
 

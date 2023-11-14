@@ -8,9 +8,8 @@ import { FiPlay, FiPause } from 'react-icons/fi'
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import InfoCard from '../InfoCard';
-import { UPLOADS_API } from '@/utils/ApiRoutes';
 
-function Video({ data }) {
+function Video({ data, companyProduct }) {
     const router = useRouter()
     const [isPlaySound, setIsPlaySound] = useState(false)
     const [isPlaying, setIsPlaying] = useState(true)
@@ -45,15 +44,15 @@ function Video({ data }) {
         const video = videoRef.current
         video?.addEventListener('leavepictureinpicture', () => {
             setIsPictureInPicture(false)
-            router.push(`/detail/video/${data.company_id}`)
+            router.push(`/detail/video/${companyProduct[0]?.product_id}`)
         })
         if (isPictureInPicture) {
-            router.push(`/detail/${data.company_id}`)
+            router.push(`/detail/${companyProduct[0]?.product_id}`)
         }
         return () => {
             video?.removeEventListener('leavepictureinpicture', () => {
                 setIsPictureInPicture(false)
-                router.push(`/detail/video/${data.company_id}`)
+                router.push(`/detail/video/${companyProduct[0]?.product_id}`)
             })
         }
     }, [isPictureInPicture, videoRef])
@@ -133,10 +132,9 @@ function Video({ data }) {
                         className="cursor-pointer" />
                 </div>
                 {/* Company info */}
-                <InfoCard data={data} navUrl={`/detail/${data.company_id}`} showTag={false} />
-                {console.log(data)}
+                <InfoCard data={data} navUrl={`/detail/${companyProduct[0]?.product_id}`} showTag={false} />
                 {
-                    data.video_banner ? (
+                    data.video ? (
                         <video
                             ref={videoRef}
                             controls={false}
@@ -145,7 +143,7 @@ function Video({ data }) {
                             muted
                             className="w-full h-full object-fit md:object-cover"
                         >
-                            <source src={`${UPLOADS_API}/${data.video_banner}`} type='video/mp4' />
+                            <source src={data.video} type='video/mp4' />
                         </video>
                     ) : (
                         <div className="w-full h-full relative rounded-[15px] shadow-md">

@@ -12,4 +12,5 @@ export const DELETE_COMPANY_ROUTE = `${COMPANY_API}/delete-company`;
 export const RESTORE_COMPANY_ROUTE = `${COMPANY_API}/restore-company`;
 
 export const GET_ALL_COMPANY_PRODUCT = `${PRODUCT_API}/products?company_id=`;
+export const GET_PRODUCT_BY_ID = `${PRODUCT_API}/get-product?product_id=`;
 export const CREATE_PRODUCT_ROUTE = `${PRODUCT_API}/create-product?company_id=`;

@@ -1,5 +1,49 @@
-import db from "../models/companyModel.js";
+import db from "../models/CompanyModel.js";
 
+export const getProductByProductId = (req, res, next) => {
+    try {
+        const { product_id } = req.query
+        if (!product_id) {
+            return res.json({
+                errCode: 1,
+                errMessage: "Missing product id",
+                data: []
+            })
+        }
+        const query = `SELECT *
+        FROM Product
+        INNER JOIN Company ON Company.id = Product.company
+        WHERE Product.product_id = ?
+        `
+        db.all(query, [product_id], function (err, rows) {
+            if (err) {
+                console.log(err)
+                return res.json({
+                    errCode: 2,
+                    errMessage: "Error when getting product",
+                    data: []
+                })
+            }
+
+            if (rows.length > 0) {
+                return res.json({
+                    errCode: 0,
+                    errMessage: "Get products successfully",
+                    data: rows.shift()
+                })
+            } else {
+                return res.json({
+                    errCode: 1,
+                    errMessage: "Not found any products",
+                    data: []
+                })
+            }
+        })
+    } catch (err) {
+        console.log(err)
+        next(err)
+    }
+}
 export const getProductByCompanyId = (req, res, next) => {
     try {
         const { company_id } = req.query
@@ -10,10 +54,14 @@ export const getProductByCompanyId = (req, res, next) => {
                 data: []
             })
         }
-        const query = `SELECT * FROM products WHERE company_id = ?
-        ORDER BY product_id DESC`
+        const query = `SELECT *
+        FROM CompanyProduct
+        INNER JOIN Product ON CompanyProduct.product_id = Product.product_id
+        WHERE CompanyProduct.company_id = ?
+        ORDER BY RANDOM()`
         db.all(query, [company_id], function (err, rows) {
             if (err) {
+                console.log(err)
                 return res.json({
                     errCode: 2,
                     errMessage: "Error while getting products",

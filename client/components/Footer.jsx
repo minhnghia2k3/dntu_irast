@@ -3,7 +3,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 function Footer({ data }) {
-    console.log(data)
     const websiteURL = data && data.websiteURL || "";
     return (
         <footer className="bg-red-800">

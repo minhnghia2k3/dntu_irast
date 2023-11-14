@@ -1,4 +1,4 @@
-import db from "../models/companyModel.js";
+import db from "../models/CompanyModel.js";
 
 /**
  *  GET /api/companies/companies
@@ -24,34 +24,34 @@ import db from "../models/companyModel.js";
 
 export const getCompanies = (req, res) => {
     try {
-        const { company_id } = req.query;
-        if (!company_id) {
-            const query = `SELECT * FROM companies
-            ORDER BY company_index ASC, company_id DESC`
+        const { id } = req.query;
+        if (!id) {
+            const query = `SELECT * FROM Company
+            ORDER BY priority ASC, id DESC`
             db.all(query, [], function (err, rows) {
                 if (err) {
                     console.log(err)
                     return res.json({
                         errCode: 2,
-                        errMessage: "Error while getting companies",
+                        errMessage: "Error while getting Company",
                         data: []
                     })
                 }
                 return res.json({
                     errCode: 0,
-                    errMessage: "Get companies successfully",
+                    errMessage: "Get Company successfully",
                     data: rows
                 })
             })
         } else {
-            const query = `SELECT * FROM companies WHERE company_id = ?
-                            ORDER BY company_index ASC, company_id DESC`
-            db.all(query, [company_id], function (err, rows) {
+            const query = `SELECT * FROM Company WHERE id = ?
+                            ORDER BY priority ASC, id DESC`
+            db.all(query, [id], function (err, rows) {
                 if (err) {
                     console.log(err)
                     return res.json({
                         errCode: 2,
-                        errMessage: "Error while getting companies",
+                        errMessage: "Error while getting Company",
                     })
                 }
                 return res.json({
@@ -62,7 +62,7 @@ export const getCompanies = (req, res) => {
             })
         }
     } catch (err) {
-        next(err);
+        console.log(err)
     }
 }
 

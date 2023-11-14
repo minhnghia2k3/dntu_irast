@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains: ['fit.dntu.edu.vn', 'cohafood.vn', 'localhost'],
+        domains: ['res.cloudinary.com', 'cohafood.vn', 'localhost'],
     },
 }
 
