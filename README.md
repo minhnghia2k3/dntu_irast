@@ -1,8 +1,8 @@
-# DNTU IRAST PROJECT - [BETA]
+# DNTU IRATS PROJECT - [BETA]
 ![Logo DNTU](./client/public/logo_dntu.png)
 
 # Introduction
-- Welcome to DNTU IRAST, this website displays about products of companies.
+- Welcome to DNTU IRATS, this website displays about products of companies.
 
 # About Us
 - Thanks for contributions from:
