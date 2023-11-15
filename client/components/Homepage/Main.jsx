@@ -44,10 +44,10 @@ export default function App({ data }) {
                     spaceBetween={10}
                     navigation={true}
                     thumbs={{ swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null }}
-                    // autoplay={{
-                    //     delay: 5000,
-                    //     disableOnInteraction: true,
-                    // }}
+                    autoplay={{
+                        delay: 15000,
+                        disableOnInteraction: true,
+                    }}
                     modules={[FreeMode, Navigation, Thumbs, Autoplay]}
                     onSlideChange={handleSwiperSlideChange}
                     className="mySwiper2"
@@ -94,9 +94,9 @@ export default function App({ data }) {
                     {data && data?.map((item, index) => {
                         if (item.isDeleted === 0)
                             return (
-                                <SwiperSlide key={index} >
+                                <SwiperSlide key={index} className="bg-slate-800">
                                     <div>
-                                        <Image src={item.logo} alt={item.name} width={128} height={128} className="object-contain" />
+                                        <Image src={item.logo} alt={item.name} width={64} height={64} className="object-contain" />
                                     </div>
                                 </SwiperSlide>
                             )

@@ -24,8 +24,8 @@ import db from "../models/CompanyModel.js";
 
 export const getCompanies = (req, res) => {
     try {
-        const { id } = req.query;
-        if (!id) {
+        const { company_id } = req.query;
+        if (!company_id) {
             const query = `SELECT * FROM Company
             ORDER BY priority ASC, id DESC`
             db.all(query, [], function (err, rows) {
@@ -46,7 +46,7 @@ export const getCompanies = (req, res) => {
         } else {
             const query = `SELECT * FROM Company WHERE id = ?
                             ORDER BY priority ASC, id DESC`
-            db.all(query, [id], function (err, rows) {
+            db.all(query, [company_id], function (err, rows) {
                 if (err) {
                     console.log(err)
                     return res.json({
@@ -65,6 +65,7 @@ export const getCompanies = (req, res) => {
         console.log(err)
     }
 }
+
 
 /**
  * POST /api/companies/create-company

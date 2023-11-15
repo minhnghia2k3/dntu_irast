@@ -16,6 +16,9 @@ function Video({ data, companyProduct }) {
     const [isPictureInPicture, setIsPictureInPicture] = useState(false)
     const videoRef = useRef(null)
 
+    console.log("data: ", data)
+    console.log("Company product: ", companyProduct)
+
     /* Handle Video Player */
     const handlePlayVideo = () => {
         // Change isPlaying
@@ -85,56 +88,60 @@ function Video({ data, companyProduct }) {
                 className="_video flex items-center justify-center relative w-full h-screen md:h-[calc(100vh-80px)] md:w-screen"
             >
                 {/* Group of buttons for controlling video */}
-                <div className="absolute bottom-5 left-8 z-50 flex items-center justify-center gap-4 text-white">
-                    {
-                        !isPlaying ?
-                            (
-                                <FiPlay
+                {data.id === 0 && (
+                    <>
+                        <div className="absolute bottom-5 left-8 z-50 flex items-center justify-center gap-4 text-white">
+                            {
+                                !isPlaying ?
+                                    (
+                                        <FiPlay
+                                            size={30}
+                                            onClick={handlePlayVideo}
+                                            className="cursor-pointer" />
+                                    ) :
+                                    (
+                                        <FiPause
+                                            size={30}
+                                            onClick={handlePlayVideo}
+                                            className="cursor-pointer" />
+                                    )
+
+                            }
+                            {!isPlaySound ? (
+                                <GoMute
                                     size={30}
-                                    onClick={handlePlayVideo}
+                                    onClick={handlePlaySound}
                                     className="cursor-pointer" />
                             ) :
-                            (
-                                <FiPause
+                                (<GoUnmute
                                     size={30}
+                                    onClick={handlePlaySound}
+                                    className="cursor-pointer" />
+                                )
+                            }
+
+                        </div>
+                        {/* Group of buttons for screen video */}
+                        <div className="absolute bottom-5 right-8 z-50 flex items-center justify-center gap-4 text-white">
+                            <div
+                                onClick={handlePictureInPicture}
+                                className={`p-2 cursor-pointer rounded-full shadow-md z-50`} >
+                                <BsFillPipFill
+                                    size={25}
                                     onClick={handlePlayVideo}
                                     className="cursor-pointer" />
-                            )
-
-                    }
-                    {!isPlaySound ? (
-                        <GoMute
-                            size={30}
-                            onClick={handlePlaySound}
-                            className="cursor-pointer" />
-                    ) :
-                        (<GoUnmute
-                            size={30}
-                            onClick={handlePlaySound}
-                            className="cursor-pointer" />
-                        )
-                    }
-
-                </div>
-                {/* Group of buttons for screen video */}
-                <div className="absolute bottom-5 right-8 z-50 flex items-center justify-center gap-4 text-white">
-                    <div
-                        onClick={handlePictureInPicture}
-                        className={`p-2 cursor-pointer rounded-full shadow-md z-50`} >
-                        <BsFillPipFill
-                            size={25}
-                            onClick={handlePlayVideo}
-                            className="cursor-pointer" />
-                    </div>
-                    <MdFullscreen
-                        size={30}
-                        onClick={handleFullScreen}
-                        className="cursor-pointer" />
-                </div>
-                {/* Company info */}
+                            </div>
+                            <MdFullscreen
+                                size={30}
+                                onClick={handleFullScreen}
+                                className="cursor-pointer" />
+                        </div>
+                        {/* Company info */}
+                    </>
+                )}
                 <InfoCard data={data} navUrl={`/detail/${companyProduct[0]?.product_id}`} showTag={false} />
                 {
-                    data.video ? (
+                    data.video && data.id === 1 ? (
                         <video
                             ref={videoRef}
                             controls={false}
@@ -146,14 +153,7 @@ function Video({ data, companyProduct }) {
                             <source src={data.video} type='video/mp4' />
                         </video>
                     ) : (
-                        <div className="w-full h-full relative rounded-[15px] shadow-md">
-                            <Image
-                                src={`/banner.jpg`}
-                                alt=""
-                                layout="fill"
-                                objectFit="cover"
-                                className="rounded-[15px]" />
-                        </div>
+                        <iframe width="100%" height="100%" src={`${data?.video}?autoplay=1&mute=0&controls=1`} title={data?.name} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
                     )
                 }
             </motion.div>

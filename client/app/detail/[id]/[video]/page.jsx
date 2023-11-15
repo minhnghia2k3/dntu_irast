@@ -23,6 +23,7 @@ function page({ params }) {
         getCompanyById(params.video)
         companyProduct(params.video);
     }, [])
+    console.log("Company ID: ", company)
     return (
         <>
             {
