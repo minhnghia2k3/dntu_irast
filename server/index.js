@@ -4,6 +4,7 @@ import { Server } from 'socket.io';
 import dotenv from 'dotenv';
 import companyRoutes from './routes/CompanyRoutes.js';
 import productRoutes from './routes/ProductRoutes.js';
+import analyticRoutes from './routes/AnalyticRoutes.js'
 import cors from 'cors';
 dotenv.config();
 
@@ -113,7 +114,7 @@ app.get('/', (req, res) => {
 app.use('/api/companies', companyRoutes);
 app.use('/api/products', productRoutes)
 app.use('/api/uploads', express.static('uploads'));
-
+app.use('/api/report', analyticRoutes);
 // Start the server
 const port = 8080
 httpServer.listen(port, () => console.log(`Listening on port ${port}`))
