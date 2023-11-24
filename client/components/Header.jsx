@@ -10,7 +10,7 @@ import { IoLogOutOutline } from 'react-icons/io5'
 function Header() {
     const [status, setStatus] = useState(false)
     const router = useRouter();
-    const HOST = 'http://localhost:8080'
+    const HOST = process.env.NEXT_PUBLIC_HOST || 'http://localhost:8080'
     const pathName = usePathname()
     useEffect(() => {
         setStatus(window.localStorage.getItem('status') === 'logged')
@@ -41,10 +41,8 @@ function Header() {
         // 2: domain/detail/video/id:?device=tivi Video page
         if (window.location.href.includes('tivi')) {
             newSocket.emit('JoinTivi')
-            console.log('đây là tivi')
         }
         newSocket.on('redirect', (data) => {
-            console.log('đã nhận diều hướng')
             if (data === '/') {
                 router.push('/tivi');
             } else {
@@ -65,7 +63,7 @@ function Header() {
             <Link href="/" className="col-span-2 flex flex-[80%] items-center justify-start select-none px-4 py-2 max-w-max h-[80px] bg-inherit focus-visible:outline-none">
                 <Image src='/logo_dntu.png' priority={true} width={70} height={60} alt="Trường Đại Học Công Nghệ Đồng Nai Logo" className="drop-shadow-md" />
                 <div className="flex flex-col">
-                    <h1 className="text-red-primary font-medium text-lg lg:text-xl drop-shadow shadow-white tracking-widest">IRAST</h1>
+                    <h1 className="text-red-primary font-medium text-lg lg:text-xl drop-shadow shadow-white tracking-widest">IRATS</h1>
                     <h1 className="text-red-primary font-medium text-[0.5rem] lg:text-lg drop-shadow shadow-white max-w-max">VIỆN NGHIÊN CỨU VÀ
                         ỨNG DỤNG KHOA HỌC CÔNG NGHỆ</h1>
                 </div>

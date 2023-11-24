@@ -8,7 +8,7 @@ const Login = () => {
     const [socket, setSocket] = useState(null);
     const [error, setError] = useState(false);
     const route = useRouter();
-    const HOST = 'http://localhost:8080'
+    const HOST = process.env.NEXT_PUBLIC_HOST || 'http://localhost:8080'
 
     useEffect(() => {
         const newSocket = io(HOST, {

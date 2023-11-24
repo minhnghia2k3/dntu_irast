@@ -5,7 +5,7 @@ import io from 'socket.io-client';
 const Logout = () => {
     const [socket, setSocket] = useState(null);
     const route = useRouter();
-    const HOST = 'http://localhost:8080'
+    const HOST = process.env.NEXT_PUBLIC_HOST || 'http://localhost:8080'
 
     useEffect(() => {
         const newSocket = io(HOST, {
@@ -32,7 +32,7 @@ const Logout = () => {
                         <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                             Cài đặt
                         </h1>
-                        <button onClick={()=>{route.push('/admin')}} className="w-full bg-red-800 text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center">Quản lý sản phẩm</button>
+                        <button onClick={() => { route.push('/admin') }} className="w-full bg-red-800 text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center">Quản lý sản phẩm</button>
                         <button onClick={Logout} className="w-full bg-red-800 text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center">Đăng xuất</button>
                     </div>
                 </div>
