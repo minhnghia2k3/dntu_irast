@@ -15,8 +15,8 @@ import Filter from './Filter';
 import Pagination from './Pagination';
 import CreateProduct from './CreateProduct';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import * as FileSaver from 'file-saver';
-import * as XLSX from 'xlsx';
+import Link from 'next/link';
+import FileSaver from 'file-saver';
 
 function Admin() {
     const [companies, setCompanies] = useState([]);
@@ -32,28 +32,10 @@ function Admin() {
     const [selectedCompany, setSelectedCompany] = useState(null);
     const [currentPageData, setCurrentPageData] = useState([]);
     const [result, setResult] = useState("");
-    const [dataReport, setDataReport] = useState([]);
-
-    const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-    const fileExtension = '.xlsx';
 
     // Handle toggle modal product
     const handleAddModal = () => {
         setIsOpenAddModal(!isOpenAddModal)
-    }
-
-    const exportToCSV = (dataReport, fileName) => {
-        const excelData = dataReport.map(item => ({
-            'Doanh nghiệp': item.name,
-            'Sản phẩm': item.product_name,
-            'Lượt truy cập': item.accessValue,
-          }));
-        
-        const ws = XLSX.utils.json_to_sheet(excelData);
-        const wb = { Sheets: { 'data': ws }, SheetNames: ['data'] };
-        const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
-        const data = new Blob([excelBuffer], { type: fileType });
-        FileSaver.saveAs(data, fileName + fileExtension);
     }
 
     useEffect(() => {
@@ -77,33 +59,11 @@ function Admin() {
         getAllProducts()
     }, [selectedCompany])
 
-    useEffect(() => {
-        const getDataReport = async () => {
-            const res = await axios.get(`${GET_ACCESSING_REPORT}`)
-            const transformedData = await Promise.all(res.data
-                .filter(item => item.path.startsWith('/detail'))
-                .map(async (item) => {
-                    const product_id = item.path.split('/').pop();
-                    const productData = await axios.get(`${GET_PRODUCT_BY_ID}${product_id}`);
-                    return {
-                        name: productData.data.data.name,
-                        product_name: productData.data.data.product_name,
-                        accessValue: item.accessValue,
-                    };
-                }));
-            console.log(transformedData);
-            setDataReport(transformedData);
-        }
-        getDataReport()
-    }, [])
-
     // Check isLogged in localStorage when component did mount
     useEffect(() => {
         const status = localStorage.getItem('status')
         setIsLogged(status)
     }, [])
-
-
     return (
         isLogged === 'logged' ?
             (
@@ -230,9 +190,9 @@ function Admin() {
                                 <TabPanel>
                                     <div className='flex justify-center items-center h-[200px] text-white border border-white rounded-lg'>
                                         {/* <button onClick={() => {console.log("Hello")}}>Xuất file báo cáo</button> */}
-                                        <Button onClick={() => {
-                                            exportToCSV(dataReport, 'hello')
-                                        }}>Xuất file báo cáo</Button> 
+                                        <a href={GET_ACCESSING_REPORT}>
+                                            Xuất file báo cáo
+                                        </a>
                                     </div>
                                 </TabPanel>
                             </Tabs>
