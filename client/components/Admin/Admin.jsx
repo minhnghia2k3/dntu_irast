@@ -15,8 +15,6 @@ import Filter from './Filter';
 import Pagination from './Pagination';
 import CreateProduct from './CreateProduct';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import Link from 'next/link';
-import FileSaver from 'file-saver';
 
 function Admin() {
     const [companies, setCompanies] = useState([]);
