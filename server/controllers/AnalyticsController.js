@@ -23,10 +23,11 @@ export async function runReport(req, res) {
       ],
       metrics: [
         {
-          name: "activeUsers",
+          name: "screenPageViews",
         },
       ],
     });
+
     //That data property will get data all of path responed from Analytics to filter and format data like:
     //{ path: '/path', accessValue: 'Access value' }
     const data = response.rows
