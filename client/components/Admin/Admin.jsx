@@ -187,7 +187,6 @@ function Admin() {
                                 {/* Report */}
                                 <TabPanel>
                                     <div className='flex justify-center items-center h-[200px] text-white border border-white rounded-lg'>
-                                        {/* <button onClick={() => {console.log("Hello")}}>Xuất file báo cáo</button> */}
                                         <a href={GET_ACCESSING_REPORT}>
                                             Xuất file báo cáo
                                         </a>

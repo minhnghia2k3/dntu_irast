@@ -27,7 +27,7 @@ const Detail = ({ data: product, allProducts }) => {
                                     <Image src={product?.logo} alt="Logo" width={64} height={64} />
                                     <p className="font-medium text-gray-400 text-xs">{product?.name}</p>
                                 </Link>
-                                <Link href={`https://zalo.me/${product?.phone}`} target="_blank" className="flex bg-red-500 hover:bg-red-700 text-white font-bold py-1.5 px-2 rounded">
+                                <Link href={`https://zalo.me/${product?.phone}`} target="_blank" className="flex bg-red-500 hover:bg-red-700 text-white font-bold py-1.5 px-2 rounded contact">
                                     Liên hệ
                                 </Link>
                             </div>
