@@ -12,7 +12,7 @@ export async function runReport(req, res) {
       property: `properties/416413446`,
       dateRanges: [
         {
-          startDate: "2023-10-01",
+          startDate: "2023-12-01",
           endDate: "today",
         },
       ],
