@@ -5,6 +5,7 @@ import Link from 'next/link'
 import React from 'react'
 
 function PreviewCompany({ products, selectedCompany: data, isOpenPreviewModal, setIsOpenPreviewModal }) {
+    console.log(products)
     return (
         <>
             {isOpenPreviewModal && (
@@ -13,7 +14,7 @@ function PreviewCompany({ products, selectedCompany: data, isOpenPreviewModal, s
                         <div className="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
                             <div className="flex justify-between mb-4 rounded-t sm:mb-5">
                                 <div className="text-lg text-gray-900 md:text-xl dark:text-white">
-                                    <h3 className="font-semibold ">{data.company_name}</h3>
+                                    <h3 className="font-semibold ">{data.name}</h3>
                                     <p className="font-semibold text-sm">{data.phone} - {data.address} - {data.gmail}</p>
                                 </div>
                                 <div>
@@ -29,21 +30,21 @@ function PreviewCompany({ products, selectedCompany: data, isOpenPreviewModal, s
                                 <dt className="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Mô tả</dt>
                                 <dd className="whitespace-normal mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">{data.description}</dd>
                                 <dt className="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Website liên kết</dt>
-                                <dd className="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400"><Link target='_blank' className='text-blue-500 underline' href={`//${data.websiteURL}`}>{data.websiteURL}</Link></dd>
+                                <dd className="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400"><Link target='_blank' className='text-blue-500 underline' href={`//${data.websiteUrl}`}>{data.websiteUrl}</Link></dd>
                                 <dt className="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Sản phẩm</dt>
                                 <dd className="grid grid-cols-2 mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">
                                     {
                                         products && products.map((product, index) => (
                                             <div key={index} className='flex items-center'>
-                                                <Image src={`${UPLOADS_API}/${product.banner_img}`} height={70} width={70} alt={product.title} />
-                                                <p className='ml-2'>{product.title}</p>
+                                                <Image src={`${product.image}`} height={70} width={70} alt={product.title} />
+                                                <p className='ml-2'>{product.product_name}</p>
                                             </div>
                                         ))
                                     }
                                 </dd>
                                 <dt className="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Video</dt>
                                 <dd className="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">
-                                    <video src={`${UPLOADS_API}/${data.video_banner}`} width={70} height={70} controls={false} />
+                                    <video src={`${data.video}`} width={70} height={70} controls={false} />
                                 </dd>
                                 <dt className="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Trạng thái</dt>
                                 <dd className="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">

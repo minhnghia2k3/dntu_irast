@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from 'react'
-import { DETAIL_ROUTE, GET_ACCESSING_REPORT, GET_ALL_COMPANIES_ROUTE, GET_ALL_COMPANY_PRODUCT, GET_PRODUCT_BY_ID, UPLOADS_API } from '@/utils/ApiRoutes.js'
+import { COMPANY_API, DETAIL_ROUTE, GET_ACCESSING_REPORT, GET_ALL_COMPANIES_ROUTE, GET_ALL_COMPANY_PRODUCT, GET_PRODUCT_BY_ID, UPLOADS_API } from '@/utils/ApiRoutes.js'
 import axios from 'axios'
 import Image from 'next/image';
 import { FiMoreHorizontal } from 'react-icons/fi'
@@ -40,6 +40,7 @@ function Admin() {
         const getAllCompanies = async () => {
             const res = await axios.get(GET_ALL_COMPANIES_ROUTE)
             if (res.status === 200) {
+                console.log(res.data.data)
                 setCompanies(res.data.data)
             }
         }
@@ -49,7 +50,7 @@ function Admin() {
 
     useEffect(() => {
         const getAllProducts = async () => {
-            const res = await axios.get(`${GET_ALL_COMPANY_PRODUCT}${selectedCompany?.company_id}`)
+            const res = await axios.get(`${GET_ALL_COMPANY_PRODUCT}${selectedCompany?.id}`)
             if (res.status === 200) {
                 setProducts(res?.data.data)
             }
@@ -100,17 +101,17 @@ function Admin() {
                                                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                                     <tr>
                                                         <th scope="col" className="px-4 py-3">#</th>
-                                                        <th scope="col" className="px-4 py-3">Đường dẫn QR</th>
+                                                        {/* <th scope="col" className="px-4 py-3">Đường dẫn QR</th> */}
                                                         <th scope="col" className="px-4 py-3">Tên doanh nghiệp</th>
-                                                        <th scope="col" className="px-4 py-3">Gmail</th>
-                                                        <th scope="col" className="px-4 py-3">Địa chỉ</th>
+                                                        {/* <th scope="col" className="px-4 py-3">Gmail</th> */}
+                                                        {/* <th scope="col" className="px-4 py-3">Địa chỉ</th> */}
                                                         <th scope="col" className="px-4 py-3">Số điện thoại</th>
-                                                        <th scope="col" className="px-4 py-3">Mô tả</th>
+                                                        {/* <th scope="col" className="px-4 py-3">Mô tả</th> */}
                                                         <th scope="col" className="px-4 py-3">Website liên kết</th>
                                                         <th scope="col" className="px-4 py-3">Hình ảnh</th>
                                                         <th scope="col" className="px-4 py-3">Video</th>
                                                         <th scope="col" className="px-4 py-3">Trạng thái</th>
-                                                        <th scope="col" className="px-4 py-3">Ngày tạo</th>
+                                                        {/* <th scope="col" className="px-4 py-3">Ngày tạo</th> */}
                                                         <th scope="col" className="px-4 py-3">
                                                             <span className="sr-only">Actions</span>
                                                         </th>
@@ -120,27 +121,27 @@ function Admin() {
                                                     {result && result.map((company, index) => (
                                                         <tr key={index} className="border-b dark:border-gray-700 h-full">
                                                             <td scope="row" className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{index + 1}</td>
-                                                            <td scope="row" className="px-4 py-3 font-medium whitespace-nowrap text-blue-500">{DETAIL_ROUTE}/{company.company_id}</td>
-                                                            <td scope="row" className="relative max-w-[8rem] truncate px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                                {company.company_name}
+                                                            {/* <td scope="row" className="px-4 py-3 font-medium whitespace-nowrap text-blue-500">{DETAIL_ROUTE}/{company.company_id}</td> */}
+                                                            <td scope="row" className="relative max-w-[20rem] truncate px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                                {company.name}
                                                                 {company.company_index === 1 && <span className="absolute top-2 left-0 text-green-500 ml-2">*</span>}
                                                             </td>
-                                                            <td scope="row" className="max-w-[8rem] truncate px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{company.gmail}</td>
+                                                            {/* <td scope="row" className="max-w-[8rem] truncate px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{company.gmail}</td> */}
 
-                                                            <td className="max-w-[8rem] truncate px-4 py-3">{company.address}</td>
+                                                            {/* <td className="max-w-[8rem] truncate px-4 py-3">{company.address}</td> */}
                                                             <td className="px-4 py-3">{company.phone}</td>
-                                                            <td className="px-4 py-3 max-w-[8rem] truncate">{company.description}</td>
+                                                            {/* <td className="px-4 py-3 max-w-[8rem] truncate">{company.description}</td> */}
                                                             <td className="max-w-[8rem] truncate px-4 py-3">
-                                                                <a target='_blank' href={company.websiteURL ? `//${company.websiteURL}` : ""} className="text-blue-500">{company.websiteURL}</a>
+                                                                <a target='_blank' href={company.websiteURL ? `//${company.websiteURL}` : ""} className="text-blue-500">{company.websiteUrl}</a>
                                                             </td>
                                                             <td className="px-4 py-3">
-                                                                <Image src={`${UPLOADS_API}/${company.logo}`} width={50} height={50} className='rounded-full object-contain' alt="image" />
+                                                                <Image src={`${company.logo}`} width={50} height={50} className='rounded-full object-contain' alt="image" />
                                                             </td>
                                                             <td className="px-4 py-3">
-                                                                <video src={`${UPLOADS_API}/${company.video_banner}`} width="50" height="50" controls={false} autoPlay={false} />
+                                                                <video src={`${company.video}`} width="50" height="50" controls={false} autoPlay={false} />
                                                             </td>
                                                             <td className={`px-4 py-3 ${company.isDeleted === 1 ? 'text-red-500' : 'text-green-500'}`}>{company.isDeleted === 1 ? 'Đã ẩn' : 'Hiển thị'}</td>
-                                                            <td className="px-4 py-3">{company.createdAt}</td>
+                                                            {/* <td className="px-4 py-3">{company.createdAt}</td> */}
                                                             <td className="px-4 py-3">
                                                                 <Dropdown>
                                                                     <DropdownTrigger>
