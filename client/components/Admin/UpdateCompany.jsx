@@ -7,7 +7,6 @@ import { IoIosRemove } from 'react-icons/io';
 import Image from 'next/image';
 import axios from 'axios';
 function UpdateCompany({ selectedCompany, isOpenEditModal, setIsOpenEditModal }) {
-    console.log(selectedCompany)
     if (!selectedCompany) return
     const [companyName, setCompanyName] = useState(selectedCompany.name)
     const [companyIndex, setCompanyIndex] = useState(selectedCompany.id)
