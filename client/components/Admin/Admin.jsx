@@ -40,7 +40,6 @@ function Admin() {
         const getAllCompanies = async () => {
             const res = await axios.get(GET_ALL_COMPANIES_ROUTE)
             if (res.status === 200) {
-                console.log(res.data.data)
                 setCompanies(res.data.data)
             }
         }

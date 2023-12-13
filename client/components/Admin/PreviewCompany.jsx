@@ -5,7 +5,6 @@ import Link from 'next/link'
 import React from 'react'
 
 function PreviewCompany({ products, selectedCompany: data, isOpenPreviewModal, setIsOpenPreviewModal }) {
-    console.log(products)
     return (
         <>
             {isOpenPreviewModal && (
