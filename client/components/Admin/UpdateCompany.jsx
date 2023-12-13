@@ -7,28 +7,29 @@ import { IoIosRemove } from 'react-icons/io';
 import Image from 'next/image';
 import axios from 'axios';
 function UpdateCompany({ selectedCompany, isOpenEditModal, setIsOpenEditModal }) {
+    console.log(selectedCompany)
     if (!selectedCompany) return
-    const [companyName, setCompanyName] = useState(selectedCompany.company_name)
-    const [companyIndex, setCompanyIndex] = useState(selectedCompany.company_index)
+    const [companyName, setCompanyName] = useState(selectedCompany.name)
+    const [companyIndex, setCompanyIndex] = useState(selectedCompany.id)
     const [logo, setLogo] = useState(selectedCompany.logo)
-    const [videoBanner, setVideoBanner] = useState(selectedCompany.video_banner)
+    const [videoBanner, setVideoBanner] = useState(selectedCompany.video)
     const [gmail, setGmail] = useState(selectedCompany.gmail)
     const [address, setAddress] = useState(selectedCompany.address)
     const [phoneNumber, setPhoneNumber] = useState(selectedCompany.phone)
-    const [websiteURL, setWebsiteURL] = useState(selectedCompany.websiteURL)
+    const [websiteURL, setWebsiteURL] = useState(selectedCompany.websiteUrl)
     const [description, setDescription] = useState(selectedCompany.description)
 
     // Reset form when modal is closed
     useEffect(() => {
-        setCompanyName(selectedCompany.company_name)
-        setCompanyIndex(selectedCompany.company_index)
+        setCompanyName(selectedCompany.name)
+        setCompanyIndex(selectedCompany.id)
         setGmail(selectedCompany.gmail)
         setAddress(selectedCompany.address)
         setPhoneNumber(selectedCompany.phone)
-        setWebsiteURL(selectedCompany.websiteURL)
+        setWebsiteURL(selectedCompany.websiteUrl)
         setDescription(selectedCompany.description)
         setLogo(selectedCompany.logo)
-        setVideoBanner(selectedCompany.video_banner)
+        setVideoBanner(selectedCompany.video)
     }, [selectedCompany])
 
     const handleChangeImage = (e) => {
@@ -142,7 +143,7 @@ function UpdateCompany({ selectedCompany, isOpenEditModal, setIsOpenEditModal })
                                     <label htmlFor="imageInput" className="cursor-pointer flex items-center justify-center w-full h-full relative">
                                         {
                                             typeof logo === "string" ? (
-                                                <Image alt="logo" src={`${UPLOADS_API}/${logo}`} width={150} height={150} />
+                                                <Image alt="logo" src={`${logo}`} width={150} height={150} />
                                             ) : (
                                                 <Image alt="logo" src={URL.createObjectURL(logo)} width={150} height={150} />
                                             )
@@ -160,8 +161,9 @@ function UpdateCompany({ selectedCompany, isOpenEditModal, setIsOpenEditModal })
                                     <label className="cursor-pointer">
                                         <div className="text-center">
                                             {typeof videoBanner === "string" ? (
-                                                <video src={`${UPLOADS_API}/${videoBanner}`} width={150} height={150} />
+                                                <video src={`${videoBanner}`} width={150} height={150} />
                                             ) : (
+                                                console.log(videoBanner),
                                                 <video src={URL.createObjectURL(videoBanner)} width={150} height={150} />
                                             )
                                             }

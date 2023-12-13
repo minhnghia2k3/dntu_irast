@@ -7,8 +7,8 @@ function Search({ data, setResult, originalData }) {
             return setResult(originalData)
         }
         else {
-            const result = data.filter(item => {
-                return item.company_name.toLowerCase().includes(searchTerm.toLowerCase())
+            const result = originalData.filter(item => {
+                return item.name.toLowerCase().includes(searchTerm.toLowerCase())
             })
             setResult(result)
         }

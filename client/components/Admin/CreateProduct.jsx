@@ -116,7 +116,7 @@ const CreateProduct = ({ data, setIsOpenAddModal, setIsOpenAddProduct, isOpenAdd
                                             <option
                                                 key={index}
                                                 value={company.company_id}>
-                                                {company.company_name}
+                                                {company.name}
                                             </option>
                                         ))}
                                     </select>
