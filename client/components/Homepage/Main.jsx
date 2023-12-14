@@ -21,6 +21,7 @@ export default function App({ data }) {
         const currentVideo = document.querySelector('.swiper-slide-active video');
         const nextVideo = document.querySelector('.swiper-slide-next video');
         const prevVideo = document.querySelector('.swiper-slide-prev video');
+        console.log(currentVideo, nextVideo, prevVideo)
         if (currentVideo) {
             currentVideo.pause();
             currentVideo.currentTime = 0;
@@ -59,14 +60,14 @@ export default function App({ data }) {
                                     <div className="w-full h-full relative">
                                         {
                                             item.video && index !== 0 ? (
-                                                <iframe width="100%" height="100%" src={`${item.video}?autoplay=0&mute=1&controls=0`} title={item.name} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
+                                                <iframe width="100%" height="100%" src={`${item.video}?autoplay=0&controls=0`} title={item.name} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
                                             ) :
                                                 (
                                                     <video
                                                         controls={false}
                                                         autoPlay
-                                                        loop
                                                         muted
+                                                        loop
                                                         className="w-full h-full object-fit bg-slate-800 md:object-cover"
                                                     >
                                                         <source src={item.video} type='video/mp4' />
