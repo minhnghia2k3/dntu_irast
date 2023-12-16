@@ -1,5 +1,6 @@
 'use client';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
+import ReactPlayer from 'react-player/youtube';
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -8,31 +9,17 @@ import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
-
 import './styles.css';
 
 // import required modules
 import { FreeMode, Navigation, Thumbs, Autoplay } from 'swiper/modules';
 import Image from 'next/image';
 import InfoCard from '../InfoCard';
+
 export default function App({ data }) {
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
-    const handleSwiperSlideChange = () => {
-        const currentVideo = document.querySelector('.swiper-slide-active video');
-        const nextVideo = document.querySelector('.swiper-slide-next video');
-        const prevVideo = document.querySelector('.swiper-slide-prev video');
-        console.log(currentVideo, nextVideo, prevVideo)
-        if (currentVideo) {
-            currentVideo.pause();
-            currentVideo.currentTime = 0;
-        }
-        if (nextVideo) {
-            nextVideo.play();
-        }
-        if (prevVideo) {
-            prevVideo.play();
-        }
-    };
+    const [isPlaying, setIsPlaying] = useState(null);
+    const player = [];
     return (
         <>
             <div className="relative bg-slate-800 w-screen h-full">
@@ -50,7 +37,9 @@ export default function App({ data }) {
                         disableOnInteraction: true,
                     }}
                     modules={[FreeMode, Navigation, Thumbs, Autoplay]}
-                    onSlideChange={handleSwiperSlideChange}
+                    onSlideChange={(swiper) => {
+                        setIsPlaying(swiper.activeIndex);
+                    }}
                     className="mySwiper2"
                 >
                     {data && data?.map((item, index) => {
@@ -60,7 +49,16 @@ export default function App({ data }) {
                                     <div className="w-full h-full relative">
                                         {
                                             item.video && index !== 0 ? (
-                                                <iframe width="100%" height="100%" src={`${item.video}?autoplay=0&controls=0`} title={item.name} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
+                                                <ReactPlayer width="100%" height="100%" 
+                                                            url={`${item.video}`}
+                                                            ref={(ref) => {
+                                                                player[index] = ref;
+                                                            }}
+                                                            playing={isPlaying === index ? true : false}
+                                                            onPause={() => {
+                                                                player[index].seekTo(0);
+                                                            }}
+                                                            />
                                             ) :
                                                 (
                                                     <video
