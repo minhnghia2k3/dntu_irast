@@ -18,7 +18,7 @@ import InfoCard from '../InfoCard';
 
 export default function App({ data }) {
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
-    const [isPlaying, setIsPlaying] = useState(null);
+    const [isPlaying, setIsPlaying] = useState(0);
     const player = [];
     return (
         <>
@@ -31,14 +31,15 @@ export default function App({ data }) {
                     loop={true}
                     spaceBetween={10}
                     navigation={true}
-                    thumbs={{ swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null }}
+                    thumbs={{ swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null}}
                     autoplay={{
                         delay: 15000,
                         disableOnInteraction: true,
                     }}
-                    modules={[FreeMode, Navigation, Thumbs, Autoplay]}
+                    modules={[Autoplay, FreeMode, Navigation, Thumbs]}
                     onSlideChange={(swiper) => {
                         setIsPlaying(swiper.activeIndex);
+                        console.log(isPlaying, swiper.activeIndex);
                     }}
                     className="mySwiper2"
                 >
@@ -47,31 +48,16 @@ export default function App({ data }) {
                             return (
                                 <SwiperSlide key={index}>
                                     <div className="w-full h-full relative">
-                                        {
-                                            item.video && index !== 0 ? (
-                                                <ReactPlayer width="100%" height="100%" 
-                                                            url={`${item.video}`}
-                                                            ref={(ref) => {
-                                                                player[index] = ref;
-                                                            }}
-                                                            playing={isPlaying === index ? true : false}
-                                                            onPause={() => {
-                                                                player[index].seekTo(0);
-                                                            }}
-                                                            />
-                                            ) :
-                                                (
-                                                    <video
-                                                        controls={false}
-                                                        autoPlay
-                                                        muted
-                                                        loop
-                                                        className="w-full h-full object-fit bg-slate-800 md:object-cover"
-                                                    >
-                                                        <source src={item.video} type='video/mp4' />
-                                                    </video>
-                                                )
-                                        }
+                                        <ReactPlayer width="100%" height="100vh"
+                                            url={`${item.video}`}
+                                            ref={(ref) => {
+                                                player[index] = ref;
+                                            }}
+                                            playing={isPlaying === index ? true : false}
+                                            onPause={() => {
+                                                player[index].seekTo(0);
+                                            }}
+                                        />
                                         <InfoCard data={item} showTag={true} navUrl={`/detail/video/${item.id}`} />
                                     </div>
                                 </SwiperSlide>
